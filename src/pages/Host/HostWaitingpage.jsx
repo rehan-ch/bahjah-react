@@ -1,35 +1,83 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../../utills/varriables";
 
 const HostWaitingpage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { id } = useParams();
+  const game_Id = localStorage.getItem('game_id');
+  const gameId = id || game_Id;
   
-  // Get quiz data and API response from previous page
-  const data = location.state || {
-    category: ["علوم"],
-    question_count: 10,
-    host_name: "المضيف",
-    host_email: "host@example.com",
-    apiResponse: null,
-    id: null,
-    access_code: null,
-    createdAt: null
-  };
+  // State for game data
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  
+  // Fetch game data from API
+  useEffect(() => {
+    const fetchGameData = async () => {
+      if (!id) {
+        setError("Game ID not found");
+        setIsLoading(false);
+        return;
+      }
+      try {
+        setError("");
+        
+        const response = await fetch(`${BASE_URL}/api/v1/games/${id}/leaderboard`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('Game Data API Response:', result);
+        
+        if (result.success && result.data) {
+          setData(result.data);
+        } else {
+          throw new Error(result.message || 'Failed to fetch game data');
+        }
+        
+      } catch (error) {
+        console.error('Error fetching game data:', error);
+        setError("حدث خطأ في تحميل بيانات اللعبة");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // Use API response data if available, otherwise use fallback
-  const quizCode = data?.access_code  || "0000";
-  const gameId = data?.id
+    // Initial fetch
+    fetchGameData();
+
+    // Set up interval to fetch every 3 seconds
+    const interval = setInterval(fetchGameData, 3000);
+
+    // Cleanup interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
+  }, [id]);
+
+  // Extract data from API response
+  const quizCode = data?.access_code || "0000";
+  const totalQuestions = data?.total_questions || 10;
+  const currentQuestionIndex = data?.current_question_index || 0;
+  const isFinished = data?.is_finished || false;
+  const players = data?.players || [];
+  const totalPlayers = data?.total_players || 0;
+  const gameStatus = data?.status || "draft";
+  
   const joinUrl = `https://Bahjah.com/${quizCode}`;
   const previewUrl = `https://Bahjah.com/${quizCode}/Live`;
 
-  // Mock participants data
-  const [participants, setParticipants] = useState([
+  // Use actual players data from API or fallback to mock data
+  const participants = players.length > 0 ? players : [
     { id: 1, name: "زينب" },
     { id: 2, name: "عمر" },
     { id: 3, name: "احمد" },
     { id: 4, name: "ليلى" }
-  ]);
+  ];
 
   // Simulate new participants joining
 //   useEffect(() => {
@@ -47,7 +95,18 @@ const HostWaitingpage = () => {
 //   }, [participants.length]);
 
   const handleStartQuiz = () => {
-    // navigate("/host-questions", { state: { data?, participants, quizCode } });
+    if (data) {
+      navigate("/host-questions", { 
+        state: { 
+          gameData: data,
+          gameId: gameId,
+          quizCode: quizCode,
+          participants: participants,
+          totalQuestions: totalQuestions,
+          currentQuestionIndex: currentQuestionIndex
+        } 
+      });
+    }
   };
 
   const copyToClipboard = (text) => {
@@ -76,10 +135,33 @@ const HostWaitingpage = () => {
           {/* Content */}
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             
-            {/* Title */}
-            <div className="text-center space-y-2" dir="rtl">
-              <h2 className="text-lg font-bold">مسابقة اليوم الوطني</h2>
-            </div>
+            {/* Loading State */}
+            {isLoading && (
+              <div className="text-center py-8" dir="rtl">
+                <div className="text-white text-lg mb-2">جاري تحميل بيانات اللعبة...</div>
+                <div className="flex justify-center space-x-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                </div>
+              </div>
+            )}
+
+            {/* Error State */}
+            {error && (
+              <div className="bg-red-600 text-white p-4 rounded-lg text-center" dir="rtl">
+                {error}
+              </div>
+            )}
+
+            {/* Main Content - Only show when data is loaded */}
+            {!isLoading && !error && data && (
+              <>
+                {/* Title */}
+                <div className="text-center space-y-2" dir="rtl">
+                  <h2 className="text-lg font-bold">مسابقة اليوم الوطني</h2>
+                  <p className="text-sm text-green-400">حالة اللعبة: {gameStatus}</p>
+                </div>
 
             {/* Quiz Code */}
             <div dir="rtl">
@@ -155,28 +237,62 @@ const HostWaitingpage = () => {
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Start Button */}
-          <div className="p-6">
-            <button
-              onClick={handleStartQuiz}
-              disabled={participants.length < 2}
-              className={`w-full py-4 px-6 rounded-full text-lg font-bold transition-colors ${
-                participants.length >= 2
-                  ? "bg-green-500 hover:bg-green-600 text-white"
-                  : "bg-gray-600 text-gray-400 cursor-not-allowed"
-              }`}
-              dir="rtl"
-            >
-              يبدأ
-            </button>
-            {participants.length < 2 && (
-              <p className="text-center text-green-300 text-sm mt-2" dir="rtl">
-                تحتاج إلى مشارك واحد على الأقل لبدء المسابقة
-              </p>
+            {/* Quiz Info */}
+            <div className="bg-teal-700 rounded-lg p-4" dir="rtl">
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>معرف اللعبة:</span>
+                  <span className="text-green-400 text-xs">{gameId}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>عدد الأسئلة:</span>
+                  <span className="text-green-400">{totalQuestions}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>المشاركون:</span>
+                  <span className="text-green-400">{totalPlayers}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>السؤال الحالي:</span>
+                  <span className="text-green-400">{currentQuestionIndex + 1} / {totalQuestions}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>حالة اللعبة:</span>
+                  <span className="text-green-400">{isFinished ? "منتهية" : "جارية"}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>حالة API:</span>
+                  <span className="text-green-400">✓ متصل</span>
+                </div>
+              </div>
+            </div>
+              </>
             )}
           </div>
+
+          {/* Start Button - Only show when data is loaded */}
+          {!isLoading && !error && data && (
+            <div className="p-6">
+              <button
+                onClick={handleStartQuiz}
+                disabled={totalPlayers < 1 || isFinished}
+                className={`w-full py-4 px-6 rounded-full text-lg font-bold transition-colors ${
+                  totalPlayers >= 1 && !isFinished
+                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                }`}
+                dir="rtl"
+              >
+                {isFinished ? "اللعبة منتهية" : "يبدأ"}
+              </button>
+              {totalPlayers < 1 && !isFinished && (
+                <p className="text-center text-green-300 text-sm mt-2" dir="rtl">
+                  في انتظار انضمام المشاركين...
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

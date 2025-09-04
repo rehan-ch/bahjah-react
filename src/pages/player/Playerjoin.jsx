@@ -1,31 +1,85 @@
-import React, {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import SplashLogo from "../../assests/splashLogo.png";
 import FooterLogo from "../../assests/splashFooterLogo.png";
 import FooterLogo2 from "../../assests/splashLogo2.png";
+import { BASE_URL } from "../../utills/varriables";
 
 const PlayerJoinPage = () => {
   const navigate = useNavigate();
+  const { code } = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const handleStart = () => {
-    navigate("/player-waiting");
-  };
+  const [gameCode, setGameCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleJoinGame = () => {
+  // Set game code from URL parameter
+  useEffect(() => {
+    if (code) {
+      setGameCode(code);
+    }
+  }, [code]);
+
+  // const handleStart = () => {
+  //   navigate("/player-waiting");
+  // };
+
+  const handleJoinGame = async () => {
     // Validate required fields
-    if (!name || !email) {
-      alert("يرجى ملء جميع الحقول المطلوبة");
+    if (!name || !email || !gameCode) {
+      setError("يرجى ملء جميع الحقول المطلوبة");
       return;
     }
 
-    const playerData = {
-      name,
-      email
-    };
+    setIsLoading(true);
+    setError("");
 
-    // Navigate to player waiting page with player data
-    navigate("/player-waiting", { state: playerData });
+    try {
+      // Prepare payload for API
+      const payload = {
+        access_code: gameCode,
+        name: name,
+        email: email
+      };
+
+      console.log('Joining game with payload:', payload);
+
+      // Send API request to join game
+      const response = await fetch(`${BASE_URL}/api/v1/games/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Join Game API Response:', result);
+
+      if (result.success) {
+        // Navigate to player waiting page with player data and API response
+        const playerData = {
+          name,
+          email,
+          gameCode,
+          apiResponse: result
+        };
+        navigate("/player-waiting", { state: playerData });
+      } else {
+        throw new Error(result.message || 'Failed to join game');
+      }
+
+    } catch (error) {
+      console.error('Error joining game:', error);
+      setError("حدث خطأ في الانضمام إلى اللعبة. يرجى التحقق من الرمز والمحاولة مرة أخرى.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,7 +119,7 @@ const PlayerJoinPage = () => {
               <button
                 className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
                 dir="rtl"
-                onClick={handleStart}
+                // onClick={handleStart}
               >
                 إبدأ لعبة جديدة
               </button>
@@ -100,12 +154,24 @@ const PlayerJoinPage = () => {
                 />
               </div>
 
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+                  {error}
+                </div>
+              )}
+
               <button
                 onClick={handleJoinGame}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
+                disabled={isLoading}
+                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
+                  isLoading
+                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600 text-white"
+                }`}
                 dir="rtl"
               >
-                انضم إلى اللعبة
+                {isLoading ? "جاري الانضمام..." : "انضم إلى اللعبة"}
               </button>
             </div>
           </div>

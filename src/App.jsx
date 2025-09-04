@@ -16,9 +16,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HostLoby />} />
             <Route path="/create-quiz" element={<HostCreateQuiz />} />
-            <Route path="/host-waiting" element={<HostWaitingpage />} />
+            <Route path="/host-waiting/:id" element={<HostWaitingpage />} />
             <Route path="/host-questions" element={<HostQuestions />} />
             <Route path="/player-join" element={<PlayerJoinPage />} />
+            <Route path="/player-join/:code" element={<PlayerJoinPage />} />
             <Route path="/player-waiting" element={<PlayerWaiting />} />
           </Routes>
         </main>

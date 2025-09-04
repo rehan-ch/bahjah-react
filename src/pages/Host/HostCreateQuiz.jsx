@@ -1,17 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../utills/varriables";
 
 const HostCreateQuiz = () => {
   const navigate = useNavigate();
 
-  const categories = ["علوم", "الجغرافيا", "ثقافة", "الأدب"];
-
-  const [selectedCategory, setSelectedCategory] = useState(["dialects","history"]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [questionCount, setQuestionCount] = useState(10);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+
+  // Fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setCategoriesLoading(true);
+        const response = await fetch(`${BASE_URL}/api/v1/categories`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('Categories API Response:', result);
+        
+        if (result.success && result.data) {
+          setCategories(result.data);
+        } else {
+          throw new Error(result.message || 'Failed to fetch categories');
+        }
+        
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        // Fallback to static categories if API fails
+        setCategories(["علوم", "الجغرافيا", "ثقافة", "الأدب"]);
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(prev => {
@@ -47,7 +85,7 @@ const HostCreateQuiz = () => {
       };
 
       // Send API request
-      const response = await fetch('https://6e51fdc04d8c.ngrok-free.app/api/v1/games', {
+      const response = await fetch(`${BASE_URL}/api/v1/games`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,11 +97,15 @@ const HostCreateQuiz = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result = await response?.data?.json();
-      // Navigate to waiting page with quiz data and API response
-      navigate("/host-waiting", { 
-        state: { data: result } 
-      });
+      const result = await response.json();
+      
+      // Store game ID in localStorage
+      if (result.data?.id) {
+        localStorage.setItem('game_id', result.data.id);
+        navigate(`/host-waiting/${result.data.id}`);
+      } else {
+        throw new Error('Game ID not found in API response');
+      }
 
     } catch (error) {
       console.error('API Error:', error);
@@ -102,32 +144,54 @@ const HostCreateQuiz = () => {
             {/* Categories */}
             <div dir="rtl">
               <h3 className="mb-3 text-sm font-medium">حدد الفئات</h3>
-              <div className="space-y-3">
-                {categories.map((category, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleCategorySelect(category)}
-                    className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${
-                      selectedCategory.includes(category)
-                        ? "bg-green-600 border-green-700"
-                        : "bg-teal-700 border-teal-500"
-                    }`}
-                  >
-                    <span>{category}</span>
-                    <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        selectedCategory.includes(category)
-                          ? "bg-green-500 border-green-600"
-                          : "border-gray-400"
-                      }`}
-                    >
-                      {selectedCategory.includes(category) && (
-                        <span className="w-2 h-2 bg-white rounded-full"></span>
-                      )}
+              
+              {/* Categories Loading State */}
+              {categoriesLoading && (
+                <div className="text-center py-4">
+                  <div className="text-green-400 text-sm mb-2">جاري تحميل الفئات...</div>
+                  <div className="flex justify-center space-x-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                  </div>
+                </div>
+              )}
+
+              {/* Categories List */}
+              {!categoriesLoading && (
+                <div className="space-y-3">
+                  {categories.length > 0 ? (
+                    categories?.map((category, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleCategorySelect(category)}
+                        className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${
+                          selectedCategory.includes(category)
+                            ? "bg-green-600 border-green-700"
+                            : "bg-teal-700 border-teal-500"
+                        }`}
+                      >
+                        <span>{category.name_ar || category}</span>
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                            selectedCategory.includes(category)
+                              ? "bg-green-500 border-green-600"
+                              : "border-gray-400"
+                          }`}
+                        >
+                          {selectedCategory.includes(category) && (
+                            <span className="w-2 h-2 bg-white rounded-full"></span>
+                          )}
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="text-center py-4 text-red-400 text-sm">
+                      لا توجد فئات متاحة
                     </div>
-                  </button>
-                ))}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Number of Questions */}

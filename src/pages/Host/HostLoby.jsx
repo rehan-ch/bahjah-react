@@ -12,7 +12,9 @@ const HostLoby = () => {
     navigate("/create-quiz");
   };
   const handleStratPlayerGame = () => {
-    navigate("/player-join");
+    if (code.trim()) {
+      navigate(`/player-join/${code}`);
+    }
   };
 
   return (
