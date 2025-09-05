@@ -26,12 +26,7 @@ const HostWaitingpage = () => {
           id: p.player_id,
           name: p.name,
         }))
-      : [
-          { id: 1, name: "زينب" },
-          { id: 2, name: "عمر" },
-          { id: 3, name: "احمد" },
-          { id: 4, name: "ليلى" },
-        ];
+      : [];
 
   const joinUrl = `https://bahjah.com/${quizCode}`;
   const previewUrl = `https://bahjah.com/${quizCode}/live`;
