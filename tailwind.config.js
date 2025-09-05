@@ -10,6 +10,7 @@ module.exports = {
           accent: "#e5e7e6",
           lightGray: "#b7b5b3",
           darkGray: "#373f51",
+          custom: "#00343A",
         },
       },
     },

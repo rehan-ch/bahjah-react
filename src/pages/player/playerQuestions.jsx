@@ -2,7 +2,7 @@ import React from 'react'
 
 const playerQuestions = () => {
   return (
-    <div className="bg-teal-800 min-h-screen text-white p-4">
+    <div className="min-h-screen bg-custom text-white p-4">
     <div className="max-w-md mx-auto">
       <div className="flex justify-between items-center mb-6">
         <span className="text-teal-300">Question 1/10</span>

@@ -24,7 +24,7 @@ const PlayerWaiting = () => {
     return (
       <div className="flex justify-center items-center min-h-screen bg-black">
         <div className="w-[420px] h-[880px] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
-          <div className="min-h-full bg-gradient-to-b from-teal-900 to-teal-800 text-white flex flex-col items-center justify-center">
+          <div className="min-h-full bg-custom text-white flex flex-col items-center justify-center">
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-4">خطأ</h2>
               <p className="text-red-400 mb-4">لم يتم العثور على معرف اللعبة</p>
@@ -45,7 +45,7 @@ const PlayerWaiting = () => {
     <div className="flex justify-center items-center min-h-screen bg-black">
       <div className="w-[420px] h-[880px] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
         
-        <div className="min-h-full bg-gradient-to-b from-teal-900 to-teal-800 text-white flex flex-col">
+        <div className="min-h-full bg-custom text-white flex flex-col">
           
           {/* Header */}
           <div className="flex justify-between items-center px-4 py-3 text-sm">

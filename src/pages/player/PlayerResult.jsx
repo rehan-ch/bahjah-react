@@ -2,7 +2,7 @@ import React from 'react'
 
 const PlayerResult = () => {
   return (
-     <div className="bg-teal-800 min-h-screen text-white p-4">
+     <div className="min-h-screen bg-custom text-white p-4">
     <div className="max-w-md mx-auto text-center">
       <div className="mb-8">
         <div className="w-20 h-20 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
