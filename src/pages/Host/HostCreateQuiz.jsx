@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../utills/varriables";
+import apiService from "../../services/apiService";
+import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
 const HostCreateQuiz = () => {
   const navigate = useNavigate();
@@ -14,59 +15,42 @@ const HostCreateQuiz = () => {
   const [error, setError] = useState("");
   const [categoriesLoading, setCategoriesLoading] = useState(true);
 
-  // Fetch categories from API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         setCategoriesLoading(true);
-        const response = await fetch(`${BASE_URL}/api/v1/categories`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        console.log('Categories API Response:', result);
-        
-        if (result.success && result.data) {
-          setCategories(result.data);
-        } else {
-          throw new Error(result.message || 'Failed to fetch categories');
-        }
-        
+        const categories = await apiService.getCategories();
+        setCategories(categories);
       } catch (error) {
         console.error('Error fetching categories:', error);
-        // Fallback to static categories if API fails
-        setCategories(["علوم", "الجغرافيا", "ثقافة", "الأدب"]);
       } finally {
         setCategoriesLoading(false);
       }
     };
-
+  
     fetchCategories();
   }, []);
+  
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(prev => {
-      if (prev.includes(category)) {
-        // Remove category if already selected
-        return prev.filter(cat => cat !== category);
+      const isSelected = prev.some(cat => 
+        (typeof cat === 'string' ? cat : cat.name) === category.name
+      );
+      
+      if (isSelected) {
+        return prev.filter(cat => 
+          (typeof cat === 'string' ? cat : cat.name) !== category.name
+        );
       } else {
-        // Add category if not selected
         return [...prev, category];
       }
     });
   };
 
   const handleSubmit = async () => {
-    // Validate required fields
     if (selectedCategory.length === 0 || !name || !email) {
-      setError("يرجى ملء جميع الحقول المطلوبة");
+      setError(ERROR_MESSAGES.REQUIRED_FIELDS);
       return;
     }
 
@@ -74,42 +58,29 @@ const HostCreateQuiz = () => {
     setError("");
 
     try {
-      // Format payload according to API requirements
-      const payload = {
-        game: {
-          category: selectedCategory,
-          question_count: questionCount,
-          host_name: name,
-          host_email: email
-        }
+      const categoryNames = selectedCategory.map(cat => {
+        return typeof cat === 'string' ? cat : cat.name;
+      });
+      
+      const gameData = {
+        category: categoryNames,
+        questionCount: questionCount,
+        name: name,
+        email: email
       };
 
-      // Send API request
-      const response = await fetch(`${BASE_URL}/api/v1/games`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
+      const result = await apiService.createGame(gameData);
       
-      // Store game ID in localStorage
-      if (result.data?.id) {
-        localStorage.setItem('game_id', result.data.id);
-        navigate(`/host-waiting/${result.data.id}`);
+      if (result?.id) {
+        localStorage.setItem('game_id', result.id);
+        navigate(`/host-waiting/${result.id}`);
       } else {
         throw new Error('Game ID not found in API response');
       }
 
     } catch (error) {
       console.error('API Error:', error);
-      setError("حدث خطأ في إنشاء المسابقة. يرجى المحاولة مرة أخرى.");
+      setError(ERROR_MESSAGES.GAME_CREATION_ERROR);
     } finally {
       setIsLoading(false);
     }
@@ -127,28 +98,24 @@ const HostCreateQuiz = () => {
               className="text-green-400 font-medium"
               dir="rtl"
             >
-              خلف
+              {UI_TEXT.BACK_BUTTON}
             </button>
-            <span className="font-bold">بهجة</span>
+            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
           </div>
 
-          {/* Content */}
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             
-            {/* Title */}
             <div className="text-center space-y-2" dir="rtl">
               <h2 className="text-lg font-bold">اسم اللعبة</h2>
-              <p className="text-xl font-bold">مسابقة اليوم الوطني</p>
+              <p className="text-xl font-bold">{UI_TEXT.GAME_TITLE}</p>
             </div>
 
-            {/* Categories */}
             <div dir="rtl">
               <h3 className="mb-3 text-sm font-medium">حدد الفئات</h3>
               
-              {/* Categories Loading State */}
               {categoriesLoading && (
                 <div className="text-center py-4">
-                  <div className="text-green-400 text-sm mb-2">جاري تحميل الفئات...</div>
+                  <div className="text-green-400 text-sm mb-2">{ERROR_MESSAGES.LOADING_CATEGORIES}</div>
                   <div className="flex justify-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
@@ -157,7 +124,6 @@ const HostCreateQuiz = () => {
                 </div>
               )}
 
-              {/* Categories List */}
               {!categoriesLoading && (
                 <div className="space-y-3">
                   {categories.length > 0 ? (
@@ -166,20 +132,26 @@ const HostCreateQuiz = () => {
                         key={index}
                         onClick={() => handleCategorySelect(category)}
                         className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${
-                          selectedCategory.includes(category)
+                          selectedCategory.some(cat => 
+                            (typeof cat === 'string' ? cat : cat.name) === category.name
+                          )
                             ? "bg-green-600 border-green-700"
                             : "bg-teal-700 border-teal-500"
                         }`}
                       >
-                        <span>{category.name_ar || category}</span>
+                        <span>{category.name_ar}</span>
                         <div
                           className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            selectedCategory.includes(category)
+                            selectedCategory.some(cat => 
+                              (typeof cat === 'string' ? cat : cat.name) === category.name
+                            )
                               ? "bg-green-500 border-green-600"
                               : "border-gray-400"
                           }`}
                         >
-                          {selectedCategory.includes(category) && (
+                          {selectedCategory.some(cat => 
+                            (typeof cat === 'string' ? cat : cat.name) === category.name
+                          ) && (
                             <span className="w-2 h-2 bg-white rounded-full"></span>
                           )}
                         </div>
@@ -187,14 +159,13 @@ const HostCreateQuiz = () => {
                     ))
                   ) : (
                     <div className="text-center py-4 text-red-400 text-sm">
-                      لا توجد فئات متاحة
+                      {ERROR_MESSAGES.NO_CATEGORIES}
                     </div>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Number of Questions */}
             <div dir="rtl">
               <label className="block mb-2 text-sm">عدد الأسئلة</label>
               <input
@@ -205,7 +176,6 @@ const HostCreateQuiz = () => {
               />
             </div>
 
-            {/* Name */}
             <div dir="rtl">
               <label className="block mb-2 text-sm">اسمك</label>
               <input
@@ -217,7 +187,6 @@ const HostCreateQuiz = () => {
               />
             </div>
 
-            {/* Email */}
             <div dir="rtl">
               <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label>
               <input
@@ -229,7 +198,6 @@ const HostCreateQuiz = () => {
               />
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
                 {error}
@@ -247,7 +215,7 @@ const HostCreateQuiz = () => {
                 }`}
                 dir="rtl"
               >
-                {isLoading ? "جاري الإنشاء..." : "يبدأ"}
+                {isLoading ? UI_TEXT.CREATING : UI_TEXT.START_BUTTON}
               </button>
             </div>
           </div>
