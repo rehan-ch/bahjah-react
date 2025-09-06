@@ -1,9 +1,10 @@
 
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { usePolling } from "../../hooks/usePolling";
+import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
+import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, disconnectFromGameChannel } from "../../utills/helperFunctions";
 
 const HostWaitingpage = () => {
   const navigate = useNavigate();
@@ -11,9 +12,12 @@ const HostWaitingpage = () => {
   const storedId = typeof window !== "undefined" ? localStorage.getItem("game_id") : null;
   const gameId = id || storedId;
 
-  const { data, isLoading, error, apiOk } = usePolling(gameId);
+  // State management for real-time data
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const quizCode = data?.access_code || "0000";
+  const quizCode = data?.access_code;
   const totalQuestions = data?.total_questions ?? 10;
   const currentQuestionIndex = data?.current_question_index ?? 0;
   const isFinished = !!data?.is_finished;
@@ -30,6 +34,54 @@ const HostWaitingpage = () => {
 
   const joinUrl = `https://bahjah.com/${quizCode}`;
   const previewUrl = `https://bahjah.com/${quizCode}/live`;
+
+  // Initial data fetch
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      if (!gameId) {
+        setError("Game ID not found");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        setError(null);
+        const gameData = await apiService.getGameLeaderboard(gameId);
+        setData(gameData);
+      } catch (error) {
+        console.error('Error fetching initial game data:', error);
+        setError(ERROR_MESSAGES.GAME_DATA_ERROR || "Failed to load game data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [gameId]);
+
+  useEffect(() => {
+    if (!quizCode) return;
+
+    // Connect to Action Cable
+    connectToGameChannel(quizCode);
+
+    // Subscribe to game events
+    const handleGameUpdate = (eventData) => {
+      setData(prevData => ({
+        ...prevData,
+        leaderboard: eventData?.leaderboard
+      }));
+    };
+
+
+    subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
+
+    return () => {
+      unsubscribeFromGameEvent('leaderboard_updated', handleGameUpdate);
+      // disconnectFromGameChannel();
+    };
+  }, [quizCode]);
 
   const handleStartQuiz = () => {
     if (data) {
@@ -51,8 +103,8 @@ const HostWaitingpage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
-      <div className="w-[420px] h-[880px] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
+    <div className="flex justify-center items-center min-h-screen bg-teal-800">
+      <div className="w-[420px] h-[880px] rounded-2xl overflow-hidden shadow-lg">
         <div className="min-h-full bg-custom text-white flex flex-col">
           <div className="flex justify-between items-center px-4 py-3 text-sm">
             <button onClick={() => navigate(-1)} className="text-green-400 font-medium" dir="rtl">
@@ -141,37 +193,6 @@ const HostWaitingpage = () => {
                   {participants.length < 4 && (
                     <div className="text-center py-4 text-green-300 text-sm">{ERROR_MESSAGES.WAITING_FOR_PLAYERS}</div>
                   )}
-                </div>
-
-                <div className="bg-teal-700 rounded-lg p-4" dir="rtl">
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>معرف اللعبة:</span>
-                      <span className="text-green-400 text-xs break-all">{gameId}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>عدد الأسئلة:</span>
-                      <span className="text-green-400">{totalQuestions}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>المشاركون:</span>
-                      <span className="text-green-400">{totalPlayers}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>السؤال الحالي:</span>
-                      <span className="text-green-400">{currentQuestionIndex + 1} / {totalQuestions}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>حالة اللعبة:</span>
-                      <span className="text-green-400">{isFinished ? "منتهية" : "جارية"}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>حالة API:</span>
-                      <span className={apiOk ? "text-green-400" : "text-red-300"}>
-                        {apiOk ? "✓ متصل" : "✗ غير متصل"}
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </>
             )}

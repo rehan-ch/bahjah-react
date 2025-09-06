@@ -11,7 +11,7 @@ import PlayerWaiting from './pages/player/playerWaiting';
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <div className="min-h-screen bg-teal-800 text-white">
         <main>
           <Routes>
             <Route path="/" element={<HostLoby />} />

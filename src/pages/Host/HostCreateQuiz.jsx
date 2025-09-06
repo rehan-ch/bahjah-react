@@ -87,8 +87,8 @@ const HostCreateQuiz = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
-      <div className="w-[420px] h-[880px] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
+    <div className="flex justify-center items-center min-h-screen bg-teal-800">
+      <div className="w-[420px] h-[880px] rounded-2xl overflow-hidden shadow-lg">
         
         <div className="min-h-full bg-custom text-white flex flex-col">
           
@@ -125,7 +125,7 @@ const HostCreateQuiz = () => {
               )}
 
               {!categoriesLoading && (
-                <div className="space-y-3">
+                <div className="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
                   {categories.length > 0 ? (
                     categories?.map((category, index) => (
                       <button
@@ -199,7 +199,7 @@ const HostCreateQuiz = () => {
             </div>
 
             {error && (
-              <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+              <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-600 text-white p-3 rounded-lg text-center z-50 max-w-sm mx-4" dir="rtl">
                 {error}
               </div>
             )}

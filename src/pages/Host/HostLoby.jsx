@@ -18,9 +18,9 @@ const HostLoby = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
-      <div className="w-[420px] h-[880px] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
-        <div className="min-h-full bg-gradient-to-b from-teal-900 to-teal-800 text-white flex flex-col">
+    <div className="flex justify-center items-center min-h-screen bg-teal-800">
+      <div className="w-[420px] h-[880px] rounded-2xl overflow-hidden shadow-lg">
+        <div className="min-h-full bg-custom text-white flex flex-col">
           <div className="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
             <div className="flex items-center space-x-1" />
           </div>

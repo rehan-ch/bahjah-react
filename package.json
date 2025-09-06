@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "Quiz-App",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,10 +14,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
