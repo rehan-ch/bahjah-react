@@ -1,54 +1,23 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UI_TEXT } from '../../utills/constants';
 
-const PlayerResult = () => {
+const FinalResult = () => {
   const navigate = useNavigate();
+  const handleClick = () => {
+    localStorage.clear();
+    navigate('/');
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
           
-          {/* Header */}
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
-          </div>
-
-          {/* Content */}
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            
-            {/* Question Progress */}
             <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال 1/10</h2>
             </div>
 
-            {/* Question */}
-            <div className="text-center" dir="rtl">
-              <p className="text-lg font-bold leading-relaxed">
-                ما هو اليوم الوطني السعودي؟
-              </p>
-            </div>
-
-            {/* Correct Answer */}
-            <div className="flex justify-center">
-              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-lg p-4 flex items-center justify-between">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-green-600 text-sm">✓</span>
-                </div>
-                <span className="text-white font-bold text-lg">22 سبتمبر</span>
-              </div>
-            </div>
-
-            {/* Results Section */}
             <div dir="rtl">
               <h3 className="text-lg font-bold mb-4 text-center">نتائج</h3>
               
@@ -101,18 +70,18 @@ const PlayerResult = () => {
           </div>
 
           {/* Footer */}
-          {/* <div className="p-6">
+          <div className="p-6">
             <button 
               className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
-              dir="rtl"
+              dir="rtl" onClick={handleClick}
             >
-              التالي
+              ابدأ لعبة جديدة
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default PlayerResult
+export default FinalResult

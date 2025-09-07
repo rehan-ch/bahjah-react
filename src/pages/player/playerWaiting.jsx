@@ -22,8 +22,8 @@ const PlayerWaiting = () => {
 
   if (!gameId) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-teal-800">
-        <div className="w-[420px] h-[880px] rounded-2xl overflow-hidden shadow-lg">
+      <div className="flex justify-center items-center min-h-screen bg-custom">
+        <div className="w-[420px] h-[880px] overflow-hidden">
           <div className="min-h-full bg-custom text-white flex flex-col items-center justify-center">
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-4">خطأ</h2>
@@ -42,8 +42,8 @@ const PlayerWaiting = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-teal-800">
-      <div className="w-[420px] h-[880px] rounded-2xl overflow-hidden shadow-lg">
+    <div className="flex justify-center items-center min-h-screen bg-custom">
+      <div className="w-[420px] h-[880px] overflow-hidden">
         
         <div className="min-h-full bg-custom text-white flex flex-col">
           

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UI_TEXT } from '../../utills/constants';
 
-const PlayerResult = () => {
+const QuestionsResult = () => {
   const navigate = useNavigate();
 
   return (
@@ -101,18 +101,18 @@ const PlayerResult = () => {
           </div>
 
           {/* Footer */}
-          {/* <div className="p-6">
+          <div className="p-6">
             <button 
               className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
               dir="rtl"
             >
               التالي
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default PlayerResult
+export default QuestionsResult
