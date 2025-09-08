@@ -1,4 +1,4 @@
-import { BASE_URL } from '../utills/varriables';
+const BASE_URL = process.env.REACT_APP_URL
 
 class ApiService {
   constructor() {
@@ -114,6 +114,11 @@ class ApiService {
   }
 
   async startGame(gameId) {
+    const response = await this.post(`/api/v1/games/${gameId}/start`);
+    return response.data;
+  }
+
+  async startQuiz(gameId) {
     const response = await this.post(`/api/v1/games/${gameId}/start`);
     return response.data;
   }

@@ -12,6 +12,11 @@ const PlayerWaiting = () => {
   
   const { data, isLoading, error, apiOk } = usePolling(gameId);
 
+  useEffect(() => {
+    if(data?.status === "active") {
+      navigate('/player-questions')
+    }
+  }, [data])
   const participants =
     Array.isArray(data?.leaderboard) && data.leaderboard.length > 0
       ? data.leaderboard.map((p) => ({

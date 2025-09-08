@@ -16,7 +16,6 @@ const HostWaitingpage = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const quizCode = data?.access_code;
   const totalQuestions = data?.total_questions ?? 10;
   const currentQuestionIndex = data?.current_question_index ?? 0;
@@ -83,18 +82,25 @@ const HostWaitingpage = () => {
     };
   }, [quizCode]);
 
-  const handleStartQuiz = () => {
-    if (data) {
-      navigate("/host-questions", {
-        state: {
-          gameData: data,
-          gameId,
-          quizCode,
-          participants,
-          totalQuestions,
-          currentQuestionIndex,
-        },
-      });
+  const handleStartQuiz = async () => {
+    if (!gameId) {
+      setError("Game ID not found");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const result = await apiService.startQuiz(gameId);
+      
+      navigate("/host-questions");
+      
+    } catch (error) {
+      console.error('Error starting quiz:', error);
+      setError("Failed to start quiz. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -161,7 +167,7 @@ const HostWaitingpage = () => {
                     {joinUrl}
                   </div>
                 </div>
-
+{/* 
                 <div dir="rtl">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">رابط المعاينة - نموذج التلفزيون</span>
@@ -172,7 +178,7 @@ const HostWaitingpage = () => {
                   <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-lg text-center text-sm break-all">
                     {previewUrl}
                   </div>
-                </div>
+                </div> */}
 
                 <div dir="rtl">
                   <h3 className="text-lg font-bold mb-4">مشاركون</h3>
@@ -190,7 +196,7 @@ const HostWaitingpage = () => {
                     ))}
                   </div>
 
-                  {participants.length < 4 && (
+                  {participants.length < 1 && (
                     <div className="text-center py-4 text-green-300 text-sm">{ERROR_MESSAGES.WAITING_FOR_PLAYERS}</div>
                   )}
                 </div>
@@ -202,12 +208,8 @@ const HostWaitingpage = () => {
             <div className="p-6">
               <button
                 onClick={handleStartQuiz}
-                disabled={totalPlayers < 1 || isFinished}
-                className={`w-full py-4 px-6 rounded-full text-lg font-bold transition-colors ${
-                  totalPlayers >= 1 && !isFinished
-                    ? "bg-green-500 hover:bg-green-600 text-white"
-                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
-                }`}
+                disabled={participants < 1}
+                className={"w-full py-4 px-6 rounded-full text-lg font-bold transition-colors bg-green-500 hover:bg-green-600 text-white"}
                 dir="rtl"
               >
                 {isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON}

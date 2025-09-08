@@ -1,12 +1,14 @@
 // Action Cable helper functions for real-time WebSocket communication
 
 // Global state for WebSocket connection
+const BASE_URL = process.env.REACT_APP_URL
+
 let cable = null;
 let callbacks = new Map();
 let reconnectTimeout = null;
 
 // Initialize Action Cable connection
-export const connectToGameChannel = (accessCode, url = 'https://e859ae03c4e5.ngrok-free.app/cable') => {
+export const connectToGameChannel = (accessCode, url = `${BASE_URL}/cable`) => {
   try {
     // Close existing connection if any
     if (cable) {

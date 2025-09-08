@@ -1,13 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UI_TEXT } from '../../utills/constants'
+import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperFunctions'
 
 const PlayerQuestions = () => {
   const navigate = useNavigate()
+  const accessCode = localStorage.getItem('access_code')
+  const [data, setData] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
+  
+  const currentQuestion = data?.current_question_index + 1 || 1
+  const totalQuestions = data?.total_questions || 10
+  const questionData = data?.question || null
+  
+  // Extract question and options from the data
+  const question = questionData?.question || "ما معنى كلمة \"خرمس\" باللهجة القصيمية؟"
+  const options = questionData?.options ? [
+    questionData.options.a,
+    questionData.options.b,
+    questionData.options.c,
+    questionData.options.d
+  ] : ["الظلام", "النور", "الإزعاج", "الهدوء"]
+  useEffect(() => {
+    if (!accessCode) return;
 
-  // Example options (you can fetch dynamically later)
-  const options = ["24 سبتمبر", "22 سبتمبر", "25 سبتمبر", "23 سبتمبر"]
+    // Connect to Action Cable
+    connectToGameChannel(accessCode);
+
+    // Subscribe to game events
+    const handleGameUpdate = (eventData) => {
+      setData( eventData );
+    };
+
+
+    subscribeToGameEvent('game_state', handleGameUpdate);
+  }, [data]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -31,14 +58,14 @@ const PlayerQuestions = () => {
             
             {/* Question Progress */}
             <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال 1/10</h2>
+              <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
 
             {/* Current Question with Options */}
             <div className="bg-custom rounded-lg p-4" dir="rtl">
               <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3>
               <p className="text-sm text-center leading-relaxed mb-4">
-                ما هو اليوم الوطني السعودي؟
+                {question}
               </p>
 
               {/* Question Options */}
@@ -48,14 +75,20 @@ const PlayerQuestions = () => {
                     key={idx}
                     onClick={() => setSelectedOption(option)}
                     className={`
-                      w-full py-3 rounded-lg border text-center font-medium transition-colors
+                      w-full py-3 px-4 rounded-lg border-2 text-center font-medium transition-colors flex items-center justify-between
                       ${selectedOption === option
-                        ? "bg-green-600 border-green-400 text-white"
-                        : "bg-custom border-teal-600 text-white hover:bg-teal-700"
+                        ? "bg-green-600 border-green-700 text-white"
+                        : "bg-teal-700 border-teal-500 text-white hover:bg-teal-600"
                       }
                     `}
+                    dir="rtl"
                   >
-                    {option}
+                    <span>{option}</span>
+                    {selectedOption === option && (
+                      <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-green-600 text-sm">✓</span>
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -65,7 +98,7 @@ const PlayerQuestions = () => {
             {/* Response Summary */}
             <div className="bg-custom rounded-lg p-4 text-center" dir="rtl">
               <div className="flex justify-center items-center gap-2 mb-2">
-                <span className="text-white text-sm">تم الرد 3/5</span>
+                {/* <span className="text-white text-sm">تم الرد 3/5</span> */}
                 <div className="flex gap-1">
                 </div>
               </div>
