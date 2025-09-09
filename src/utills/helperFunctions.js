@@ -49,13 +49,12 @@ export const connectToGameChannel = (accessCode, userId, url = `${BASE_URL}/cabl
     }
 
     const wsUrl = userId ? `${url}?user_id=${userId}` : url;
-    
     cable = new WebSocket(wsUrl);
     cable.accessCode = accessCode; // Store access code for reference
     cable.userId = userId; // Store user_id for reference
     
     cable.onopen = () => {
-      subscribeToChannel(accessCode);
+      subscribeToChannel(accessCode,userId);
     };
 
     cable.onmessage = (event) => {
@@ -90,7 +89,7 @@ export const connectToGameChannel = (accessCode, userId, url = `${BASE_URL}/cabl
 };
 
 // Subscribe to a specific game channel
-const subscribeToChannel = (accessCode) => {
+const subscribeToChannel = (accessCode,userId) => {
   if (!cable || cable.readyState !== WebSocket.OPEN) {
     return;
   }
@@ -99,7 +98,8 @@ const subscribeToChannel = (accessCode) => {
     command: 'subscribe',
     identifier: JSON.stringify({
       channel: 'GameChannel',
-      access_code: accessCode
+      access_code: accessCode,
+      user_id: userId
     })
   };
 

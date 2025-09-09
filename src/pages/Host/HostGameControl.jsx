@@ -7,8 +7,8 @@ const HostGameControl = ({data}) => {
   const accessCode = localStorage.getItem('access_code')
   const game_id = localStorage.getItem('game_id')
   
-  const currentQuestion = data?.current_question_index + 1 || 1
-  const totalQuestions = data?.total_questions || 10
+  const currentQuestion = data?.game?.current_question_index + 1 || 1
+  const totalQuestions = data?.game?.total_questions || 10
   const questionData = data?.current_question || null
   
   // Extract question and options from the data
@@ -25,7 +25,9 @@ const HostGameControl = ({data}) => {
     { letter: 'c', text: "4 مرات" },
     { letter: 'd', text: "7 مرات" }
   ]
-
+const handleNextQuestion = () => {
+  navigate('/question-result');
+}
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
@@ -100,7 +102,7 @@ const HostGameControl = ({data}) => {
             <div className="space-y-3">
               <button 
                 className="w-full border border-green-600 bg-custom hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
-                dir="rtl"
+                dir="rtl" onClick={handleNextQuestion}
               >
                  التالي
               </button>

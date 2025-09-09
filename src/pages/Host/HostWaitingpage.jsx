@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
-const HostWaitingpage = ({setIsStarted}) => {
+const HostWaitingpage = ({leaderboard}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const storedId = typeof window !== "undefined" ? localStorage.getItem("game_id") : null;
@@ -32,6 +32,13 @@ const HostWaitingpage = ({setIsStarted}) => {
 
   const joinUrl = `https://bahjah.com/${quizCode}`;
   const previewUrl = `https://bahjah.com/${quizCode}/live`;
+
+  useEffect(() => {
+    setData(prevData => ({
+      ...prevData,
+      leaderboard: leaderboard
+    }));
+  }, [leaderboard]);
 
   // Initial data fetch
   useEffect(() => {
@@ -71,7 +78,6 @@ const HostWaitingpage = ({setIsStarted}) => {
       
       const result = await apiService.startQuiz(gameId);
       if(result){
-        setIsStarted(true);
         navigate("/host-questions");
       }
       

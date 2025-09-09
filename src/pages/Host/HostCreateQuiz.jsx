@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
-const HostCreateQuiz = () => {
+const HostCreateQuiz = ({setIsStarted}) => {
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
@@ -76,6 +76,7 @@ const HostCreateQuiz = () => {
         localStorage.setItem("user_id", result?.host?.id);
         localStorage.setItem("game_id", result.id);
         localStorage.setItem("access_code", result?.access_code);
+        setIsStarted(true);
         navigate(`/host-waiting/${result.id}`);
       } else {
         throw new Error('Game ID not found in API response');

@@ -1,16 +1,47 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UI_TEXT } from '../../utills/constants';
-import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperFunctions';
 
-const PlayerResult = () => {
+const PlayerResult = ({data}) => {
   const navigate = useNavigate();
-  const [data, setData] = useState(null)
-  const accessCode = localStorage.getItem('access_code')
-  const currentQuestion = data?.current_question_index + 1 || 1
-  const totalQuestions = data?.total_questions || 10
+  const [previousQuestionIndex, setPreviousQuestionIndex] = useState(null);
+  const game = data?.game || {}
+  const currentQuestionData = data?.current_question || {}
+  const leaderboard = data?.leaderboard || []
+  
+  const currentQuestion = game?.current_question_index + 1 || 1
+  const totalQuestions = game?.total_questions || 10
+  const question = currentQuestionData?.question || "المملكة العربية السعودية هي الدولة العربية الوحيدة ضمن أي مؤسسة عالمية؟"
+  const correctAnswer = currentQuestionData?.correct || "a"
+  const options = currentQuestionData?.options || {
+    "a": "مجموعة العشرين - G20",
+    "b": "الأمم المتحدة", 
+    "c": "منظمة الصحة العالمية",
+    "d": "رابطة العالم الإسلامي"
+  }
+  
+  // Get the correct answer text
+  const correctAnswerText = options[correctAnswer] || "مجموعة العشرين - G20"
+  useEffect(() => {
+    const currentQuestionIndex = game?.current_question_index + 1;
+    if (previousQuestionIndex === null) {
+      setPreviousQuestionIndex(currentQuestionIndex);
+      return;
+    }
 
+    if (currentQuestionIndex !== previousQuestionIndex) {
+
+      if (currentQuestionIndex >= totalQuestions) {
+    
+        navigate('/final-result');
+      } else {
+        navigate('/player-questions');
+      }
+      
+      // Update previous question index
+      setPreviousQuestionIndex(currentQuestionIndex);
+    }
+  }, [game?.current_question_index, totalQuestions, navigate, previousQuestionIndex]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -34,13 +65,13 @@ const PlayerResult = () => {
             
             {/* Question Progress */}
             <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال 1/10</h2>
+              <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
 
             {/* Question */}
             <div className="text-center" dir="rtl">
               <p className="text-lg font-bold leading-relaxed">
-                ما هو اليوم الوطني السعودي؟
+                {question}
               </p>
             </div>
 
@@ -50,7 +81,7 @@ const PlayerResult = () => {
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                   <span className="text-green-600 text-sm">✓</span>
                 </div>
-                <span className="text-white font-bold text-lg">22 سبتمبر</span>
+                <span className="text-white font-bold text-lg">{correctAnswerText}</span>
               </div>
             </div>
 
@@ -59,49 +90,23 @@ const PlayerResult = () => {
               <h3 className="text-lg font-bold mb-4 text-center">نتائج</h3>
               
               <div className="space-y-3">
-                {/* Player 1 */}
-                <div className="flex justify-between items-center py-3 border-b border-green-400">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">👤</span>
+                {leaderboard.map((player, index) => (
+                  <div key={player.player_id} className="flex justify-between items-center py-3 border-b border-green-400">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs">👤</span>
+                      </div>
+                      <span className="text-white">{player.name}</span>
                     </div>
-                    <span className="text-white">زينب</span>
+                    <span className="text-white font-bold">{player.score} PT</span>
                   </div>
-                  <span className="text-white font-bold">8 PT</span>
-                </div>
-
-                {/* Player 2 */}
-                <div className="flex justify-between items-center py-3 border-b border-green-400">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">👤</span>
-                    </div>
-                    <span className="text-white">عمر</span>
+                ))}
+                
+                {leaderboard.length === 0 && (
+                  <div className="text-center py-4 text-green-300 text-sm">
+                    لا توجد نتائج متاحة
                   </div>
-                  <span className="text-white font-bold">7 PT</span>
-                </div>
-
-                {/* Player 3 */}
-                <div className="flex justify-between items-center py-3 border-b border-green-400">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">👤</span>
-                    </div>
-                    <span className="text-white">احمد</span>
-                  </div>
-                  <span className="text-white font-bold">2 PT</span>
-                </div>
-
-                {/* Player 4 */}
-                <div className="flex justify-between items-center py-3 border-b border-green-400">
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">👤</span>
-                    </div>
-                    <span className="text-white">ليلى</span>
-                  </div>
-                  <span className="text-white font-bold">1 PT</span>
-                </div>
+                )}
               </div>
             </div>
           </div>

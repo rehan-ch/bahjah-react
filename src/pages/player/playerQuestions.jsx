@@ -42,7 +42,7 @@ const PlayerQuestions = ({data}) => {
     setError(null);
 
     try {
-      const questionIndex = data?.current_question_index || 0;
+      const questionIndex = data?.game?.current_question_index || 0;
       const selectedOptionLetter = getOptionLetter(selectedOption);
       
       const result = await apiService.submitPlayerAnswer(

@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePolling } from '../../hooks/usePolling';
 import { ERROR_MESSAGES, UI_TEXT } from '../../utills/constants';
 
-const PlayerWaiting = ({setIsStarted}) => {
+const PlayerWaiting = ({leaderboard,status}) => {
   const navigate = useNavigate();
-  const location = useLocation();
   
   const gameId = localStorage.getItem('game_id');
   const playerId = localStorage.getItem('player_id');
+  const [playerData, setPlayerData] = useState(leaderboard || []);
   
   const { data, isLoading, error, apiOk } = usePolling(gameId);
+  
   useEffect(() => {
-    if(data?.status === "active") {
-      setIsStarted(true);
+    if(leaderboard && leaderboard?.length > 0){
+    setPlayerData(leaderboard);
+  }
+    if(status === "active") {
       navigate('/player-questions')
-    }
+      }
+  }, [leaderboard,status])
+  useEffect(() => {
+    setPlayerData(data?.leaderboard);
   }, [data])
+
   const participants =
-    Array.isArray(data?.leaderboard) && data.leaderboard.length > 0
-      ? data.leaderboard.map((p) => ({
+    Array.isArray(playerData) && playerData?.length > 0
+      ? playerData?.map((p) => ({
           id: p.player_id,
           name: p.name,
         }))

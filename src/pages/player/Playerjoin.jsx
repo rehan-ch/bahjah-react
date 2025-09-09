@@ -6,7 +6,7 @@ import FooterLogo2 from "../../assests/splashLogo2.png";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
-const PlayerJoinPage = () => {
+const PlayerJoinPage = ({setIsStarted}) => {
   const navigate = useNavigate();
   const { code } = useParams();
 
@@ -52,15 +52,8 @@ const PlayerJoinPage = () => {
       localStorage.setItem("user_id", result.user_id);
       localStorage.setItem("game_id", result.game_id);
       localStorage.setItem("access_code", codeValue);
-
-      navigate("/player-waiting", {
-        state: {
-          name: trimmedName,
-          email: trimmedEmail,
-          gameCode: codeValue,
-          apiResponse: { success: true, data: result },
-        },
-      });
+      setIsStarted(true);
+      navigate("/player-waiting");
     } catch (err) {
       setError(ERROR_MESSAGES.GAME_JOIN_ERROR);
     } finally {
