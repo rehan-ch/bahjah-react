@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import apiService from '../services/apiService';
 import { ERROR_MESSAGES } from '../utills/constants';
-import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent } from '../utills/helperFunctions';
 
 export const usePolling = (gameId) => {
   const [data, setData] = useState(null);
@@ -47,30 +46,6 @@ export const usePolling = (gameId) => {
   }, [gameId]);
 
 
-  useEffect(() => {
-    if (!data?.access_code) return;
-    const quizCode = data?.access_code;
-
-    // Connect to Action Cable
-    connectToGameChannel(quizCode);
-
-    // Subscribe to game events
-    const handleGameUpdate = (eventData) => {
-      setData(prevData => ({
-        ...prevData,
-        leaderboard: eventData?.leaderboard,
-        status: eventData?.status
-      }));
-    };
-
-
-    subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
-
-    return () => {
-      unsubscribeFromGameEvent('leaderboard_updated', handleGameUpdate);
-      // disconnectFromGameChannel();
-    };
-  }, [data?.access_code]);
 
   return { data, isLoading, error, apiOk };
 };

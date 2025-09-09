@@ -1,24 +1,60 @@
 // Action Cable helper functions for real-time WebSocket communication
 
 // Global state for WebSocket connection
-const BASE_URL = process.env.REACT_APP_URL
+const BASE_URL = process.env.REACT_APP_URL || 'http://localhost:3000'
+
+// Test WebSocket URL accessibility
+export const testWebSocketConnection = async (url = `${BASE_URL}/cable`) => {
+  return new Promise((resolve, reject) => {
+    const testWs = new WebSocket(url);
+    
+    testWs.onopen = () => {
+      testWs.close();
+      resolve(true);
+    };
+    
+    testWs.onerror = (error) => {
+      reject(error);
+    };
+    
+    testWs.onclose = () => {};
+    
+    setTimeout(() => {
+      if (testWs.readyState === WebSocket.CONNECTING) {
+        testWs.close();
+        reject(new Error('WebSocket connection timeout'));
+      }
+    }, 10000);
+  });
+};
 
 let cable = null;
 let callbacks = new Map();
 let reconnectTimeout = null;
 
 // Initialize Action Cable connection
-export const connectToGameChannel = (accessCode, url = `${BASE_URL}/cable`) => {
+export const connectToGameChannel = (accessCode, userId, url = `${BASE_URL}/cable`) => {
   try {
-    // Close existing connection if any
+    if (cable && cable.readyState === WebSocket.OPEN && cable.accessCode === accessCode) {
+      return;
+    }
+
     if (cable) {
       cable.close();
     }
 
-    cable = new WebSocket(url);
+    if (reconnectTimeout) {
+      clearTimeout(reconnectTimeout);
+      reconnectTimeout = null;
+    }
+
+    const wsUrl = userId ? `${url}?user_id=${userId}` : url;
+    
+    cable = new WebSocket(wsUrl);
+    cable.accessCode = accessCode; // Store access code for reference
+    cable.userId = userId; // Store user_id for reference
     
     cable.onopen = () => {
-      console.log('Action Cable connected');
       subscribeToChannel(accessCode);
     };
 
@@ -26,26 +62,36 @@ export const connectToGameChannel = (accessCode, url = `${BASE_URL}/cable`) => {
       handleMessage(event);
     };
 
-    cable.onclose = () => {
-      console.log('Action Cable disconnected');
-      // Attempt to reconnect after 3 seconds
-      reconnectTimeout = setTimeout(() => {
-        connectToGameChannel(accessCode, url);
-      }, 3000);
+    cable.onclose = (event) => {
+      if ([1002, 1003, 1006, 1011].includes(event.code) && userId) {
+        setTimeout(() => {
+          connectToGameChannel(accessCode, null, url);
+        }, 1000);
+        return;
+      }
+      
+      if (event.code !== 1000) {
+        reconnectTimeout = setTimeout(() => {
+          connectToGameChannel(accessCode, userId, url);
+        }, 3000);
+      }
     };
 
     cable.onerror = (error) => {
-      console.error('Action Cable error:', error);
+      if (userId && wsUrl.includes('user_id')) {
+        setTimeout(() => {
+          connectToGameChannel(accessCode, null, url);
+        }, 1000);
+      }
     };
   } catch (error) {
-    console.error('Failed to connect to Action Cable:', error);
+    // Silent error handling
   }
 };
 
 // Subscribe to a specific game channel
 const subscribeToChannel = (accessCode) => {
   if (!cable || cable.readyState !== WebSocket.OPEN) {
-    console.error('Action Cable not connected');
     return;
   }
 
@@ -58,7 +104,6 @@ const subscribeToChannel = (accessCode) => {
   };
 
   cable.send(JSON.stringify(subscribeMessage));
-  console.log(`Subscribed to game channel: game_${accessCode}`);
 };
 
 // Handle incoming WebSocket messages
@@ -67,15 +112,12 @@ const handleMessage = (event) => {
     const message = JSON.parse(event.data);
     
     if (message.type === 'ping') {
-      // Handle ping messages
       return;
     }
 
     if (message.message) {
       const { event: eventName, data, timestamp } = message.message;
-      console.log('Received event:', eventName, data);
       
-      // Call registered callbacks for this event
       if (callbacks.has(eventName)) {
         callbacks.get(eventName).forEach(callback => {
           callback(data, timestamp);
@@ -83,7 +125,7 @@ const handleMessage = (event) => {
       }
     }
   } catch (error) {
-    console.error('Error parsing Action Cable message:', error);
+    // Silent error handling
   }
 };
 
@@ -92,7 +134,11 @@ export const subscribeToGameEvent = (eventName, callback) => {
   if (!callbacks.has(eventName)) {
     callbacks.set(eventName, []);
   }
-  callbacks.get(eventName).push(callback);
+  
+  const eventCallbacks = callbacks.get(eventName);
+  if (!eventCallbacks.includes(callback)) {
+    eventCallbacks.push(callback);
+  }
 };
 
 // Remove callback for specific events
@@ -114,9 +160,10 @@ export const disconnectFromGameChannel = () => {
   }
   
   if (cable) {
-    cable.close();
+    cable.close(1000, 'Manual disconnect');
     cable = null;
   }
+  
   callbacks.clear();
 };
 
@@ -135,4 +182,16 @@ export const getConnectionStatus = () => {
     case WebSocket.CLOSED: return 'disconnected';
     default: return 'unknown';
   }
+};
+
+// Debug connection info
+export const getConnectionInfo = () => {
+  return {
+    status: getConnectionStatus(),
+    accessCode: cable?.accessCode,
+    userId: cable?.userId,
+    readyState: cable?.readyState,
+    callbacksCount: callbacks.size,
+    hasReconnectTimeout: !!reconnectTimeout
+  };
 };

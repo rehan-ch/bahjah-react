@@ -5,12 +5,10 @@ import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperF
 import apiService from '../../services/apiService'
 
 const PlayerQuestions = ({data}) => {
-  console.log(data,'data from player')
   const navigate = useNavigate()
   const accessCode = localStorage.getItem('access_code')
   const player_id = localStorage.getItem('player_id')
   const game_id = localStorage.getItem('game_id')
-  // const [data, setData] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)
@@ -65,16 +63,6 @@ const PlayerQuestions = ({data}) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!accessCode) return;
-  //   connectToGameChannel(accessCode);
-  //   const handleGameUpdate = (eventData) => {
-  //     setData( eventData );
-  //   };
-
-
-  //   subscribeToGameEvent('game_state', handleGameUpdate);
-  // }, [data]);
 
 
   return (

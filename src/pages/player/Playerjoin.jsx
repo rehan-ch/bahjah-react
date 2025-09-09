@@ -49,6 +49,7 @@ const PlayerJoinPage = () => {
       const result = await apiService.joinGame(joinData);
       
       localStorage.setItem("player_id", result.player_id);
+      localStorage.setItem("user_id", result.user_id);
       localStorage.setItem("game_id", result.game_id);
       localStorage.setItem("access_code", codeValue);
 
@@ -61,7 +62,6 @@ const PlayerJoinPage = () => {
         },
       });
     } catch (err) {
-      console.error("Error joining game:", err);
       setError(ERROR_MESSAGES.GAME_JOIN_ERROR);
     } finally {
       setIsLoading(false);

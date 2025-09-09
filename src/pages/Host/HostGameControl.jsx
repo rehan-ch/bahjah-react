@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UI_TEXT } from '../../utills/constants'
-// import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent } from '../../utills/helperFunctions'
 
 const HostGameControl = ({data}) => {
   const navigate = useNavigate()
   const accessCode = localStorage.getItem('access_code')
   const game_id = localStorage.getItem('game_id')
-  console.log(data,'data from the host view')
   
   const currentQuestion = data?.current_question_index + 1 || 1
   const totalQuestions = data?.total_questions || 10

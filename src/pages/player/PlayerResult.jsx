@@ -11,16 +11,6 @@ const PlayerResult = () => {
   const currentQuestion = data?.current_question_index + 1 || 1
   const totalQuestions = data?.total_questions || 10
 
-  // useEffect(() => {
-  //   if (!accessCode) return;
-  //   connectToGameChannel(accessCode);
-  //   const handleGameUpdate = (eventData) => {
-  //     setData( eventData );
-  //   };
-
-
-  //   subscribeToGameEvent('game_state', handleGameUpdate);
-  // }, [data]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">

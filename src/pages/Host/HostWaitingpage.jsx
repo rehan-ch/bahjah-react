@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
-import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, disconnectFromGameChannel } from "../../utills/helperFunctions";
 
 const HostWaitingpage = ({setIsStarted}) => {
   const navigate = useNavigate();
@@ -59,28 +58,6 @@ const HostWaitingpage = ({setIsStarted}) => {
     fetchInitialData();
   }, [gameId]);
 
-  useEffect(() => {
-    if (!quizCode) return;
-
-    // Connect to Action Cable
-    connectToGameChannel(quizCode);
-
-    // Subscribe to game events
-    const handleGameUpdate = (eventData) => {
-      setData(prevData => ({
-        ...prevData,
-        leaderboard: eventData?.leaderboard
-      }));
-    };
-
-
-    subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
-
-    return () => {
-      unsubscribeFromGameEvent('leaderboard_updated', handleGameUpdate);
-      // disconnectFromGameChannel();
-    };
-  }, [quizCode]);
 
   const handleStartQuiz = async () => {
     if (!gameId) {

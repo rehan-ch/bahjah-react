@@ -73,6 +73,7 @@ const HostCreateQuiz = () => {
       
       if (result?.id) {
         localStorage.setItem("host_id", result?.host?.id);
+        localStorage.setItem("user_id", result?.host?.id);
         localStorage.setItem("game_id", result.id);
         localStorage.setItem("access_code", result?.access_code);
         navigate(`/host-waiting/${result.id}`);
@@ -81,7 +82,6 @@ const HostCreateQuiz = () => {
       }
 
     } catch (error) {
-      console.error('API Error:', error);
       setError(ERROR_MESSAGES.GAME_CREATION_ERROR);
     } finally {
       setIsLoading(false);

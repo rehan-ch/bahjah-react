@@ -10,38 +10,59 @@ import HostGameControl from './pages/Host/HostGameControl';
 import FinalResult from './pages/Host/FinalResult';
 import PlayerQuestions from './pages/player/playerQuestions';
 import PlayerResult from './pages/player/PlayerResult';
-import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent } from './utills/helperFunctions';
+import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, disconnectFromGameChannel, getConnectionInfo, testWebSocketConnection } from './utills/helperFunctions';
 
 
 const App = () => {
 
   const accessCode = localStorage.getItem('access_code')
+  const userId = localStorage.getItem('user_id')
   const [data, setData] = useState(null)
   const [isStarted, setIsStarted] = useState(false)
 
-console.log(accessCode)
-  // useEffect(() => {
-  //   localStorage.clear();
-  // }, []);
+  
+  // Cleanup WebSocket connection when app unmounts
   useEffect(() => {
-    if (!accessCode && !isStarted) return;
+    return () => {
+      disconnectFromGameChannel();
+    };
+  }, []);
+  useEffect(() => {
+    if (!accessCode || !userId) return;
 
-    // Connect to Action Cable
-    connectToGameChannel(accessCode);
+    const initializeWebSocket = async () => {
+      const handleGameUpdate = (eventData) => {
+        setData(eventData);
+      };
 
-    // Subscribe to game events
-    const handleGameUpdate = (eventData) => {
-      console.log(eventData,'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-      setData(eventData);
+      try {
+        await testWebSocketConnection();
+        connectToGameChannel(accessCode, userId);
+
+        subscribeToGameEvent('game_state', handleGameUpdate);
+        subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
+
+        setTimeout(() => {
+          const connectionInfo = getConnectionInfo();
+          if (connectionInfo.status !== 'connected') {
+            connectToGameChannel(accessCode, null);
+          }
+        }, 2000);
+
+      } catch (error) {
+        connectToGameChannel(accessCode, null);
+        subscribeToGameEvent('game_state', handleGameUpdate);
+        subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
+      }
     };
 
-    subscribeToGameEvent('game_state', handleGameUpdate);
+    initializeWebSocket();
 
     return () => {
-      debugger
-      unsubscribeFromGameEvent('game_state', handleGameUpdate);
+      unsubscribeFromGameEvent('game_state', () => {});
+      unsubscribeFromGameEvent('leaderboard_updated', () => {});
     };
-  }, [accessCode, isStarted]);
+  }, [accessCode, userId]);
 
 
   return (
