@@ -1,10 +1,26 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UI_TEXT } from '../../utills/constants';
+import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperFunctions';
 
 const PlayerResult = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState(null)
+  const accessCode = localStorage.getItem('access_code')
+  const currentQuestion = data?.current_question_index + 1 || 1
+  const totalQuestions = data?.total_questions || 10
+
+  // useEffect(() => {
+  //   if (!accessCode) return;
+  //   connectToGameChannel(accessCode);
+  //   const handleGameUpdate = (eventData) => {
+  //     setData( eventData );
+  //   };
+
+
+  //   subscribeToGameEvent('game_state', handleGameUpdate);
+  // }, [data]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -99,16 +115,6 @@ const PlayerResult = () => {
               </div>
             </div>
           </div>
-
-          {/* Footer */}
-          {/* <div className="p-6">
-            <button 
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
-              dir="rtl"
-            >
-              التالي
-            </button>
-          </div> */}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import SplashLogo from "../../assests/splashLogo.png";
 import FooterLogo from "../../assests/splashFooterLogo.png";
@@ -16,6 +16,7 @@ const HostLoby = () => {
       navigate(`/player-join/${code}`);
     }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">

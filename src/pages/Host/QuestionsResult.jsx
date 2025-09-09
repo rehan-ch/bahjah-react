@@ -1,16 +1,51 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UI_TEXT } from '../../utills/constants';
+import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants';
+import apiService from '../../services/apiService';
 
 const QuestionsResult = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const game_id = localStorage.getItem('game_id');
+
+  const handleNextQuestion = async () => {
+    if (!game_id) {
+      setError("Game ID not found");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await apiService.nextQuestion(game_id);
+      if(result){
+        navigate('/host-questions');
+      }
+      
+    } catch (error) {
+      console.error('Error loading next question:', error);
+      setError(ERROR_MESSAGES.NEXT_QUESTION_ERROR || "Failed to load next question");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
+            
+            {/* Error Display */}
+            {error && (
+              <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+                {error}
+              </div>
+            )}
+
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-2">السؤال 1/10</h2>
             </div>
@@ -85,10 +120,16 @@ const QuestionsResult = () => {
           {/* Footer */}
           <div className="p-6">
             <button 
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
+              onClick={handleNextQuestion}
+              disabled={isLoading}
+              className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
+                isLoading
+                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600 text-white"
+              }`}
               dir="rtl"
             >
-              التالي
+              {isLoading ? "جاري التحميل..." : "التالي"}
             </button>
           </div>
         </div>

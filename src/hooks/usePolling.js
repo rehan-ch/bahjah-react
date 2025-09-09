@@ -58,7 +58,8 @@ export const usePolling = (gameId) => {
     const handleGameUpdate = (eventData) => {
       setData(prevData => ({
         ...prevData,
-        leaderboard: eventData?.leaderboard
+        leaderboard: eventData?.leaderboard,
+        status: eventData?.status
       }));
     };
 

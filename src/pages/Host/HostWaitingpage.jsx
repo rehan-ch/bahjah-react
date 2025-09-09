@@ -6,7 +6,7 @@ import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, disconnectFromGameChannel } from "../../utills/helperFunctions";
 
-const HostWaitingpage = () => {
+const HostWaitingpage = ({setIsStarted}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const storedId = typeof window !== "undefined" ? localStorage.getItem("game_id") : null;
@@ -93,8 +93,10 @@ const HostWaitingpage = () => {
       setError(null);
       
       const result = await apiService.startQuiz(gameId);
-      
-      navigate("/host-questions");
+      if(result){
+        setIsStarted(true);
+        navigate("/host-questions");
+      }
       
     } catch (error) {
       console.error('Error starting quiz:', error);

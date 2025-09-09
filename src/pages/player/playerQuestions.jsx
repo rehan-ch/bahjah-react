@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UI_TEXT } from '../../utills/constants'
+import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants'
 import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperFunctions'
+import apiService from '../../services/apiService'
 
-const PlayerQuestions = () => {
+const PlayerQuestions = ({data}) => {
+  console.log(data,'data from player')
   const navigate = useNavigate()
   const accessCode = localStorage.getItem('access_code')
-  const [data, setData] = useState(null)
+  const player_id = localStorage.getItem('player_id')
+  const game_id = localStorage.getItem('game_id')
+  // const [data, setData] = useState(null)
   const [selectedOption, setSelectedOption] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState(null)
   
-  const currentQuestion = data?.current_question_index + 1 || 1
-  const totalQuestions = data?.total_questions || 10
-  const questionData = data?.question || null
-  
+  const currentQuestion = data?.game?.current_question_index + 1 || 1
+  const totalQuestions = data?.game?.total_questions || 10
+  const questionData = data?.current_question || null
   // Extract question and options from the data
   const question = questionData?.question || "ما معنى كلمة \"خرمس\" باللهجة القصيمية؟"
   const options = questionData?.options ? [
@@ -21,20 +26,56 @@ const PlayerQuestions = () => {
     questionData.options.c,
     questionData.options.d
   ] : ["الظلام", "النور", "الإزعاج", "الهدوء"]
-  useEffect(() => {
-    if (!accessCode) return;
 
-    // Connect to Action Cable
-    connectToGameChannel(accessCode);
+  // Function to get option letter (a, b, c, d) from option text
+  const getOptionLetter = (optionText) => {
+    const optionIndex = options.findIndex(opt => opt === optionText);
+    return ['a', 'b', 'c', 'd'][optionIndex];
+  };
 
-    // Subscribe to game events
-    const handleGameUpdate = (eventData) => {
-      setData( eventData );
-    };
+  // Function to submit answer
+  const handleSubmitAnswer = async () => {
+    if (!game_id || !player_id || !selectedOption) {
+      setError("Missing required data for submission");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const questionIndex = data?.current_question_index || 0;
+      const selectedOptionLetter = getOptionLetter(selectedOption);
+      
+      const result = await apiService.submitPlayerAnswer(
+        game_id, 
+        player_id, 
+        questionIndex, 
+        selectedOptionLetter
+      );
+      if(result){
+        navigate('/player-result')
+      }
+      
+    } catch (error) {
+      console.error('Error submitting answer:', error);
+      setError(ERROR_MESSAGES.ANSWER_SUBMIT_ERROR || "Failed to submit answer");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (!accessCode) return;
+  //   connectToGameChannel(accessCode);
+  //   const handleGameUpdate = (eventData) => {
+  //     setData( eventData );
+  //   };
 
 
-    subscribeToGameEvent('game_state', handleGameUpdate);
-  }, [data]);
+  //   subscribeToGameEvent('game_state', handleGameUpdate);
+  // }, [data]);
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -56,6 +97,13 @@ const PlayerQuestions = () => {
           {/* Content */}
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             
+            {/* Error Display */}
+            {error && (
+              <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+                {error}
+              </div>
+            )}
+
             {/* Question Progress */}
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
@@ -109,10 +157,16 @@ const PlayerQuestions = () => {
           <div className="p-6">
             <div className="space-y-3">
               <button 
-                className="w-full border border-green-600 bg-custom hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
+                onClick={handleSubmitAnswer}
+                disabled={!selectedOption || isSubmitting}
+                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
+                  selectedOption && !isSubmitting
+                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                }`}
                 dir="rtl"
               >
-                 التالي
+                {isSubmitting ? "جاري الإرسال..." : "التالي"}
               </button>
             </div>
           </div>

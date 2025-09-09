@@ -1,13 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UI_TEXT } from '../../utills/constants'
+// import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent } from '../../utills/helperFunctions'
 
-const HostGameControl = () => {
+const HostGameControl = ({data}) => {
   const navigate = useNavigate()
-  const [selectedOption, setSelectedOption] = useState(null)
-
-  // Example options (you can fetch dynamically later)
-  const options = ["24 سبتمبر", "22 سبتمبر", "25 سبتمبر", "23 سبتمبر"]
+  const accessCode = localStorage.getItem('access_code')
+  const game_id = localStorage.getItem('game_id')
+  console.log(data,'data from the host view')
+  
+  const currentQuestion = data?.current_question_index + 1 || 1
+  const totalQuestions = data?.total_questions || 10
+  const questionData = data?.current_question || null
+  
+  // Extract question and options from the data
+  const question = questionData?.question || "كم مرة تأهل المنتخب السعودي لكأس العالم؟"
+  const correctAnswer = questionData?.correct || "a"
+  const options = questionData?.options ? [
+    { letter: 'a', text: questionData.options.a },
+    { letter: 'b', text: questionData.options.b },
+    { letter: 'c', text: questionData.options.c },
+    { letter: 'd', text: questionData.options.d }
+  ] : [
+    { letter: 'a', text: "6 مرات" },
+    { letter: 'b', text: "5 مرات" },
+    { letter: 'c', text: "4 مرات" },
+    { letter: 'd', text: "7 مرات" }
+  ]
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -31,42 +50,48 @@ const HostGameControl = () => {
             
             {/* Question Progress */}
             <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال 1/10</h2>
+              <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
 
             {/* Current Question with Options */}
             <div className="bg-custom rounded-lg p-4" dir="rtl">
               <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3>
               <p className="text-sm text-center leading-relaxed mb-4">
-                ما هو اليوم الوطني السعودي؟
+                {question}
               </p>
 
               {/* Question Options */}
               <div className="space-y-3">
                 {options.map((option, idx) => (
-                  <button
+                  <div
                     key={idx}
-                    onClick={() => setSelectedOption(option)}
                     className={`
-                      w-full py-3 rounded-lg border text-center font-medium transition-colors
-                      ${selectedOption === option
-                        ? "bg-green-600 border-green-400 text-white"
-                        : "bg-custom border-teal-600 text-white hover:bg-teal-700"
+                      w-full py-3 px-4 rounded-lg border-2 flex items-center justify-between
+                      ${option.letter === correctAnswer
+                        ? "bg-green-600 border-green-700 text-white"
+                        : "bg-teal-700 border-teal-500 text-white"
                       }
                     `}
+                    dir="rtl"
                   >
-                    {option}
-                  </button>
+                    <span className="font-medium">{option.text}</span>
+                    {option.letter === correctAnswer && (
+                      <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-green-600 text-sm font-bold">✓</span>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
             
 
             {/* Response Summary */}
-            <div className="bg-custom rounded-lg p-4 text-center" dir="rtl">
+            <div className="bg-teal-800 rounded-lg p-4 text-center" dir="rtl">
               <div className="flex justify-center items-center gap-2 mb-2">
-                <span className="text-white text-sm">تم الرد 3/5</span>
+                <span className="text-white text-sm">الإجابة الصحيحة</span>
                 <div className="flex gap-1">
+                  <div className="w-4 h-4 bg-green-400 rounded-full"></div>
                 </div>
               </div>
             </div>

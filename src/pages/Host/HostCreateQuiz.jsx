@@ -72,7 +72,9 @@ const HostCreateQuiz = () => {
       const result = await apiService.createGame(gameData);
       
       if (result?.id) {
-        localStorage.setItem('game_id', result.id);
+        localStorage.setItem("host_id", result?.host?.id);
+        localStorage.setItem("game_id", result.id);
+        localStorage.setItem("access_code", result?.access_code);
         navigate(`/host-waiting/${result.id}`);
       } else {
         throw new Error('Game ID not found in API response');

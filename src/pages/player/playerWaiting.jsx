@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { usePolling } from '../../hooks/usePolling';
 import { ERROR_MESSAGES, UI_TEXT } from '../../utills/constants';
 
-const PlayerWaiting = () => {
+const PlayerWaiting = ({setIsStarted}) => {
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -11,9 +11,9 @@ const PlayerWaiting = () => {
   const playerId = localStorage.getItem('player_id');
   
   const { data, isLoading, error, apiOk } = usePolling(gameId);
-
   useEffect(() => {
     if(data?.status === "active") {
+      setIsStarted(true);
       navigate('/player-questions')
     }
   }, [data])

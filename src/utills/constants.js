@@ -11,6 +11,8 @@ export const ERROR_MESSAGES = {
   LOADING_GAME_DATA: "جاري تحميل بيانات اللعبة...",
   WAITING_FOR_PLAYERS: "في انتظار المزيد من المشاركين...",
   WAITING_FOR_JOIN: "في انتظار انضمام المشاركين...",
+  ANSWER_SUBMIT_ERROR: "حدث خطأ في إرسال الإجابة. يرجى المحاولة مرة أخرى.",
+  NEXT_QUESTION_ERROR: "حدث خطأ في تحميل السؤال التالي. يرجى المحاولة مرة أخرى.",
 };
 
 export const UI_TEXT = {

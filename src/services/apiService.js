@@ -133,6 +133,22 @@ class ApiService {
     return response.data;
   }
 
+  async submitPlayerAnswer(gameId, playerId, questionIndex, selectedOption) {
+    const payload = {
+      player_id: playerId,
+      question_index: questionIndex,
+      selected_option: selectedOption
+    };
+
+    const response = await this.post(`/api/v1/games/${gameId}/submit_answer`, payload);
+    return response.data;
+  }
+
+  async nextQuestion(gameId) {
+    const response = await this.post(`/api/v1/games/${gameId}/next_question`);
+    return response.data;
+  }
+
   async getGameResults(gameId) {
     const response = await this.get(`/api/v1/games/${gameId}/results`);
     return response.data;
