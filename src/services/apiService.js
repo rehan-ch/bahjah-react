@@ -149,6 +149,11 @@ class ApiService {
     return response.data;
   }
 
+  async finishGame(gameId) {
+    const response = await this.post(`/api/v1/games/${gameId}/finish`);
+    return response.data;
+  }
+
   async getGameResults(gameId) {
     const response = await this.get(`/api/v1/games/${gameId}/results`);
     return response.data;

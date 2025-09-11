@@ -22,26 +22,21 @@ const PlayerResult = ({data}) => {
   
   // Get the correct answer text
   const correctAnswerText = options[correctAnswer] || "مجموعة العشرين - G20"
+  
   useEffect(() => {
     const currentQuestionIndex = game?.current_question_index + 1;
+    if(game?.finished_at){
+      navigate('/final-result');
+      return;
+    }
     if (previousQuestionIndex === null) {
       setPreviousQuestionIndex(currentQuestionIndex);
       return;
     }
-
     if (currentQuestionIndex !== previousQuestionIndex) {
-
-      if (currentQuestionIndex >= totalQuestions) {
-    
-        navigate('/final-result');
-      } else {
         navigate('/player-questions');
       }
-      
-      // Update previous question index
-      setPreviousQuestionIndex(currentQuestionIndex);
-    }
-  }, [game?.current_question_index, totalQuestions, navigate, previousQuestionIndex]);
+  }, [game, previousQuestionIndex]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">

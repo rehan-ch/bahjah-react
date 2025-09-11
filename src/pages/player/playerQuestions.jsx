@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants'
-import { connectToGameChannel, subscribeToGameEvent } from '../../utills/helperFunctions'
 import apiService from '../../services/apiService'
 
 const PlayerQuestions = ({data}) => {
   const navigate = useNavigate()
-  const accessCode = localStorage.getItem('access_code')
   const player_id = localStorage.getItem('player_id')
   const game_id = localStorage.getItem('game_id')
   const [selectedOption, setSelectedOption] = useState(null)
@@ -16,6 +14,7 @@ const PlayerQuestions = ({data}) => {
   const currentQuestion = data?.game?.current_question_index + 1 || 1
   const totalQuestions = data?.game?.total_questions || 10
   const questionData = data?.current_question || null
+  const isHostSubmitted = data?.game?.is_result
   // Extract question and options from the data
   const question = questionData?.question || "ما معنى كلمة \"خرمس\" باللهجة القصيمية؟"
   const options = questionData?.options ? [
@@ -44,24 +43,22 @@ const PlayerQuestions = ({data}) => {
     try {
       const questionIndex = data?.game?.current_question_index || 0;
       const selectedOptionLetter = getOptionLetter(selectedOption);
-      
-      const result = await apiService.submitPlayerAnswer(
+       await apiService.submitPlayerAnswer(
         game_id, 
         player_id, 
         questionIndex, 
         selectedOptionLetter
       );
-      if(result){
-        navigate('/player-result')
-      }
-      
     } catch (error) {
-      console.error('Error submitting answer:', error);
       setError(ERROR_MESSAGES.ANSWER_SUBMIT_ERROR || "Failed to submit answer");
-    } finally {
-      setIsSubmitting(false);
-    }
+    } 
   };
+  useEffect(() => {
+
+    if(isHostSubmitted){
+      navigate('/player-result')
+    }
+  }, [isHostSubmitted])
 
 
 

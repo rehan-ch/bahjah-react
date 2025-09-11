@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UI_TEXT } from '../../utills/constants'
+import apiService from '../../services/apiService'
 
 const HostGameControl = ({data}) => {
   const navigate = useNavigate()
-  const accessCode = localStorage.getItem('access_code')
   const game_id = localStorage.getItem('game_id')
-  
   const currentQuestion = data?.game?.current_question_index + 1 || 1
   const totalQuestions = data?.game?.total_questions || 10
   const questionData = data?.current_question || null
+  const playerData = data?.players || 0
+  const totalPlayers = data?.players?.length || 0
+  const playerAnswered = useMemo(() => {
+    if(playerData?.length > 0){
+      return playerData?.filter((player) => player?.has_answered)?.length || 0
+    }
+    return 0
+  }, [playerData])
   
-  // Extract question and options from the data
   const question = questionData?.question || "كم مرة تأهل المنتخب السعودي لكأس العالم؟"
   const correctAnswer = questionData?.correct || "a"
   const options = questionData?.options ? [
@@ -25,7 +31,8 @@ const HostGameControl = ({data}) => {
     { letter: 'c', text: "4 مرات" },
     { letter: 'd', text: "7 مرات" }
   ]
-const handleNextQuestion = () => {
+const handleNextQuestion = async () => {
+  await apiService.getGameLeaderboard(game_id);
   navigate('/question-result');
 }
   return (
@@ -91,7 +98,7 @@ const handleNextQuestion = () => {
               <div className="flex justify-center items-center gap-2 mb-2">
                 <span className="text-white text-sm">الإجابة الصحيحة</span>
                 <div className="flex gap-1">
-                  <div className="w-4 h-4 bg-green-400 rounded-full"></div>
+                  <div>{playerAnswered}/{totalPlayers}</div>
                 </div>
               </div>
             </div>

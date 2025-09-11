@@ -8,6 +8,7 @@ import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 const HostWaitingpage = ({leaderboard}) => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const baseUrl = window.location.origin;
   const storedId = typeof window !== "undefined" ? localStorage.getItem("game_id") : null;
   const gameId = id || storedId;
 
@@ -16,8 +17,6 @@ const HostWaitingpage = ({leaderboard}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const quizCode = data?.access_code;
-  const totalQuestions = data?.total_questions ?? 10;
-  const currentQuestionIndex = data?.current_question_index ?? 0;
   const isFinished = !!data?.is_finished;
   const totalPlayers = data?.total_players ?? 0;
   const gameStatus = data?.status || "draft";
@@ -30,8 +29,7 @@ const HostWaitingpage = ({leaderboard}) => {
         }))
       : [];
 
-  const joinUrl = `https://bahjah.com/${quizCode}`;
-  const previewUrl = `https://bahjah.com/${quizCode}/live`;
+  const joinUrl = `${baseUrl}/player-join/${quizCode}`;
 
   useEffect(() => {
     setData(prevData => ({
@@ -63,7 +61,7 @@ const HostWaitingpage = ({leaderboard}) => {
     };
 
     fetchInitialData();
-  }, [gameId]);
+  }, [id]);
 
 
   const handleStartQuiz = async () => {

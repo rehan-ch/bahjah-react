@@ -143,11 +143,6 @@ const PlayerWaiting = ({leaderboard,status}) => {
             <div className="text-green-400 text-sm" dir="rtl">
               استعد للمسابقة!
             </div>
-            {!isLoading && !error && data && (
-              <div className="text-xs text-teal-300 mt-2" dir="rtl">
-                API: {apiOk ? "✓ متصل" : "✗ غير متصل"}
-              </div>
-            )}
           </div>
         </div>
       </div>

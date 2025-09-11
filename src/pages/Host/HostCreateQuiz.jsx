@@ -15,6 +15,14 @@ const HostCreateQuiz = ({setIsStarted}) => {
   const [error, setError] = useState("");
   const [categoriesLoading, setCategoriesLoading] = useState(true);
 
+  // Calculate the maximum number of questions allowed based on selected categories
+  const maxQuestions = selectedCategory.reduce((total, cat) => {
+    const selected = typeof cat === 'string' 
+      ? categories.find((c) => c.name === cat)
+      : cat;
+    return total + (selected?.question_count || 0);
+  }, 0);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -31,6 +39,13 @@ const HostCreateQuiz = ({setIsStarted}) => {
     fetchCategories();
   }, []);
   
+  // Ensure question count never exceeds the maximum allowed from selected categories
+  useEffect(() => {
+    if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
+      setQuestionCount(maxQuestions);
+    }
+  }, [maxQuestions]);
+
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(prev => {
@@ -51,6 +66,12 @@ const HostCreateQuiz = ({setIsStarted}) => {
   const handleSubmit = async () => {
     if (selectedCategory.length === 0 || !name || !email) {
       setError(ERROR_MESSAGES.REQUIRED_FIELDS);
+      return;
+    }
+
+    // Guard: prevent submitting more than the allowed total questions
+    if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
+      setError(`لا يمكنك اختيار عدد أسئلة أكثر من الحد المسموح (${maxQuestions}).`);
       return;
     }
 
@@ -174,9 +195,28 @@ const HostCreateQuiz = ({setIsStarted}) => {
               <input
                 type="number"
                 value={questionCount}
-                onChange={(e) => setQuestionCount(e.target.value)}
+                min={1}
+                max={maxQuestions || undefined}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  if (!Number.isFinite(value)) {
+                    setQuestionCount(1);
+                    return;
+                  }
+                  if (maxQuestions > 0) {
+                    const clamped = Math.max(1, Math.min(value, maxQuestions));
+                    setQuestionCount(clamped);
+                  } else {
+                    setQuestionCount(Math.max(1, value));
+                  }
+                }}
                 className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
               />
+              {selectedCategory.length > 0 && (
+                <p className="text-xs text-teal-300 mt-2">
+                  الحد الأقصى المسموح بناءً على الفئات المختارة: {maxQuestions}
+                </p>
+              )}
             </div>
 
             <div dir="rtl">

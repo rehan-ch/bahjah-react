@@ -39,6 +39,7 @@ const QuestionsResult = ({data}) => {
 
     try {
       if(currentQuestion === totalQuestions){
+        await apiService.finishGame(game_id);
         navigate('/final-result');
         return;
       }

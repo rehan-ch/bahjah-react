@@ -17,6 +17,10 @@ const HostLoby = () => {
     }
   };
 
+  useEffect(() => {
+    localStorage.clear();
+  }, [])
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">

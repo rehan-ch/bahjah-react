@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 
 const FinalResult = ({data}) => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const FinalResult = ({data}) => {
   
   const handleClick = () => {
     localStorage.clear();
+    disconnectFromGameChannel()
     navigate('/');
   }
 
