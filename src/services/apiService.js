@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_URL
+const BASE_URL = process.env.BACKEND_URL
 
 class ApiService {
   constructor() {
@@ -19,7 +19,7 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      
+
       if (!response.ok) {
         const errorText = await response.text().catch(() => '');
         throw new Error(`HTTP ${response.status} ${response.statusText} – ${errorText}`);
@@ -32,7 +32,7 @@ class ApiService {
       }
 
       const data = await response.json();
-      
+
       if (data.success === false) {
         throw new Error(data.message || 'API request failed');
       }
