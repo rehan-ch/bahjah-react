@@ -5,7 +5,7 @@ import SplashLogo from "../../assests/splashLogo.svg";
 import FooterLogo from "../../assests/footerLogo.png";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
-const HostCreateQuiz = ({setIsStarted}) => {
+const HostCreateQuiz = ({ setIsStarted }) => {
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
@@ -19,7 +19,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
 
   // Calculate the maximum number of questions allowed based on selected categories
   const maxQuestions = selectedCategory.reduce((total, cat) => {
-    const selected = typeof cat === 'string' 
+    const selected = typeof cat === 'string'
       ? categories.find((c) => c.name === cat)
       : cat;
     return total + (selected?.question_count || 0);
@@ -37,10 +37,10 @@ const HostCreateQuiz = ({setIsStarted}) => {
         setCategoriesLoading(false);
       }
     };
-  
+
     fetchCategories();
   }, []);
-  
+
   useEffect(() => {
     if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
       setQuestionCount(maxQuestions);
@@ -50,12 +50,12 @@ const HostCreateQuiz = ({setIsStarted}) => {
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(prev => {
-      const isSelected = prev.some(cat => 
+      const isSelected = prev.some(cat =>
         (typeof cat === 'string' ? cat : cat.name) === category.name
       );
-      
+
       if (isSelected) {
-        return prev.filter(cat => 
+        return prev.filter(cat =>
           (typeof cat === 'string' ? cat : cat.name) !== category.name
         );
       } else {
@@ -82,7 +82,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
       const categoryNames = selectedCategory.map(cat => {
         return typeof cat === 'string' ? cat : cat.name;
       });
-      
+
       const gameData = {
         category: categoryNames,
         questionCount: questionCount,
@@ -91,7 +91,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
       };
 
       const result = await apiService.createGame(gameData);
-      
+
       if (result?.id) {
         localStorage.setItem("host_id", result?.host?.id);
         localStorage.setItem("user_id", result?.host?.id);
@@ -134,21 +134,24 @@ const HostCreateQuiz = ({setIsStarted}) => {
 }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
-      <div className="w-[420px] overflow-hidden">
-        <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
-         <div className="mb-12 text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-                <img
-                  src={SplashLogo}
-                  alt="Saudi National Day 95"
-                  className="w-[150px] h-full object-contain"
-                />
-              </div>
-            </div>
+    <div className="flex justify-center items-center min-h-screen bg-custom">
+      <div className="w-[420px]">
+
+        <div className="min-h-full bg-custom text-white flex flex-col">
+
+          <div className="flex justify-between items-center px-4 py-3 text-sm">
+            <button
+              onClick={() => navigate(-1)}
+              className="text-green-400 font-medium"
+              dir="rtl"
+            >
+              {UI_TEXT.BACK_BUTTON}
+            </button>
+            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
+          </div>
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            
+
             <div className="text-center space-y-2" dir="rtl">
               <h2 className="text-lg font-bold">اسم اللعبة</h2>
               <p className="text-xl font-bold">{UI_TEXT.GAME_TITLE}</p>
@@ -156,14 +159,14 @@ const HostCreateQuiz = ({setIsStarted}) => {
 
             <div dir="rtl">
               <h3 className="mb-3 text-sm font-medium">حدد الفئات</h3>
-              
+
               {categoriesLoading && (
                 <div className="text-center py-4">
                   <div className="text-green-400 text-sm mb-2">{ERROR_MESSAGES.LOADING_CATEGORIES}</div>
                   <div className="flex justify-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               )}
@@ -175,29 +178,27 @@ const HostCreateQuiz = ({setIsStarted}) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex justify-between items-center px-4 py-3 rounded-[25px] border-2 transition-colors ${
-                          selectedCategory.some(cat => 
-                            (typeof cat === 'string' ? cat : cat.name) === category.name
-                          )
-                            ? "bg-button border-green-700"
-                            : "bg-teal-700 border-teal-500"
-                        }`}
+                        className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${selectedCategory.some(cat =>
+                          (typeof cat === 'string' ? cat : cat.name) === category.name
+                        )
+                          ? "bg-green-600 border-green-700"
+                          : "bg-teal-700 border-teal-500"
+                          }`}
                       >
                         <span>{category.name_ar}</span>
                         <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            selectedCategory.some(cat => 
-                              (typeof cat === 'string' ? cat : cat.name) === category.name
-                            )
-                              ? "bg-green-500 border-green-600"
-                              : "border-gray-400"
-                          }`}
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedCategory.some(cat =>
+                            (typeof cat === 'string' ? cat : cat.name) === category.name
+                          )
+                            ? "bg-green-500 border-green-600"
+                            : "border-gray-400"
+                            }`}
                         >
-                          {selectedCategory.some(cat => 
+                          {selectedCategory.some(cat =>
                             (typeof cat === 'string' ? cat : cat.name) === category.name
                           ) && (
-                            <span className="w-2 h-2 bg-white rounded-full"></span>
-                          )}
+                              <span className="w-2 h-2 bg-white rounded-full"></span>
+                            )}
                         </div>
                       </button>
                     ))
@@ -259,11 +260,10 @@ const HostCreateQuiz = ({setIsStarted}) => {
               <button
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
-                  isLoading
-                    ? "bg-button text-gray-400 cursor-not-allowed"
-                    : "bg-button text-white"
-                }`}
+                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${isLoading
+                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600 text-white"
+                  }`}
                 dir="rtl"
               >
                 {isLoading ? UI_TEXT.CREATING :" يخلق"}

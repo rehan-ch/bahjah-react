@@ -7,7 +7,7 @@ app = 'bahjah-frontend'
 primary_region = 'lhr'
 
 [build.args]
-  BACKEND_URL = 'bahjah.fly.dev'
+  REACT_APP_BACKEND_URL = 'https://bahjah.fly.dev'
 
 [http_service]
   internal_port = 3000
