@@ -57,9 +57,9 @@ const PlayerWaiting = ({leaderboard,status}) => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom">
-      <div className="w-[420px] h-[880px] overflow-hidden">
-        <div className="min-h-full bg-custom text-white flex flex-col">
+    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
+        <div className="w-[420px] overflow-hidden">
+          <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
         <div className="mb-12 text-center">
               <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
                 <img

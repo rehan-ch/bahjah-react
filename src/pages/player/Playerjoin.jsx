@@ -62,9 +62,9 @@ const PlayerJoinPage = ({setIsStarted}) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom">
-      <div className="w-[420px] h-[880px] overflow-hidden">
-        <div className="min-h-full bg-custom text-white flex flex-col">
+    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
+        <div className="w-[420px] overflow-hidden">
+          <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
             <div className="mb-12 text-center">
               <div className="w-50 h-20 mx-auto rounded flex items-center justify-center">

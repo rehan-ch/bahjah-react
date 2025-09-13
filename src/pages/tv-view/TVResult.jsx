@@ -4,7 +4,7 @@ import FooterLogo from '../../assests/footerLogo.png'
 
 const TVResult = () => {
   return (
-    <div className="bg-teal-900 min-h-screen text-white p-8">
+    <div className="bg-teal-900 min-h-screen text-white p-8 overflow-y-auto">
     <div className="max-w-4xl mx-auto">
       {/* Header with Logo */}
       <div className="flex justify-between items-center mb-8">

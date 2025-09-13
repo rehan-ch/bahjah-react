@@ -20,9 +20,9 @@ const FinalResult = ({data}) => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom">
-      <div className="w-[420px] h-[880px] overflow-hidden">
-        <div className="min-h-full bg-custom text-white flex flex-col">
+    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
+      <div className="w-[420px] overflow-hidden">
+        <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           {/* Header with Logo */}
           <div className="flex justify-between items-center px-4 py-3 text-sm">
             <div className="w-16 h-8 flex items-center justify-center">
