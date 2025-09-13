@@ -9,16 +9,24 @@ const HostLoby = () => {
   const [code, setCode] = useState("");
   const handleStart = () => {
     navigate("/create-quiz");
+    localStorage.setItem("hasReloaded", "available");
   };
   const handleStratPlayerGame = () => {
     if (code.trim()) {
       navigate(`/player-join/${code}`);
+    localStorage.setItem("hasReloaded", "available");
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
+  const hasReloaded = localStorage.getItem("hasReloaded");
+  if (hasReloaded === "available") {
     localStorage.clear();
-  }, []);
+    localStorage.setItem("hasReloaded", "done");
+    window.location.reload();
+  }
+}, []);
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
