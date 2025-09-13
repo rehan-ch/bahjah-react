@@ -16,7 +16,7 @@ ENV NODE_ENV="production"
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-ARG REACT_APP_BACKEND_URL
+ARG REACT_APP_URL
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
