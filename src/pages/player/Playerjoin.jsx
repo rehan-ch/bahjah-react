@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SplashLogo from "../../assests/splashLogo.png";
-import FooterLogo from "../../assests/splashFooterLogo.png";
+import SplashLogo from "../../assests/splashLogo.svg";
+import FooterLogo from "../../assests/footerLogo.png";
 import FooterLogo2 from "../../assests/splashLogo2.png";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
@@ -65,13 +65,9 @@ const PlayerJoinPage = ({setIsStarted}) => {
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
-          <div className="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
-            <div className="flex items-center space-x-1" />
-          </div>
-
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
             <div className="mb-12 text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <div className="w-50 h-20 mx-auto rounded flex items-center justify-center">
                 <img src={SplashLogo} alt="Saudi National Day 95" className="w-full h-full object-contain" />
               </div>
             </div>
@@ -86,9 +82,11 @@ const PlayerJoinPage = ({setIsStarted}) => {
             </div>
 
             <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
-              <button type="button" className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors" dir="rtl" disabled>
-                إبدأ لعبة جديدة
-              </button>
+              <div className="flex justify-center">
+                <button type="button" className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]" dir="rtl" disabled>
+                  إبدأ لعبة جديدة
+                </button>
+              </div>
 
               <div className="flex items-center justify-center gap-2 py-2">
                 <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
@@ -104,7 +102,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                   placeholder="أدخل رمز اللعبة"
                   autoComplete="one-time-code"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
@@ -115,7 +113,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="اسمك"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
@@ -126,39 +124,34 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@email.com"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
               {error && (
-                <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+                <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
                   {error}
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
-                  isLoading ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600 text-white"
-                }`}
-                dir="rtl"
-              >
-                {isLoading ? UI_TEXT.JOINING : UI_TEXT.JOIN_BUTTON}
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
+                    isLoading ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600 text-white"
+                  }`}
+                  dir="rtl"
+                >
+                  {isLoading ? UI_TEXT.JOINING : UI_TEXT.JOIN_BUTTON}
+                </button>
+              </div>
             </form>
           </div>
 
           <div className="relative">
             <div className="h-20 relative flex justify-center items-center">
               <div className="flex">
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
                 <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
               </div>
             </div>

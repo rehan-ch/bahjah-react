@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePolling } from '../../hooks/usePolling';
+import SplashLogo from '../../assests/splashLogo.svg';
+import FooterLogo from '../../assests/footerLogo.png';
 import { ERROR_MESSAGES, UI_TEXT } from '../../utills/constants';
 
 const PlayerWaiting = ({leaderboard,status}) => {
@@ -40,12 +42,13 @@ const PlayerWaiting = ({leaderboard,status}) => {
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-4">خطأ</h2>
               <p className="text-red-400 mb-4">لم يتم العثور على معرف اللعبة</p>
-              <button
-                onClick={() => navigate('/player-join')}
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-              >
-                العودة لصفحة الانضمام
-              </button>
+              <div className="flex justify-center">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full min-w-[120px]"
+                >
+                  العودة لصفحة الانضمام
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -56,25 +59,17 @@ const PlayerWaiting = ({leaderboard,status}) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
-        
         <div className="min-h-full bg-custom text-white flex flex-col">
-          
-          {/* Header */}
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
-          </div>
-
-          {/* Content */}
+        <div className="mb-12 text-center">
+              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+                <img
+                  src={SplashLogo}
+                  alt="Saudi National Day 95"
+                  className="w-[150px] h-full object-contain"
+                />
+              </div>
+            </div>
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            
-            {/* Title */}
             {isLoading && (
               <div className="text-center py-8" dir="rtl">
                 <div className="text-white text-lg mb-2">{ERROR_MESSAGES.LOADING_GAME_DATA}</div>
@@ -87,7 +82,7 @@ const PlayerWaiting = ({leaderboard,status}) => {
             )}
 
             {error && (
-              <div className="bg-red-600 text-white p-4 rounded-lg text-center" dir="rtl">
+              <div className="bg-red-600 text-white p-4 rounded-full text-center" dir="rtl">
                 {error}
               </div>
             )}
@@ -138,10 +133,14 @@ const PlayerWaiting = ({leaderboard,status}) => {
             )}
           </div>
 
-          {/* Footer */}
-          <div className="p-6 text-center">
-            <div className="text-green-400 text-sm" dir="rtl">
-              استعد للمسابقة!
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
             </div>
           </div>
         </div>

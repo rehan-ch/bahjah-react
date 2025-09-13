@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SplashLogo from '../../assests/splashLogo.svg';
+import FooterLogo from '../../assests/footerLogo.png';
 import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants';
 import apiService from '../../services/apiService';
 
@@ -60,11 +62,19 @@ const QuestionsResult = ({data}) => {
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
+          <div className="mb-12 text-center">
+              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+                <img
+                  src={SplashLogo}
+                  alt="Saudi National Day 95"
+                  className="w-[150px] h-full object-contain"
+                />
+              </div>
+            </div>
+          
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            
-            {/* Error Display */}
             {error && (
-              <div className="bg-red-600 text-white p-3 rounded-lg text-center" dir="rtl">
+              <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
                 {error}
               </div>
             )}
@@ -80,7 +90,7 @@ const QuestionsResult = ({data}) => {
 
             {/* Correct Answer */}
             <div className="flex justify-center">
-              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-lg p-4 flex items-center justify-between">
+              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                   <span className="text-green-600 text-sm">✓</span>
                 </div>
@@ -115,11 +125,11 @@ const QuestionsResult = ({data}) => {
           </div>
 
           {/* Footer */}
-          <div className="p-6">
+          <div className="p-6 flex justify-center">
             <button 
               onClick={handleNextQuestion}
               disabled={isLoading}
-              className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
+              className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
                 isLoading
                   ? "bg-gray-600 text-gray-400 cursor-not-allowed"
                   : "bg-green-500 hover:bg-green-600 text-white"
@@ -128,6 +138,17 @@ const QuestionsResult = ({data}) => {
             >
               {isLoading ? "جاري التحميل..." : "التالي"}
             </button>
+          </div>
+          
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiService from "../../services/apiService";
+import SplashLogo from "../../assests/splashLogo.svg";
+import FooterLogo from "../../assests/footerLogo.png";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
 const HostWaitingpage = ({leaderboard}) => {
@@ -95,12 +97,16 @@ const HostWaitingpage = ({leaderboard}) => {
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button onClick={() => navigate(-1)} className="text-green-400 font-medium" dir="rtl">
-              {UI_TEXT.BACK_BUTTON}
-            </button>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
-          </div>
+          {/* Header with Logo */}
+          <div className="mb-12 text-center">
+              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+                <img
+                  src={SplashLogo}
+                  alt="Saudi National Day 95"
+                  className="w-[150px] h-full object-contain"
+                />
+              </div>
+            </div>
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             {isLoading && (
@@ -115,7 +121,7 @@ const HostWaitingpage = ({leaderboard}) => {
             )}
 
             {error && (
-              <div className="bg-red-600 text-white p-4 rounded-lg text-center" dir="rtl">
+              <div className="bg-red-600 text-white p-4 rounded-full text-center" dir="rtl">
                 {error}
               </div>
             )}
@@ -134,7 +140,7 @@ const HostWaitingpage = ({leaderboard}) => {
                       {UI_TEXT.COPY}
                     </button>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-lg text-center font-mono text-lg">
+                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-full text-center font-mono text-lg">
                     {quizCode}
                   </div>
                 </div>
@@ -146,7 +152,7 @@ const HostWaitingpage = ({leaderboard}) => {
                       {UI_TEXT.COPY}
                     </button>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-lg text-center text-sm break-all">
+                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-full text-center text-sm break-all">
                     {joinUrl}
                   </div>
                 </div>
@@ -158,7 +164,7 @@ const HostWaitingpage = ({leaderboard}) => {
                       {UI_TEXT.COPY}
                     </button>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-lg text-center text-sm break-all">
+                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-full text-center text-sm break-all">
                     {previewUrl}
                   </div>
                 </div> */}
@@ -188,11 +194,11 @@ const HostWaitingpage = ({leaderboard}) => {
           </div>
 
           {!isLoading && !error && data && (
-            <div className="p-6">
+            <div className="p-6 flex flex-col items-center">
               <button
                 onClick={handleStartQuiz}
                 disabled={participants < 1}
-                className={"w-full py-4 px-6 rounded-full text-lg font-bold transition-colors bg-green-500 hover:bg-green-600 text-white"}
+                className={"py-4 px-6 rounded-full text-lg font-bold transition-colors bg-green-500 hover:bg-green-600 text-white min-w-[120px]"}
                 dir="rtl"
               >
                 {isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON}
@@ -204,6 +210,17 @@ const HostWaitingpage = ({leaderboard}) => {
               )}
             </div>
           )}
+          
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

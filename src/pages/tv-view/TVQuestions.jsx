@@ -1,14 +1,24 @@
 import React from 'react'
+import SplashLogo from '../../assests/splashLogo.svg'
+import FooterLogo from '../../assests/footerLogo.png'
 
 const TVQuestions = () => {
   return (
     <div className="bg-teal-900 min-h-screen text-white p-8">
     <div className="max-w-4xl mx-auto">
+      {/* Header with Logo */}
       <div className="flex justify-between items-center mb-8">
+        <div className="w-20 h-10 flex items-center justify-center">
+          <img
+            src={SplashLogo}
+            alt="Saudi National Day 95"
+            className="w-full h-full object-contain"
+          />
+        </div>
         <h1 className="text-2xl font-bold">Quiz Game</h1>
         <div className="flex items-center space-x-4">
           <span className="text-teal-300">Question 1/10</span>
-          <div className="bg-red-500 px-4 py-2 rounded text-xl font-mono">
+          <div className="bg-red-500 px-4 py-2 rounded-full text-xl font-mono">
             00:15
           </div>
         </div>
@@ -28,7 +38,7 @@ const TVQuestions = () => {
           ].map((option) => (
             <div 
               key={option.id}
-              className={`${option.color} p-6 rounded-lg text-2xl font-semibold`}
+              className={`${option.color} p-6 rounded-full text-2xl font-semibold`}
             >
               {option.id}. {option.text}
             </div>
@@ -36,8 +46,19 @@ const TVQuestions = () => {
         </div>
       </div>
       
-      <div className="text-center text-teal-300">
+      <div className="text-center text-teal-300 mb-8">
         Players are answering...
+      </div>
+      
+      {/* Footer with Logo */}
+      <div className="text-center mb-8">
+        <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+          <img
+            src={FooterLogo}
+            alt="Saudi National Day 95"
+            className="w-[150px] h-full object-contain"
+          />
+        </div>
       </div>
     </div>
   </div>

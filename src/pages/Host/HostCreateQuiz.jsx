@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../../services/apiService";
+import SplashLogo from "../../assests/splashLogo.svg";
+import FooterLogo from "../../assests/footerLogo.png";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
 const HostCreateQuiz = ({setIsStarted}) => {
@@ -39,7 +41,6 @@ const HostCreateQuiz = ({setIsStarted}) => {
     fetchCategories();
   }, []);
   
-  // Ensure question count never exceeds the maximum allowed from selected categories
   useEffect(() => {
     if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
       setQuestionCount(maxQuestions);
@@ -69,7 +70,6 @@ const HostCreateQuiz = ({setIsStarted}) => {
       return;
     }
 
-    // Guard: prevent submitting more than the allowed total questions
     if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
       setError(`لا يمكنك اختيار عدد أسئلة أكثر من الحد المسموح (${maxQuestions}).`);
       return;
@@ -113,19 +113,16 @@ const HostCreateQuiz = ({setIsStarted}) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
-        
         <div className="min-h-full bg-custom text-white flex flex-col">
-          
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
-          </div>
+         <div className="mb-12 text-center">
+              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+                <img
+                  src={SplashLogo}
+                  alt="Saudi National Day 95"
+                  className="w-[150px] h-full object-contain"
+                />
+              </div>
+            </div>
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             
@@ -155,7 +152,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${
+                        className={`w-full flex justify-between items-center px-4 py-3 rounded-full border-2 transition-colors ${
                           selectedCategory.some(cat => 
                             (typeof cat === 'string' ? cat : cat.name) === category.name
                           )
@@ -210,7 +207,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
                     setQuestionCount(Math.max(1, value));
                   }
                 }}
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
               {selectedCategory.length > 0 && (
                 <p className="text-xs text-teal-300 mt-2">
@@ -226,7 +223,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="اسمك"
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
@@ -237,21 +234,21 @@ const HostCreateQuiz = ({setIsStarted}) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="البريد الإلكتروني الخاص بك"
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
             {error && (
-              <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-600 text-white p-3 rounded-lg text-center z-50 max-w-sm mx-4" dir="rtl">
+              <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-600 text-white p-3 rounded-full text-center z-50 max-w-sm mx-4" dir="rtl">
                 {error}
               </div>
             )}
 
-            <div>
+            <div className="flex justify-center">
               <button
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${
+                className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
                   isLoading
                     ? "bg-gray-600 text-gray-400 cursor-not-allowed"
                     : "bg-green-500 hover:bg-green-600 text-white"
@@ -260,6 +257,17 @@ const HostCreateQuiz = ({setIsStarted}) => {
               >
                 {isLoading ? UI_TEXT.CREATING : UI_TEXT.START_BUTTON}
               </button>
+            </div>
+          </div>
+          
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
             </div>
           </div>
         </div>

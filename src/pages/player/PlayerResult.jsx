@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SplashLogo from '../../assests/splashLogo.svg';
+import FooterLogo from '../../assests/footerLogo.png';
 import { UI_TEXT } from '../../utills/constants';
 
 const PlayerResult = ({data}) => {
@@ -43,7 +45,7 @@ const PlayerResult = ({data}) => {
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
           
-          {/* Header */}
+          {/* Header with Logo */}
           <div className="flex justify-between items-center px-4 py-3 text-sm">
             <button
               onClick={() => navigate(-1)}
@@ -52,6 +54,13 @@ const PlayerResult = ({data}) => {
             >
               {UI_TEXT.BACK_BUTTON}
             </button>
+            <div className="w-16 h-8 flex items-center justify-center">
+              <img
+                src={SplashLogo}
+                alt="Saudi National Day 95"
+                className="w-full h-full object-contain"
+              />
+            </div>
             <span className="font-bold">{UI_TEXT.APP_NAME}</span>
           </div>
 
@@ -72,7 +81,7 @@ const PlayerResult = ({data}) => {
 
             {/* Correct Answer */}
             <div className="flex justify-center">
-              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-lg p-4 flex items-center justify-between">
+              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                   <span className="text-green-600 text-sm">✓</span>
                 </div>
@@ -103,6 +112,17 @@ const PlayerResult = ({data}) => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+          
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
             </div>
           </div>
         </div>

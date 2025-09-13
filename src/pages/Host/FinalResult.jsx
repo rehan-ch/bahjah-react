@@ -1,6 +1,9 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import SplashLogo from '../../assests/splashLogo.svg';
+import FooterLogo from '../../assests/footerLogo.png';
+import { UI_TEXT } from '../../utills/constants';
 import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 
 const FinalResult = ({data}) => {
@@ -20,6 +23,18 @@ const FinalResult = ({data}) => {
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px] h-[880px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col">
+          {/* Header with Logo */}
+          <div className="flex justify-between items-center px-4 py-3 text-sm">
+            <div className="w-16 h-8 flex items-center justify-center">
+              <img
+                src={SplashLogo}
+                alt="Saudi National Day 95"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
+            <div className="w-16 h-8"></div>
+          </div>
           
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             <div className="text-center" dir="rtl">
@@ -50,10 +65,20 @@ const FinalResult = ({data}) => {
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="p-6">
+          {/* Footer with Logo */}
+          <div className="mb-12 text-center">
+            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <img
+                src={FooterLogo}
+                alt="Saudi National Day 95"
+                className="w-[150px] h-full object-contain"
+              />
+            </div>
+          </div>
+          
+          <div className="p-6 flex justify-center">
             <button 
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]"
               dir="rtl" onClick={handleClick}
             >
               ابدأ لعبة جديدة

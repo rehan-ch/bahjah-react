@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SplashLogo from "../../assests/splashLogo.png";
-import FooterLogo from "../../assests/splashFooterLogo.png";
+import SplashLogo from "../../assests/splashLogo.svg";
+import FooterLogo from "../../assests/footerLogo.png";
 import FooterLogo2 from "../../assests/splashLogo2.png";
-
 
 const HostLoby = () => {
   const navigate = useNavigate();
@@ -19,8 +18,7 @@ const HostLoby = () => {
 
   useEffect(() => {
     localStorage.clear();
-  }, [])
-
+  }, []);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
@@ -36,7 +34,7 @@ const HostLoby = () => {
                 <img
                   src={SplashLogo}
                   alt="Saudi National Day 95"
-                  className="w-full h-full object-contain"
+                  className="w-[150px] h-full object-contain"
                 />
               </div>
             </div>
@@ -49,20 +47,21 @@ const HostLoby = () => {
                 className="text-base leading-relaxed px-4 text-center"
                 dir="rtl"
               >
-                أهلاً بكم في بهجة! هل أنتم مستعدون للانضمام
-                <br />
-                إلى المغامرة أم بدء لعبة جديدة؟
+                أهلاً بكم في بهجة! هل أنتم مستعدون للانضمام إلى المغامرة أو بدء
+                لعبة جديدة؟
               </p>
             </div>
 
             <div className="w-full max-w-sm space-y-4">
-              <button
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
-                dir="rtl"
-                onClick={handleStart}
-              >
-                إبدأ لعبة جديدة
-              </button>
+              <div className="flex justify-center">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]"
+                  dir="rtl"
+                  onClick={handleStart}
+                >
+                  إبدأ لعبة جديدة
+                </button>
+              </div>
 
               <div className="flex items-center justify-center gap-2 py-2">
                 <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
@@ -72,74 +71,33 @@ const HostLoby = () => {
               <div className="mb-4">
                 <input
                   type="text"
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={e => setCode(e.target.value)}
                   placeholder="أدخل الرمز"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-lg text-center text-lg focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-2 border-green-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-center text-lg focus:outline-none"
                   dir="rtl"
                 />
               </div>
 
-              <button
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors"
-                dir="rtl" onClick={handleStratPlayerGame}
-              >
-                انضم إلى اللعبة
-              </button>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="h-20 relative flex justify-center items-center">
-              <div className="flex">
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
-                <img
-                  src={FooterLogo}
-                  alt="Decorative Pattern"
-                  className="w-[210px] h-[60px] object-contain"
-                />
+              <div className="flex justify-center">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]"
+                  dir="rtl"
+                  onClick={handleStratPlayerGame}
+                >
+                  انضم إلى اللعبة
+                </button>
               </div>
             </div>
-
-            <div className="bg-teal-900 text-center py-3">
-              <p className="text-xs text-teal-300" dir="rtl">
-                جميع الحقوق محفوظة © 2024
-              </p>
-            </div>
           </div>
+        <div className="mb-12 text-center">
+          <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+            <img
+              src={FooterLogo}
+              alt="Saudi National Day 95"
+              className="w-[150px] h-full object-contain"
+            />
+          </div>
+        </div>
         </div>
       </div>
     </div>

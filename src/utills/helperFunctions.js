@@ -84,7 +84,7 @@ export const connectToGameChannel = (accessCode, userId, url = `${BASE_URL}/cabl
       }
     };
   } catch (error) {
-    // Silent error handling
+    console.error('WebSocket connection error:', error);
   }
 };
 
