@@ -83,7 +83,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
 
             <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
               <div className="flex justify-center">
-                <button type="button" className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]" dir="rtl" disabled>
+                <button type="button" className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]" dir="rtl" disabled>
                   إبدأ لعبة جديدة
                 </button>
               </div>
@@ -138,8 +138,8 @@ const PlayerJoinPage = ({setIsStarted}) => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
-                    isLoading ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600 text-white"
+                  className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
+                    isLoading ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-button text-white"
                   }`}
                   dir="rtl"
                 >

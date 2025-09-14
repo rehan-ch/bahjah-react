@@ -95,7 +95,7 @@ const handleNextQuestion = async () => {
           <div className="p-6 flex justify-center">
             <div className="space-y-3">
               <button 
-                className="border border-green-600 bg-custom hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px]"
+                className="border border-green-600 bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
                 dir="rtl" onClick={handleNextQuestion}
               >
                  التالي

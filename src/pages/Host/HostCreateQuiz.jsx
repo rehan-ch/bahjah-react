@@ -109,6 +109,29 @@ const HostCreateQuiz = ({setIsStarted}) => {
       setIsLoading(false);
     }
   };
+  const handleOnChange = (e) => {
+  const rawValue = e.target.value;
+
+  // Allow empty input so backspace works
+  if (rawValue === "") {
+    setQuestionCount("");
+    return;
+  }
+
+  const value = Number(rawValue);
+
+  if (!Number.isFinite(value)) {
+    setQuestionCount(1);
+    return;
+  }
+
+  if (maxQuestions > 0) {
+    const clamped = Math.max(1, Math.min(value, maxQuestions));
+    setQuestionCount(clamped);
+  } else {
+    setQuestionCount(Math.max(1, value));
+  }
+}
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
@@ -152,11 +175,11 @@ const HostCreateQuiz = ({setIsStarted}) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex justify-between items-center px-4 py-3 rounded-full border-2 transition-colors ${
+                        className={`w-full flex justify-between items-center px-4 py-3 rounded-[25px] border-2 transition-colors ${
                           selectedCategory.some(cat => 
                             (typeof cat === 'string' ? cat : cat.name) === category.name
                           )
-                            ? "bg-green-600 border-green-700"
+                            ? "bg-button border-green-700"
                             : "bg-teal-700 border-teal-500"
                         }`}
                       >
@@ -194,19 +217,7 @@ const HostCreateQuiz = ({setIsStarted}) => {
                 value={questionCount}
                 min={1}
                 max={maxQuestions || undefined}
-                onChange={(e) => {
-                  const value = Number(e.target.value);
-                  if (!Number.isFinite(value)) {
-                    setQuestionCount(1);
-                    return;
-                  }
-                  if (maxQuestions > 0) {
-                    const clamped = Math.max(1, Math.min(value, maxQuestions));
-                    setQuestionCount(clamped);
-                  } else {
-                    setQuestionCount(Math.max(1, value));
-                  }
-                }}
+                onChange={(e)=>handleOnChange(e)}
                 className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
               {selectedCategory.length > 0 && (
@@ -248,14 +259,14 @@ const HostCreateQuiz = ({setIsStarted}) => {
               <button
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
+                className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
                   isLoading
-                    ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-600 text-white"
+                    ? "bg-button text-gray-400 cursor-not-allowed"
+                    : "bg-button text-white"
                 }`}
                 dir="rtl"
               >
-                {isLoading ? UI_TEXT.CREATING : UI_TEXT.START_BUTTON}
+                {isLoading ? UI_TEXT.CREATING :" يخلق"}
               </button>
             </div>
           </div>

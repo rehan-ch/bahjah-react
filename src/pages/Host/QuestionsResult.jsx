@@ -129,10 +129,10 @@ const QuestionsResult = ({data}) => {
             <button 
               onClick={handleNextQuestion}
               disabled={isLoading}
-              className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
+              className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
                 isLoading
                   ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 text-white"
+                  : "bg-button text-white"
               }`}
               dir="rtl"
             >

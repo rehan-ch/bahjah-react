@@ -44,7 +44,7 @@ const PlayerWaiting = ({leaderboard,status}) => {
               <p className="text-red-400 mb-4">لم يتم العثور على معرف اللعبة</p>
               <div className="flex justify-center">
                 <button
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full min-w-[120px]"
+                  className="bg-button text-white font-bold py-2 px-4 rounded-[25px] min-w-[120px]"
                 >
                   العودة لصفحة الانضمام
                 </button>

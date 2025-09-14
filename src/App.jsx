@@ -10,7 +10,7 @@ import HostGameControl from './pages/Host/HostGameControl';
 import FinalResult from './pages/Host/FinalResult';
 import PlayerQuestions from './pages/player/playerQuestions';
 import PlayerResult from './pages/player/PlayerResult';
-import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, disconnectFromGameChannel, getConnectionInfo, testWebSocketConnection } from './utills/helperFunctions';
+import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, getConnectionInfo, testWebSocketConnection } from './utills/helperFunctions';
 
 
 const App = () => {
@@ -33,7 +33,6 @@ const App = () => {
         connectToGameChannel(accessCode, userId);
 
         subscribeToGameEvent('game_state', handleGameUpdate);
-        // subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
 
         setTimeout(() => {
           const connectionInfo = getConnectionInfo();
@@ -45,7 +44,6 @@ const App = () => {
       } catch (error) {
         connectToGameChannel(accessCode, null);
         subscribeToGameEvent('game_state', handleGameUpdate);
-        // subscribeToGameEvent('leaderboard_updated', handleGameUpdate);
       }
     };
 
@@ -53,7 +51,6 @@ const App = () => {
 
     return () => {
       unsubscribeFromGameEvent('game_state', () => {});
-      // unsubscribeFromGameEvent('leaderboard_updated', () => {});
     };
   }, [accessCode, userId,isStarted]);
 

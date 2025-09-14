@@ -11,6 +11,7 @@ module.exports = {
           lightGray: "#b7b5b3",
           darkGray: "#373f51",
           custom: "#00343A",
+          button: "#006936",
         },
       },
     },

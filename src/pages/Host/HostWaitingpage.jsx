@@ -140,7 +140,7 @@ const HostWaitingpage = ({leaderboard}) => {
                       {UI_TEXT.COPY}
                     </button>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-full text-center font-mono text-lg">
+                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-[25px] text-center font-mono text-lg">
                     {quizCode}
                   </div>
                 </div>
@@ -152,7 +152,7 @@ const HostWaitingpage = ({leaderboard}) => {
                       {UI_TEXT.COPY}
                     </button>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-full text-center text-sm break-all">
+                  <div className="bg-transparent border-2 border-green-400 text-white py-3 px-4 rounded-[25px] text-center text-sm break-all">
                     {joinUrl}
                   </div>
                 </div>
@@ -198,7 +198,7 @@ const HostWaitingpage = ({leaderboard}) => {
               <button
                 onClick={handleStartQuiz}
                 disabled={participants < 1}
-                className={"py-4 px-6 rounded-full text-lg font-bold transition-colors bg-green-500 hover:bg-green-600 text-white min-w-[120px]"}
+                className={"py-4 px-6 rounded-[25px] text-lg font-bold transition-colors bg-button text-white min-w-[120px]"}
                 dir="rtl"
               >
                 {isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON}
