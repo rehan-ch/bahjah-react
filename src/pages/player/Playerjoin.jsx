@@ -68,8 +68,8 @@ const PlayerJoinPage = ({setIsStarted}) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
-        <div className="w-[420px] overflow-hidden">
+    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide overflow-x-hidden">
+        <div className="w-[520px] overflow-hidden">
           <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
             <div className="mb-12 text-center">
@@ -79,7 +79,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
             </div>
 
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold mb-6 leading-relaxed" dir="rtl">مسابقة اليوم الوطني</h1>
+              <h1 className="text-2xl font-bold mb-6 font-saudi text-[32px]" dir="rtl">مسابقة اليوم الوطني</h1>
             </div>
 
             <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
@@ -93,7 +93,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
               <img src={GroupLogo} alt="decor" className="w-40 h-10" />
                 <img src={GroupLogo1} alt="decor" className="w-40 h-10" />
                 <img src={GroupLogo2} alt="decor" className="w-40 h-10" />
-                <span className="text-lg mx-2 whitespace-nowrap">انضم إلى اللعبة</span>
+                <span className="text-lg mx-2 whitespace-nowrap font-saudi text-[19px]">انضم إلى اللعبة</span>
                 <img src={GroupLogo3} alt="decor" className="w-40 h-10" />
                 <img src={GroupLogo4} alt="decor" className="w-40 h-10" />
                 <img src={GroupLogo5} alt="decor" className="w-40 h-10" />
@@ -108,7 +108,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                   placeholder="أدخل رمز اللعبة"
                   autoComplete="one-time-code"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent font-saudi text-[15px] border-2 border-teal-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
@@ -119,7 +119,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="اسمك"
-                  className="w-full bg-transparent border-[2px] border-green-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-[3px] font-saudi text-[15px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
                 />
               </div>
 
@@ -130,7 +130,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="البريد الإلكتروني الخاص بك"
-                  className="w-full bg-transparent border-[2px] border-green-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-[2px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
                 />
               </div>
 
@@ -144,9 +144,8 @@ const PlayerJoinPage = ({setIsStarted}) => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
-                    isLoading ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-button text-white"
-                  }`}
+                  className={`inline-flex h-[56px] px-[48px] py-[18px] justify-center items-center text-white rounded-[24px] font-saudi text-[24px] transition-colors 
+                    ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-button hover:bg-green-700"}`}
                   dir="rtl"
                 >
                   {isLoading ? UI_TEXT.JOINING : UI_TEXT.START_GAME}

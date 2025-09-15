@@ -113,7 +113,7 @@ const QuestionsResult = ({data}) => {
                       </div>
                       <span className="text-white font-saudi text-[24px]">{player.name}</span>
                     </div>
-                    <span className="text-white font-bold font-saudi text-[24px]">PT {player.score}</span>
+                    <span className="text-white font-saudi text-[24px]" dir='ltr'>{player.score} PT</span>
                   </div>
                 ))}
                 

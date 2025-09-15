@@ -75,7 +75,7 @@ const PlayerResult = ({data}) => {
 
             {/* Results Section */}
             <div dir="rtl">
-              <h2  className="text-3xl text-right  mb-4 text-center">نتائج</h2>
+              <h2  className="text-3xl text-right font-saudi text-[32px]">نتائج</h2>
               
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (
@@ -93,9 +93,9 @@ const PlayerResult = ({data}) => {
                           </defs>
                       </svg>
                       </div>
-                      <span className="text-white">{player.name}</span>
+                      <span className="text-white font-saudi text-[24px]">{player.name}</span>
                     </div>
-                    <span className="text-white font-bold" dir='ltr'>{player.score} PT </span>
+                    <span className="text-white font-saudi text-[24px]" dir='ltr'>{player.score} PT </span>
                   </div>
                 ))}
                 

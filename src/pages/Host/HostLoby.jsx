@@ -41,10 +41,8 @@ useEffect(() => {
           <div className="flex justify-between items-center px-6 py-2 text-white text-sm font-medium">
             <div className="flex items-center space-x-1" />
           </div>
-
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
             <HeaderLogo />
-
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold mb-6 leading-relaxed font-saudi text-[32px]" dir="rtl">
                 مرحباً بكم في بهجة

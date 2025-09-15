@@ -178,18 +178,17 @@ const HostWaitingpage = ({leaderboard}) => {
                   </div>
 
                   {participants.length < 1 && (
-                    <div className="text-center py-4 text-green-300 text-sm">{ERROR_MESSAGES.WAITING_FOR_PLAYERS}</div>
+                    <div className="text-center py-4 text-white font-saudi text-sm">{ERROR_MESSAGES.WAITING_FOR_PLAYERS}</div>
                   )}
                 </div>
               </>
             )}
           </div>
-
           {!isLoading && !error && data && (
             <div className="p-6 flex flex-col items-center">
-              <GreenButton text={isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON} handleClick={handleStartQuiz} disabled={participants < 1} />
+              <GreenButton text={isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON} handleClick={handleStartQuiz}/>
               {totalPlayers < 1 && !isFinished && (
-                <p className="text-center text-green-300 text-sm mt-2" dir="rtl">
+                <p className="text-center text-white font-saudi text-sm mt-2" dir="rtl">
                   {ERROR_MESSAGES.WAITING_FOR_JOIN}
                 </p>
               )}

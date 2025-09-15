@@ -144,7 +144,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px]">
-        <div className="min-h-full bg-custom text-white flex flex-col">
+        <div className="min-h-full bg-custom text-white flex flex-col  px-6 py-8">
           <HeaderLogo />
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             <div className="text-right space-y-2" dir="rtl">
@@ -209,10 +209,10 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 min={1}
                 max={maxQuestions || undefined}
                 onChange={(e)=>handleOnChange(e)}
-                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full no-spinner bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none"
               />
               {selectedCategory.length > 0 && (
-                <p className="text-xs text-teal-300 mt-2">
+                <p className="text-xs text-white mt-2 font-saudi text-[15px]">
                   الحد الأقصى المسموح بناءً على الفئات المختارة: {maxQuestions}
                 </p>
               )}
@@ -225,7 +225,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="اسمك"
-                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none"
               />
             </div>
 
@@ -236,7 +236,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="البريد الإلكتروني الخاص بك"
-                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none"
               />
             </div>
 

@@ -3,8 +3,8 @@ import SplashLogo from '../assests/splashLogo.svg';
 
 const HeaderLogo = ({ className = "" }) => {
   return (
-    <div className={`mb-12 text-center ${className}`}>
-      <div className="w-36 h-24 text-center mx-auto rounded flex items-center justify-center">
+    <div class="flex w-[402px] px-[16px] pt-[21px] pb-[19px] justify-center items-center gap-[154px]">
+      <div className="w-[80px] h-[32px] text-center mx-auto rounded flex items-center justify-center">
         <img 
           src={SplashLogo} 
           alt="Saudi National Day 95" 

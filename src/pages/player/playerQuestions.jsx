@@ -82,7 +82,7 @@ const PlayerQuestions = ({data}) => {
             </div>
 
             <div className="bg-custom rounded-full p-4" dir="rtl">
-              <h2 className="text-white text-right text-3xl leading-10 tracking-wide mb-4">
+              <h2 className="text-white text-right leading-10 tracking-wide mb-4 font-saudi text-[32px]">
                 {question}
               </h2>
               <div className="space-y-3">
@@ -91,7 +91,7 @@ const PlayerQuestions = ({data}) => {
                     key={idx}
                     onClick={() => setSelectedOption(option)}
                     className={`
-                      w-full py-2 px-4 rounded-full border-2 text-center font-medium transition-colors flex items-center justify-between
+                      w-full py-2 px-4 rounded-full border-2 flex items-center justify-between font-saudi text-[24px]
                       ${selectedOption === option
                         ? "border-borderGreen text-white"
                         : "text-white hover:border-borderGreen"
