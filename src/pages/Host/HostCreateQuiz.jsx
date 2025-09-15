@@ -184,23 +184,23 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex justify-between items-center px-4 py-3 rounded-full transition-colors ${getButtonBorderClasses(category)}`}
+                        className={`w-full flex items-center px-4 py-2 rounded-full transition-colors ${getButtonBorderClasses(category)}`}
+                        dir="ltr"
                       >
-                        <span>{category.name_ar}</span>
-                        <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedCategory.some(cat =>
-                            (typeof cat === 'string' ? cat : cat.name) === category.name
-                          )
-                            ? "bg-green-500 border-green-600"
-                            : "border-gray-400"
-                            }`}
-                        >
+                        <div className="w-6 h-6 flex items-center justify-center mr-3">
                           {selectedCategory.some(cat =>
                             (typeof cat === 'string' ? cat : cat.name) === category.name
-                          ) && (
-                              <span className="w-2 h-2 bg-white rounded-full"></span>
-                            )}
+                          ) ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+                              <path d="M12 1C4.29 1 1 4.29 1 12C1 19.71 4.29 23 12 23C19.71 23 23 19.71 23 12C23 4.29 19.71 1 12 1ZM17.305 9.539C15.993 11.592 14.125 14.165 11.304 15.858C10.98 16.053 10.573 16.048 10.254 15.845C8.734 14.882 7.593 13.85 6.66 12.597C6.33 12.154 6.422 11.528 6.865 11.198C7.307 10.868 7.934 10.961 8.263 11.403C8.937 12.308 9.751 13.082 10.799 13.808C12.959 12.348 14.443 10.301 15.618 8.462C15.917 7.996 16.535 7.86 16.999 8.158C17.465 8.456 17.602 9.074 17.305 9.539Z" fill="#008A4A"/>
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path d="M12 1C4.29 1 1 4.29 1 12C1 19.71 4.29 23 12 23C19.71 23 23 19.71 23 12C23 4.29 19.71 1 12 1ZM17.305 9.539C15.993 11.592 14.125 14.165 11.304 15.858C10.98 16.053 10.573 16.048 10.254 15.845C8.734 14.882 7.593 13.85 6.66 12.597C6.33 12.154 6.422 11.528 6.865 11.198C7.307 10.868 7.934 10.961 8.263 11.403C8.937 12.308 9.751 13.082 10.799 13.808C12.959 12.348 14.443 10.301 15.618 8.462C15.917 7.996 16.535 7.86 16.999 8.158C17.465 8.456 17.602 9.074 17.305 9.539Z" fill="white" fill-opacity="0.4"/>
+                            </svg>
+                         )}
                         </div>
+                        <span className="flex-1 text-center">{category.name_ar}</span>
                       </button>
                     ))
                   ) : (
@@ -220,7 +220,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 min={1}
                 max={maxQuestions || undefined}
                 onChange={(e)=>handleOnChange(e)}
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
               {selectedCategory.length > 0 && (
                 <p className="text-xs text-teal-300 mt-2">
@@ -236,7 +236,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="اسمك"
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
@@ -247,7 +247,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="البريد الإلكتروني الخاص بك"
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
