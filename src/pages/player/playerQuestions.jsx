@@ -105,10 +105,10 @@ const PlayerQuestions = ({data}) => {
 
             {/* Current Question with Options */}
             <div className="bg-custom rounded-full p-4" dir="rtl">
-              <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3>
-              <p className="text-sm text-center leading-relaxed mb-4">
+              {/* <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3> */}
+              <h2 className="text-white text-right text-3xl leading-10 tracking-wide mb-4">
                 {question}
-              </p>
+              </h2>
 
               {/* Question Options */}
               <div className="space-y-3">
@@ -162,7 +162,7 @@ const PlayerQuestions = ({data}) => {
                 }`}
                 dir="rtl"
               >
-                {isSubmitting ? "جاري الإرسال..." : "التالي"}
+                {isSubmitting ? "جاري الإرسال..." : "يُقدِّم"}
               </button>
             </div>
           </div>
