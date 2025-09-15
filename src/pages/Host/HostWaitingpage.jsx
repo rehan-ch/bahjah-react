@@ -154,7 +154,7 @@ const HostWaitingpage = ({leaderboard}) => {
                 </div> */}
 
                 <div dir="rtl">
-                  <h3 className="mb-4 font-bold font-saudi text-[17px]">مشاركون</h3>
+                  <h3 className="mb-4 font-saudi text-[17px]">مشاركون</h3>
                   <div className="space-y-3">
                     {participants.map((participant, index) => (
                       <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-400">
@@ -171,7 +171,7 @@ const HostWaitingpage = ({leaderboard}) => {
                               </defs>
                             </svg>
                           </div>
-                          <span className="text-white font-bold font-saudi text-[24px]">{participant.name}</span>
+                          <span className="text-white font-saudi text-[24px]">{participant.name}</span>
                         </div>
                       </div>
                     ))}

@@ -84,16 +84,18 @@ const QuestionsResult = ({data}) => {
             {/* Correct Answer */}
             <div className="flex justify-center">
               <div className="w-full max-w-sm bg-transparent border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
-                <div className="w-6 h-6 bg-leafGreen rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm">✓</span>
-                </div>
+              <div className="w-6 h-6 flex items-left justify-center justify-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" className="w-6 h-6">
+                  <path d="M11 0C3.29 0 0 3.29 0 11C0 18.71 3.29 22 11 22C18.71 22 22 18.71 22 11C22 3.29 18.71 0 11 0ZM16.305 8.539C14.993 10.592 13.125 13.165 10.304 14.858C9.98 15.053 9.573 15.048 9.254 14.845C7.734 13.882 6.593 12.85 5.66 11.597C5.33 11.154 5.422 10.528 5.865 10.198C6.307 9.868 6.934 9.961 7.263 10.403C7.937 11.308 8.751 12.082 9.799 12.808C11.959 11.348 13.443 9.301 14.618 7.462C14.917 6.996 15.535 6.86 15.999 7.158C16.465 7.456 16.602 8.074 16.305 8.539Z" fill="#008A4A"/>
+                </svg>
+              </div>
                 <span className="text-white font-bold text-lg">{correctAnswerText}</span>
               </div>
             </div>
 
             {/* Results Section */}
             <div className="text-right" dir="rtl">
-              <h3 className="font-bold mb-4  font-saudi text-[32px]">نتائج</h3>
+              <h3 className="mb-4 font-saudi text-[32px]">نتائج</h3>
               
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (

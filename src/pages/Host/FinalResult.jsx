@@ -26,13 +26,13 @@ const FinalResult = ({data}) => {
           <HeaderLogo />
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             <div className="text-right" dir="rtl">
-              <p className="text-lg  mb-2 font-saudi text-[16px]">
+              <p className="text-lg mb-2 font-saudi text-[16px]">
               مسابقة اليوم الوطني
               </p>
             </div>
 
             <div dir="rtl">
-            <h2  className="text-3xl text-right mb-4 text-center font-saudi text-[32px]">نتائج</h2>
+            <h2  className="text-right mb-4 text-center font-saudi text-[32px]">نتائج</h2>
 
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (
