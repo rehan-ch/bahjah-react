@@ -108,7 +108,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                   placeholder="أدخل رمز اللعبة"
                   autoComplete="one-time-code"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
@@ -119,7 +119,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="اسمك"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-[2px] border-green-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 
@@ -130,7 +130,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="example@email.com"
-                  className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                  className="w-full bg-transparent border-[2px] border-green-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
 

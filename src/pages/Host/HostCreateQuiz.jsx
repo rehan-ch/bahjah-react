@@ -261,9 +261,9 @@ const HostCreateQuiz = ({ setIsStarted }) => {
               <button
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className={`w-full font-bold py-4 px-6 rounded-full text-lg transition-colors ${isLoading
-                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 text-white"
+                className={`font-bold py-4 px-12 rounded-full text-lg transition-colors ${isLoading
+                  ? "bg-button text-gray-400 cursor-not-allowed"
+                  : "bg-button text-white"
                   }`}
                 dir="rtl"
               >

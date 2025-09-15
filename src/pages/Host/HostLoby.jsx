@@ -68,7 +68,7 @@ useEffect(() => {
             <div className="w-full max-w-sm space-y-4">
               <div className="flex justify-center">
                 <button
-                  className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
+                  className="bg-button text-white py-2 px-7 rounded-[25px] text-lg transition-colors min-w-[120px]"
                   dir="rtl"
                   onClick={handleStart}
                 >
@@ -90,14 +90,14 @@ useEffect(() => {
                   type="text"
                   onChange={e => setCode(e.target.value)}
                   placeholder="أدخل الرمز"
-                  className="w-full bg-transparent border-2 border-green-700 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right text-lg focus:outline-none"
+                  className="w-full bg-transparent border-[2px] border-green-700 text-white placeholder-white py-2 px-4 rounded-full text-right text-lg focus:outline-none"
                   dir="rtl"
                 />
               </div>
 
               <div className="flex justify-center">
                 <button
-                  className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
+                  className="bg-button text-white py-2 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
                   dir="rtl"
                   onClick={handleStratPlayerGame}
                 >

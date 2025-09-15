@@ -117,18 +117,20 @@ const PlayerQuestions = ({data}) => {
                     key={idx}
                     onClick={() => setSelectedOption(option)}
                     className={`
-                      w-full py-3 px-4 rounded-full border-2 text-center font-medium transition-colors flex items-center justify-between
+                      w-full py-2 px-4 rounded-full border-2 text-center font-medium transition-colors flex items-center justify-between
                       ${selectedOption === option
-                        ? "bg-green-600 border-green-700 text-white"
-                        : "bg-teal-700 border-teal-500 text-white hover:bg-teal-600"
+                        ? "border-borderGreen text-white"
+                        : "text-white hover:bg-teal-600"
                       }
                     `}
                     dir="rtl"
                   >
                     <span>{option}</span>
                     {selectedOption === option && (
-                      <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                        <span className="text-green-600 text-sm">✓</span>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" className="w-6 h-6">
+                          <path d="M11 0C3.29 0 0 3.29 0 11C0 18.71 3.29 22 11 22C18.71 22 22 18.71 22 11C22 3.29 18.71 0 11 0ZM16.305 8.539C14.993 10.592 13.125 13.165 10.304 14.858C9.98 15.053 9.573 15.048 9.254 14.845C7.734 13.882 6.593 12.85 5.66 11.597C5.33 11.154 5.422 10.528 5.865 10.198C6.307 9.868 6.934 9.961 7.263 10.403C7.937 11.308 8.751 12.082 9.799 12.808C11.959 11.348 13.443 9.301 14.618 7.462C14.917 6.996 15.535 6.86 15.999 7.158C16.465 7.456 16.602 8.074 16.305 8.539Z" fill="#008A4A"/>
+                        </svg>
                       </div>
                     )}
                   </button>

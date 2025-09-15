@@ -164,7 +164,7 @@ const HostWaitingpage = ({leaderboard}) => {
                   <h3 className="text-lg font-bold mb-4">مشاركون</h3>
                   <div className="space-y-3">
                     {participants.map((participant, index) => (
-                      <div key={participant.id} className="flex items-center justify-between py-2">
+                      <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-400">
                         <div className="flex items-center space-x-3" dir="rtl">
                           <div className="w-6 h-6 rounded-full flex items-center justify-center ml-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none" className="text-leafGreen">
@@ -180,7 +180,6 @@ const HostWaitingpage = ({leaderboard}) => {
                           </div>
                           <span className="text-white font-bold">{participant.name}</span>
                         </div>
-                        <div className="text-green-400 text-sm">{index === 0 ? UI_TEXT.HOST : UI_TEXT.PARTICIPANT}</div>
                       </div>
                     ))}
                   </div>
