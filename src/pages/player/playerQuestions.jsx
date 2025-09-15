@@ -70,14 +70,7 @@ const PlayerQuestions = ({data}) => {
         <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           
           {/* Header with Logo */}
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
+          <div className="flex justify-center items-center px-4 py-3 text-sm">
             <div className="w-16 h-8 flex items-center justify-center">
               <img
                 src={SplashLogo}
@@ -85,7 +78,6 @@ const PlayerQuestions = ({data}) => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
           </div>
 
           {/* Content */}
@@ -120,7 +112,7 @@ const PlayerQuestions = ({data}) => {
                       w-full py-2 px-4 rounded-full border-2 text-center font-medium transition-colors flex items-center justify-between
                       ${selectedOption === option
                         ? "border-borderGreen text-white"
-                        : "text-white hover:bg-teal-600"
+                        : "text-white hover:bg-green-600"
                       }
                     `}
                     dir="rtl"
@@ -157,7 +149,7 @@ const PlayerQuestions = ({data}) => {
                 disabled={!selectedOption || isSubmitting}
                 className={`font-bold py-4 px-6 rounded-full text-lg transition-colors min-w-[120px] ${
                   selectedOption && !isSubmitting
-                    ? "bg-green-500 hover:bg-green-600 text-white"
+                    ? "bg-button text-white"
                     : "bg-gray-600 text-gray-400 cursor-not-allowed"
                 }`}
                 dir="rtl"
