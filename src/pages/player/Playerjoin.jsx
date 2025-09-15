@@ -73,7 +73,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
           <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
             <div className="mb-12 text-center">
-              <div className="w-50 h-20 mx-auto rounded flex items-center justify-center">
+              <div className="w-36 h-24 rounded flex items-center justify-center">
                 <img src={SplashLogo} alt="Saudi National Day 95" className="w-full h-full object-contain" />
               </div>
             </div>
@@ -113,7 +113,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
               </div>
 
               <div dir="rtl">
-                <label className="block mb-2 text-sm">اسمك</label>
+                {/* <label className="block mb-2 text-sm">اسمك</label> */}
                 <input
                   type="text"
                   value={name}
@@ -124,12 +124,12 @@ const PlayerJoinPage = ({setIsStarted}) => {
               </div>
 
               <div dir="rtl">
-                <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label>
+                {/* <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label> */}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="example@email.com"
+                  placeholder="البريد الإلكتروني الخاص بك"
                   className="w-full bg-transparent border-[2px] border-green-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
                 />
               </div>
@@ -154,6 +154,10 @@ const PlayerJoinPage = ({setIsStarted}) => {
               </div>
             </form>
           </div>
+
+          <div className="text-center mb-8">
+              <p className="text-lg font-bold mb-6 leading-relaxed" dir="rtl">STREAM</p>
+            </div>
 
           <div className="relative">
             <div className="h-20 relative flex justify-center items-center">

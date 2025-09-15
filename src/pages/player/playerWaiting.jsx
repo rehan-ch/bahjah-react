@@ -61,7 +61,7 @@ const PlayerWaiting = ({leaderboard,status}) => {
         <div className="w-[420px] overflow-hidden">
           <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
         <div className="mb-12 text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
+              <div className="w-36 h-24 mx-auto rounded flex items-center justify-center">
                 <img
                   src={SplashLogo}
                   alt="Saudi National Day 95"
@@ -97,7 +97,7 @@ const PlayerWaiting = ({leaderboard,status}) => {
                   <h3 className="text-lg font-bold mb-4">مشاركون</h3>
                   <div className="space-y-3">
                     {participants.map((participant, index) => (
-                      <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-400">
+                      <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-700">
                         <div className="flex items-center space-x-3" dir="rtl">
                         <div className="w-6 h-6 rounded-full flex items-center justify-center ml-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none" className="text-leafGreen">
@@ -127,12 +127,9 @@ const PlayerWaiting = ({leaderboard,status}) => {
                     اللعبة سوف تبدأ قريبا
                   </div>
                   <div className="flex justify-center space-x-1">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                  </div>
-                  <div className="text-sm text-teal-300 mt-2" dir="rtl">
-                    في انتظار المضيف لبدء اللعبة...
+                    <div className="w-2 h-2 bg-green-700 rounded-full animate-pulse ml-1" style={{animationDelay: '0.1s'}}></div>
+                    <div className="w-2 h-2 bg-green-700 rounded-full animate-pulse ml-1" style={{animationDelay: '0.3s'}}></div>
+                    <div className="w-2 h-2 bg-green-700 rounded-full animate-pulse ml-1" style={{animationDelay: '0.5s'}}></div>
                   </div>
                 </div>
               </>

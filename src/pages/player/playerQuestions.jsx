@@ -91,8 +91,8 @@ const PlayerQuestions = ({data}) => {
             )}
 
             {/* Question Progress */}
-            <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
+            <div className="text-right" dir="rtl">
+              <h2 className="text-lg font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
 
             {/* Current Question with Options */}
@@ -112,7 +112,7 @@ const PlayerQuestions = ({data}) => {
                       w-full py-2 px-4 rounded-full border-2 text-center font-medium transition-colors flex items-center justify-between
                       ${selectedOption === option
                         ? "border-borderGreen text-white"
-                        : "text-white hover:bg-green-600"
+                        : "text-white hover:border-borderGreen"
                       }
                     `}
                     dir="rtl"

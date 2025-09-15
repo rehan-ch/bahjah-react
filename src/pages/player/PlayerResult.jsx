@@ -73,9 +73,9 @@ const PlayerResult = ({data}) => {
 
             {/* Correct Answer */}
             <div className="flex justify-center">
-              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-green-600 text-sm">✓</span>
+              <div className="w-full max-w-sm border-borderGreen border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
+                <div className="w-6 h-6 bg-green-700 rounded-full flex items-center justify-center">
+                  <span className="text-black text-sm">✓</span>
                 </div>
                 <span className="text-white font-bold text-lg">{correctAnswerText}</span>
               </div>
@@ -83,7 +83,7 @@ const PlayerResult = ({data}) => {
 
             {/* Results Section */}
             <div dir="rtl">
-              <h2  className="text-3xl text-right font-bold mb-4 text-center">نتائج</h2>
+              <h2  className="text-3xl text-right  mb-4 text-center">نتائج</h2>
               
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (
@@ -103,7 +103,7 @@ const PlayerResult = ({data}) => {
                       </div>
                       <span className="text-white">{player.name}</span>
                     </div>
-                    <span className="text-white font-bold">PT {player.score}</span>
+                    <span className="text-white font-bold" dir='ltr'>{player.score} PT </span>
                   </div>
                 ))}
                 
