@@ -162,9 +162,9 @@ const PlayerJoinPage = ({setIsStarted}) => {
               </div>
             </div>
 
-            <div className="bg-teal-900 text-center py-3">
+            {/* <div className="bg-teal-900 text-center py-3">
               <p className="text-xs text-teal-300" dir="rtl">{UI_TEXT.COPYRIGHT}</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
