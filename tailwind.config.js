@@ -12,6 +12,7 @@ module.exports = {
           darkGray: "#373f51",
           custom: "#00343A",
           button: "#006936",
+          borderGreen: "#008346",
         },
       },
     },
