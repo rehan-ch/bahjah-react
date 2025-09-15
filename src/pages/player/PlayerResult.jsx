@@ -46,14 +46,7 @@ const PlayerResult = ({data}) => {
         <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           
           {/* Header with Logo */}
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
+          <div className="flex justify-center items-center px-4 py-3 text-sm">
             <div className="w-16 h-8 flex items-center justify-center">
               <img
                 src={SplashLogo}
@@ -61,7 +54,6 @@ const PlayerResult = ({data}) => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
           </div>
 
           {/* Content */}

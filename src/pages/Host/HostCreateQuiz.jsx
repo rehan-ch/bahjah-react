@@ -133,27 +133,33 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   }
 }
 
+  const getButtonBorderClasses = (category) => {
+    const isSelected = selectedCategory.some(cat =>
+      (typeof cat === 'string' ? cat : cat.name) === category.name
+    );
+    return isSelected ? 'border-[3px] border-borderGreen' : 'border-[3px] border-gray-400';
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px]">
 
         <div className="min-h-full bg-custom text-white flex flex-col">
 
-          <div className="flex justify-between items-center px-4 py-3 text-sm">
-            <button
-              onClick={() => navigate(-1)}
-              className="text-green-400 font-medium"
-              dir="rtl"
-            >
-              {UI_TEXT.BACK_BUTTON}
-            </button>
-            <span className="font-bold">{UI_TEXT.APP_NAME}</span>
+          <div className="flex justify-center items-center px-4 py-3 text-sm">
+            <div className="w-16 h-8 flex items-center justify-center">
+              <img
+                src={SplashLogo}
+                alt="Saudi National Day 95"
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
 
-            <div className="text-center space-y-2" dir="rtl">
-              <h2 className="text-lg font-bold">اسم اللعبة</h2>
+            <div className="text-right space-y-2" dir="rtl">
+              <h2 className="text-sm">اسم اللعبة</h2>
               <p className="text-xl font-bold">{UI_TEXT.GAME_TITLE}</p>
             </div>
 
@@ -178,12 +184,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex justify-between items-center px-4 py-3 rounded-lg border-2 transition-colors ${selectedCategory.some(cat =>
-                          (typeof cat === 'string' ? cat : cat.name) === category.name
-                        )
-                          ? "bg-green-600 border-green-700"
-                          : "bg-teal-700 border-teal-500"
-                          }`}
+                        className={`w-full flex justify-between items-center px-4 py-3 rounded-full transition-colors ${getButtonBorderClasses(category)}`}
                       >
                         <span>{category.name_ar}</span>
                         <div
@@ -219,7 +220,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 min={1}
                 max={maxQuestions || undefined}
                 onChange={(e)=>handleOnChange(e)}
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
               {selectedCategory.length > 0 && (
                 <p className="text-xs text-teal-300 mt-2">
@@ -235,7 +236,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="اسمك"
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
@@ -246,7 +247,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="البريد الإلكتروني الخاص بك"
-                className="w-full bg-transparent border-2 border-teal-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-teal-300 py-3 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
