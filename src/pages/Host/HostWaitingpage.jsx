@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiService from "../../services/apiService";
-import SplashLogo from "../../assests/splashLogo.svg";
-import FooterLogo from "../../assests/footerLogo.png";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
+import HeaderLogo from "../../Components/HeaderLogo";
+import FooterLogoComponent from "../../Components/FooterLogo";
 
 const HostWaitingpage = ({leaderboard}) => {
   const navigate = useNavigate();
@@ -98,15 +98,7 @@ const HostWaitingpage = ({leaderboard}) => {
         <div className="w-[420px] overflow-hidden">
           <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
           {/* Header with Logo */}
-          <div className="mb-2text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-                <img
-                  src={SplashLogo}
-                  alt="Saudi National Day 95"
-                  className="w-[150px] h-full object-contain"
-                />
-              </div>
-            </div>
+          <HeaderLogo />
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             {isLoading && (
@@ -211,15 +203,7 @@ const HostWaitingpage = ({leaderboard}) => {
           )}
           
           {/* Footer with Logo */}
-          <div className="mb-12 text-center">
-            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-              <img
-                src={FooterLogo}
-                alt="Saudi National Day 95"
-                className="w-[150px] h-full object-contain"
-              />
-            </div>
-          </div>
+          <FooterLogoComponent />
         </div>
       </div>
     </div>

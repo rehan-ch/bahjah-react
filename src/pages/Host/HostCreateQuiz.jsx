@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../../services/apiService";
-import SplashLogo from "../../assests/splashLogo.svg";
-import FooterLogo from "../../assests/footerLogo.png";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
+import HeaderLogo from "../../Components/HeaderLogo";
+import FooterLogoComponent from "../../Components/FooterLogo";
 
 const HostCreateQuiz = ({ setIsStarted }) => {
   const navigate = useNavigate();
@@ -146,15 +146,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
 
         <div className="min-h-full bg-custom text-white flex flex-col">
 
-          <div className="flex justify-center items-center px-4 py-3 text-sm">
-            <div className="w-16 h-8 flex items-center justify-center">
-              <img
-                src={SplashLogo}
-                alt="Saudi National Day 95"
-                className="w-full h-full object-contain"
-              />
-            </div>
-          </div>
+          <HeaderLogo />
 
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
 
@@ -273,15 +265,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
           </div>
           
           {/* Footer with Logo */}
-          <div className="mb-12 text-center">
-            <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-              <img
-                src={FooterLogo}
-                alt="Saudi National Day 95"
-                className="w-[150px] h-full object-contain"
-              />
-            </div>
-          </div>
+          <FooterLogoComponent />
         </div>
       </div>
     </div>

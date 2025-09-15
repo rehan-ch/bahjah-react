@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SplashLogo from "../../assests/splashLogo.svg";
-import FooterLogo from "../../assests/footerLogo.png";
 import GroupLogo from "../../assests/groupLogo.svg";
 import GroupLogo1 from "../../assests/groupLogo1.svg";
 import GroupLogo2 from "../../assests/groupLogo2.svg";
 import GroupLogo3 from "../../assests/groupLogo3.svg";
 import GroupLogo4 from "../../assests/groupLogo4.svg";
 import GroupLogo5 from "../../assests/groupLogo5.svg";
+import HeaderLogo from "../../Components/HeaderLogo";
+import FooterLogoComponent from "../../Components/FooterLogo";
 
 const HostLoby = () => {
   const navigate = useNavigate();
@@ -42,15 +42,7 @@ useEffect(() => {
           </div>
 
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-            <div className="mb-12 text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-                <img
-                  src={SplashLogo}
-                  alt="Saudi National Day 95"
-                  className="w-[150px] h-full object-contain"
-                />
-              </div>
-            </div>
+            <HeaderLogo />
 
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold mb-6 leading-relaxed" dir="rtl">
@@ -105,15 +97,7 @@ useEffect(() => {
               </div>
             </div>
           </div>
-        <div className="mb-12 text-center">
-          <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-            <img
-              src={FooterLogo}
-              alt="Saudi National Day 95"
-              className="w-[150px] h-full object-contain"
-            />
-          </div>
-        </div>
+        <FooterLogoComponent />
         </div>
       </div>
     </div>
