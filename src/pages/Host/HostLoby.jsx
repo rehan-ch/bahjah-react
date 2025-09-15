@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SplashLogo from "../../assests/splashLogo.svg";
 import FooterLogo from "../../assests/footerLogo.png";
-import FooterLogo2 from "../../assests/splashLogo2.png";
+import GroupLogo from "../../assests/groupLogo.svg";
+import GroupLogo1 from "../../assests/groupLogo1.svg";
+import GroupLogo2 from "../../assests/groupLogo2.svg";
+import GroupLogo3 from "../../assests/groupLogo3.svg";
+import GroupLogo4 from "../../assests/groupLogo4.svg";
+import GroupLogo5 from "../../assests/groupLogo5.svg";
 
 const HostLoby = () => {
   const navigate = useNavigate();
@@ -72,16 +77,20 @@ useEffect(() => {
               </div>
 
               <div className="flex items-center justify-center gap-2 py-2">
-                <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
+                <img src={GroupLogo} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo1} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo2} alt="decor" className="w-40 h-10" />
                 <span className="text-lg">أو</span>
-                <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
+                <img src={GroupLogo3} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo4} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo5} alt="decor" className="w-40 h-10" />
               </div>
               <div className="mb-4">
                 <input
                   type="text"
                   onChange={e => setCode(e.target.value)}
                   placeholder="أدخل الرمز"
-                  className="w-full bg-transparent border-2 border-green-400 text-white placeholder-teal-300 py-3 px-4 rounded-full text-center text-lg focus:outline-none"
+                  className="w-full bg-transparent border-2 border-green-700 text-white placeholder-teal-300 py-3 px-4 rounded-full text-right text-lg focus:outline-none"
                   dir="rtl"
                 />
               </div>

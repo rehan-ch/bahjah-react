@@ -3,6 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import SplashLogo from "../../assests/splashLogo.svg";
 import FooterLogo from "../../assests/footerLogo.png";
 import FooterLogo2 from "../../assests/splashLogo2.png";
+import GroupLogo from "../../assests/groupLogo.svg";
+import GroupLogo1 from "../../assests/groupLogo1.svg";
+import GroupLogo2 from "../../assests/groupLogo2.svg";
+import GroupLogo3 from "../../assests/groupLogo3.svg";
+import GroupLogo4 from "../../assests/groupLogo4.svg";
+import GroupLogo5 from "../../assests/groupLogo5.svg";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
@@ -73,31 +79,31 @@ const PlayerJoinPage = ({setIsStarted}) => {
             </div>
 
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold mb-6 leading-relaxed" dir="rtl">مرحباً بكم في بهجة</h1>
-              <p className="text-base leading-relaxed px-4 text-center" dir="rtl">
-                أهلاً بكم في بهجة! هل أنتم مستعدون للانضمام
-                <br />
-                إلى المغامرة أم بدء لعبة جديدة؟
-              </p>
+              <h1 className="text-2xl font-bold mb-6 leading-relaxed" dir="rtl">مسابقة اليوم الوطني</h1>
             </div>
 
             <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
-              <div className="flex justify-center">
+              {/* <div className="flex justify-center">
                 <button type="button" className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]" dir="rtl" disabled>
                   إبدأ لعبة جديدة
                 </button>
-              </div>
+              </div> */}
 
               <div className="flex items-center justify-center gap-2 py-2">
-                <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
-                <span className="text-lg">أو</span>
-                <img src={FooterLogo2} alt="decor" className="w-90 h-5" />
+              <img src={GroupLogo} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo1} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo2} alt="decor" className="w-40 h-10" />
+                <span className="text-lg mx-2 whitespace-nowrap">انضم إلى اللعبة</span>
+                <img src={GroupLogo3} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo4} alt="decor" className="w-40 h-10" />
+                <img src={GroupLogo5} alt="decor" className="w-40 h-10" />
               </div>
 
               <div dir="rtl">
-                <label className="block mb-2 text-sm">رمز اللعبة</label>
+                {/* <label className="block mb-2 text-sm">رمز اللعبة</label> */}
                 <input
                   type="text"
+                  hidden={true}
                   value={gameCode}
                   onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                   placeholder="أدخل رمز اللعبة"
@@ -143,7 +149,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
                   }`}
                   dir="rtl"
                 >
-                  {isLoading ? UI_TEXT.JOINING : UI_TEXT.JOIN_BUTTON}
+                  {isLoading ? UI_TEXT.JOINING : UI_TEXT.START_GAME}
                 </button>
               </div>
             </form>

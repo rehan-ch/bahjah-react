@@ -28,6 +28,7 @@ export const UI_TEXT = {
   HOST: "المضيف",
   PARTICIPANT: "مشارك",
   COPYRIGHT: "جميع الحقوق محفوظة © 2024",
+  START_GAME: "ابدأ لعبة جديدة",
 };
 
 export const API_ENDPOINTS = {
