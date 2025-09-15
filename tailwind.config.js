@@ -13,6 +13,7 @@ module.exports = {
           custom: "#00343A",
           button: "#006936",
           borderGreen: "#008346",
+          leafGreen: "#84AC40",
         },
       },
     },
