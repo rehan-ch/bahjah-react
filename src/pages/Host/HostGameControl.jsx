@@ -41,15 +41,15 @@ const handleNextQuestion = async () => {
     <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
       <div className="w-[420px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
-         <div className="mb-12 text-center">
-              <div className="w-72 h-24 mx-auto rounded flex items-center justify-center">
-                <img
-                  src={SplashLogo}
-                  alt="Saudi National Day 95"
-                  className="w-[150px] h-full object-contain"
-                />
-              </div>
+        <div className="flex justify-center items-center px-4 py-3 text-sm">
+            <div className="w-16 h-8 flex items-center justify-center">
+              <img
+                src={SplashLogo}
+                alt="Saudi National Day 95"
+                className="w-full h-full object-contain"
+              />
             </div>
+          </div>
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             <div className="text-center" dir="rtl">
               <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
