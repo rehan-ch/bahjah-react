@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UI_TEXT } from '../../utills/constants';
 import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 import HeaderLogo from '../../Components/HeaderLogo';
 import FooterLogoComponent from '../../Components/FooterLogo';
+import GreenButton from '../../Components/GreenButton';
 
 const FinalResult = ({data}) => {
   const navigate = useNavigate();
@@ -23,18 +23,16 @@ const FinalResult = ({data}) => {
     <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide">
       <div className="w-[420px] overflow-hidden">
         <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
-          {/* Header with Logo */}
           <HeaderLogo />
-          
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
             <div className="text-right" dir="rtl">
-              <p className="text-lg  mb-2">
+              <p className="text-lg  mb-2 font-saudi text-[16px]">
               مسابقة اليوم الوطني
               </p>
             </div>
 
             <div dir="rtl">
-            <h2  className="text-3xl text-right  mb-4 text-center">نتائج</h2>
+            <h2  className="text-3xl text-right mb-4 text-center font-saudi text-[32px]">نتائج</h2>
 
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (
@@ -52,12 +50,11 @@ const FinalResult = ({data}) => {
                           </defs>
                       </svg>
                       </div>
-                      <span className="text-white">{player.name}</span>
+                      <span className="text-white font-saudi text-[24px]">{player.name}</span>
                     </div>
-                    <span className="text-white " dir='ltr'>{player.score} PT </span>
+                    <span className="text-white font-saudi text-[24px]" dir='ltr'>{player.score} PT </span>
                   </div>
                 ))}
-                
                 {leaderboard.length === 0 && (
                   <div className="text-center py-4 text-green-300 text-sm">
                     لا توجد نتائج متاحة
@@ -68,17 +65,9 @@ const FinalResult = ({data}) => {
           </div>
 
           <div className="p-6 flex justify-center">
-            <button 
-              className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
-              dir="rtl" onClick={handleClick}
-            >
-              ابدأ لعبة جديدة
-            </button>
+            <GreenButton text="ابدأ لعبة جديدة" handleClick={handleClick} />
           </div>
-
-          {/* Footer with Logo */}
           <FooterLogoComponent />
-          
         </div>
       </div>
     </div>

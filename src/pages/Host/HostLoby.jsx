@@ -8,6 +8,7 @@ import GroupLogo4 from "../../assests/groupLogo4.svg";
 import GroupLogo5 from "../../assests/groupLogo5.svg";
 import HeaderLogo from "../../Components/HeaderLogo";
 import FooterLogoComponent from "../../Components/FooterLogo";
+import GreenButton from "../../Components/GreenButton";
 
 const HostLoby = () => {
   const navigate = useNavigate();
@@ -45,11 +46,11 @@ useEffect(() => {
             <HeaderLogo />
 
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold mb-6 leading-relaxed" dir="rtl">
+              <h1 className="text-2xl font-bold mb-6 leading-relaxed font-saudi text-[32px]" dir="rtl">
                 مرحباً بكم في بهجة
               </h1>
               <p
-                className="text-base leading-relaxed px-4 text-center"
+                className="text-base leading-relaxed px-4 text-center font-saudi text-[17px]"
                 dir="rtl"
               >أهلاً بكم في بهجة! هل أنتم مستعدون للانضمام   <br />
                إلى المغامرة أو بدء لعبة جديدة؟ 
@@ -58,13 +59,7 @@ useEffect(() => {
 
             <div className="w-full max-w-sm space-y-4">
               <div className="flex justify-center">
-                <button
-                  className="bg-button text-white py-2 px-7 rounded-[25px] text-lg transition-colors min-w-[120px]"
-                  dir="rtl"
-                  onClick={handleStart}
-                >
-                  إبدأ لعبة جديدة
-                </button>
+                <GreenButton text="إبدأ لعبة جديدة" handleClick={handleStart} />  
               </div>
 
               <div className="flex items-center justify-center gap-2 py-2">
@@ -87,13 +82,7 @@ useEffect(() => {
               </div>
 
               <div className="flex justify-center">
-                <button
-                  className="bg-button text-white py-2 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
-                  dir="rtl"
-                  onClick={handleStratPlayerGame}
-                >
-                  انضم إلى اللعبة
-                </button>
+                <GreenButton text="انضم إلى اللعبة" handleClick={handleStratPlayerGame} />
               </div>
             </div>
           </div>

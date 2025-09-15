@@ -15,6 +15,9 @@ module.exports = {
           borderGreen: "#008346",
           leafGreen: "#84AC40",
         },
+        fontFamily: {
+          saudi: ["Saudi", "sans-serif"],
+        },
       },
     },
     plugins: [

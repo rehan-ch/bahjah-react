@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { UI_TEXT } from '../../utills/constants'
 import apiService from '../../services/apiService'
 import HeaderLogo from '../../Components/HeaderLogo'
+import User from '../../assests/multiuser.png'
 import FooterLogoComponent from '../../Components/FooterLogo'
+import GreenButton from '../../Components/GreenButton'
 
 const HostGameControl = ({data}) => {
   const navigate = useNavigate()
@@ -43,12 +45,11 @@ const handleNextQuestion = async () => {
         <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
         <HeaderLogo />
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            <div className="text-center" dir="rtl">
-              <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
+            <div className="text-right" dir="rtl">
+              <h2 className="text-lg font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
             <div className="bg-custom rounded-full p-4" dir="rtl">
-              <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3>
-              <p className="text-sm text-center leading-relaxed mb-4">
+              <p className="text-white text-right leading-10 tracking-wide mb-4 font-saudi text-[32px]">
                 {question}
               </p>
               <div className="space-y-3">
@@ -56,7 +57,7 @@ const handleNextQuestion = async () => {
                   <div
                     key={idx}
                     className={`
-                      w-full py-2 px-4 rounded-full border-2 flex items-center justify-between
+                      w-full py-2 px-4 rounded-full border-2 flex items-center justify-between font-saudi text-[24px]
                       ${option.letter === correctAnswer
                         ? "border-borderGreen text-white"
                         : "text-white"
@@ -76,24 +77,20 @@ const handleNextQuestion = async () => {
                 ))}
               </div>
             </div>
-            <div className="bg-teal-800 rounded-full p-4 text-center" dir="rtl">
-              <div className="flex justify-center items-center gap-2 mb-2">
-                <span className="text-white text-sm">الإجابة الصحيحة</span>
-                <div className="flex gap-1">
-                  <div>{playerAnswered}/{totalPlayers}</div>
-                </div>
+            <div className="bg-transparent p-4 text-right" dir="rtl">
+            <div className="flex items-center gap-2 mb-2">
+              <img src={User} alt="Logo" className="w-5 h-5" />
+              <span className="text-white font-saudi text-[15px]">تم الرد</span>
+              <div className="flex gap-1 text-white text-[15px] font-saudi">
+                <div>{playerAnswered}/{totalPlayers}</div>
               </div>
             </div>
+          </div>
           </div>
           <div className="space-y-3">
           <div className="p-6 flex justify-center">
             <div className="space-y-3">
-              <button 
-                className="border border-green-600 bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]"
-                dir="rtl" onClick={handleNextQuestion}
-              >
-                 التالي
-              </button>
+              <GreenButton text="التالي" handleClick={handleNextQuestion} />
             </div>
           </div>
           </div>

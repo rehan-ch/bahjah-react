@@ -71,30 +71,20 @@ const PlayerQuestions = ({data}) => {
           
           {/* Header with Logo */}
           <HeaderLogo />
-
-          {/* Content */}
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-            
-            {/* Error Display */}
             {error && (
               <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
                 {error}
               </div>
             )}
-
-            {/* Question Progress */}
             <div className="text-right" dir="rtl">
               <h2 className="text-lg font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
 
-            {/* Current Question with Options */}
             <div className="bg-custom rounded-full p-4" dir="rtl">
-              {/* <h3 className="font-semibold mb-3 text-center">السؤال الحالي</h3> */}
               <h2 className="text-white text-right text-3xl leading-10 tracking-wide mb-4">
                 {question}
               </h2>
-
-              {/* Question Options */}
               <div className="space-y-3">
                 {options.map((option, idx) => (
                   <button

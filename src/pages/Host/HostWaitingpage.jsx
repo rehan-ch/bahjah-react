@@ -6,6 +6,7 @@ import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 import HeaderLogo from "../../Components/HeaderLogo";
 import FooterLogoComponent from "../../Components/FooterLogo";
+import GreenButton from "../../Components/GreenButton";
 
 const HostWaitingpage = ({leaderboard}) => {
   const navigate = useNavigate();
@@ -121,11 +122,11 @@ const HostWaitingpage = ({leaderboard}) => {
             {!isLoading && !error && data && (
               <>
                 <div className="text-right space-y-2" dir="rtl">
-                  <h2 className="text-lg font-bold">{UI_TEXT.GAME_TITLE}</h2>
+                  <h2 className="font-bold font-saudi text-white text-right text-[32px]">{UI_TEXT.GAME_TITLE}</h2>
                 </div>
 
                 <div dir="rtl">
-                  <div className="bg-transparent border-2 border-green-400 text-white py-1 px-4 rounded-[25px] flex items-center justify-between">
+                  <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] px-[16px] py-[12px] font-saudi text-[15px] text-white py-1 px-4 rounded-[25px] flex items-center justify-between">
                     <span className="text-sm font-medium text-white-300">شفرة</span>
                     <span className="font-mono">{quizCode}</span>
                   </div>
@@ -135,7 +136,7 @@ const HostWaitingpage = ({leaderboard}) => {
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">الانضمام إلى URL</span>
                   </div>
-                  <div className="bg-transparent border-2 border-green-400 text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
+                  <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] px-[16px] py-[12px] font-saudi text-[15px] text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
                     {joinUrl}
                   </div>
                 </div>
@@ -153,7 +154,7 @@ const HostWaitingpage = ({leaderboard}) => {
                 </div> */}
 
                 <div dir="rtl">
-                  <h3 className="text-lg font-bold mb-4">مشاركون</h3>
+                  <h3 className="mb-4 font-bold font-saudi text-[17px]">مشاركون</h3>
                   <div className="space-y-3">
                     {participants.map((participant, index) => (
                       <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-400">
@@ -170,7 +171,7 @@ const HostWaitingpage = ({leaderboard}) => {
                               </defs>
                             </svg>
                           </div>
-                          <span className="text-white font-bold">{participant.name}</span>
+                          <span className="text-white font-bold font-saudi text-[24px]">{participant.name}</span>
                         </div>
                       </div>
                     ))}
@@ -186,14 +187,7 @@ const HostWaitingpage = ({leaderboard}) => {
 
           {!isLoading && !error && data && (
             <div className="p-6 flex flex-col items-center">
-              <button
-                onClick={handleStartQuiz}
-                disabled={participants < 1}
-                className={"py-4 px-6 rounded-[25px] text-lg font-bold transition-colors bg-button text-white min-w-[120px]"}
-                dir="rtl"
-              >
-                {isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON}
-              </button>
+              <GreenButton text={isFinished ? UI_TEXT.GAME_FINISHED : UI_TEXT.START_BUTTON} handleClick={handleStartQuiz} disabled={participants < 1} />
               {totalPlayers < 1 && !isFinished && (
                 <p className="text-center text-green-300 text-sm mt-2" dir="rtl">
                   {ERROR_MESSAGES.WAITING_FOR_JOIN}

@@ -4,6 +4,7 @@ import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 import HeaderLogo from "../../Components/HeaderLogo";
 import FooterLogoComponent from "../../Components/FooterLogo";
+import GreenButton from "../../Components/GreenButton";
 
 const HostCreateQuiz = ({ setIsStarted }) => {
   const navigate = useNavigate();
@@ -143,20 +144,16 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-custom">
       <div className="w-[420px]">
-
         <div className="min-h-full bg-custom text-white flex flex-col">
-
           <HeaderLogo />
-
           <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
-
             <div className="text-right space-y-2" dir="rtl">
-              <h2 className="text-sm">اسم اللعبة</h2>
-              <p className="text-xl font-bold">{UI_TEXT.GAME_TITLE}</p>
+              <h2 className="font-saudi text-white text-right text-[15px]">اسم اللعبة</h2>
+              <p className="font-bold font-saudi text-white text-right text-[32px]">{UI_TEXT.GAME_TITLE}</p>
             </div>
 
             <div dir="rtl">
-              <h3 className="mb-3 text-sm font-medium">حدد الفئات</h3>
+              <h3 className="mb-3 font-medium font-saudi text-[17px]">حدد الفئات</h3>
 
               {categoriesLoading && (
                 <div className="text-center py-4">
@@ -176,7 +173,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                       <button
                         key={index}
                         onClick={() => handleCategorySelect(category)}
-                        className={`w-full flex items-center px-4 py-2 rounded-full transition-colors ${getButtonBorderClasses(category)}`}
+                        className={`w-full font-saudi text-[24px] h-[48px] flex items-center px-4 py-2 rounded-full transition-colors ${getButtonBorderClasses(category)}`}
                         dir="ltr"
                       >
                         <div className="w-6 h-6 flex items-center justify-center mr-3">
@@ -192,7 +189,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
                             </svg>
                          )}
                         </div>
-                        <span className="flex-1 text-center">{category.name_ar}</span>
+                        <span className="flex-1 text-center font-saudi text-[24px]">{category.name_ar}</span>
                       </button>
                     ))
                   ) : (
@@ -205,14 +202,14 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             </div>
 
             <div dir="rtl">
-              <label className="block mb-2 text-sm">عدد الأسئلة</label>
+              <label className="block mb-2 font-saudi text-[17px]">عدد الأسئلة</label>
               <input
                 type="number"
                 value={questionCount}
                 min={1}
                 max={maxQuestions || undefined}
                 onChange={(e)=>handleOnChange(e)}
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
               {selectedCategory.length > 0 && (
                 <p className="text-xs text-teal-300 mt-2">
@@ -222,24 +219,24 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             </div>
 
             <div dir="rtl">
-              <label className="block mb-2 text-sm">اسمك</label>
+              <label className="block mb-2 font-saudi text-[17px]">اسمك</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="اسمك"
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
             <div dir="rtl">
-              <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label>
+              <label className="block mb-2 font-saudi text-[17px]">البريد الإلكتروني الخاص بك</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="البريد الإلكتروني الخاص بك"
-                className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+                className="w-full bg-transparent font-saudi text-[15px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
               />
             </div>
 
@@ -250,17 +247,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             )}
 
             <div className="flex justify-center">
-              <button
-                onClick={handleSubmit}
-                disabled={isLoading}
-                className={`font-bold py-4 px-12 rounded-full text-lg transition-colors ${isLoading
-                  ? "bg-button text-gray-400 cursor-not-allowed"
-                  : "bg-button text-white"
-                  }`}
-                dir="rtl"
-              >
-                {isLoading ? UI_TEXT.CREATING :" يخلق"}
-              </button>
+              <GreenButton text={" يخلق"} handleClick={handleSubmit} disabled={isLoading} />
             </div>
           </div>
           

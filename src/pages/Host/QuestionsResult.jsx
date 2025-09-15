@@ -5,6 +5,7 @@ import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants';
 import apiService from '../../services/apiService';
 import HeaderLogo from '../../Components/HeaderLogo';
 import FooterLogoComponent from '../../Components/FooterLogo';
+import GreenButton from '../../Components/GreenButton';
 
 const QuestionsResult = ({data}) => {
   const navigate = useNavigate();
@@ -71,28 +72,28 @@ const QuestionsResult = ({data}) => {
               </div>
             )}
 
-            <div className="text-center" dir="rtl">
+            <div className="text-right" dir="rtl">
               <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
             </div>
-            <div className="text-center" dir="rtl">
-              <p className="text-lg font-bold leading-relaxed">
+            <div className="text-right" dir="rtl">
+              <p className="leading-relaxed font-saudi text-[15px]">
                 {question}
               </p>
             </div>
 
             {/* Correct Answer */}
             <div className="flex justify-center">
-              <div className="w-full max-w-sm bg-green-600 border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-green-600 text-sm">✓</span>
+              <div className="w-full max-w-sm bg-transparent border-2 border-green-700 rounded-full p-4 flex items-center justify-between">
+                <div className="w-6 h-6 bg-leafGreen rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm">✓</span>
                 </div>
                 <span className="text-white font-bold text-lg">{correctAnswerText}</span>
               </div>
             </div>
 
             {/* Results Section */}
-            <div dir="rtl">
-              <h3 className="text-lg font-bold mb-4 text-center">نتائج</h3>
+            <div className="text-right" dir="rtl">
+              <h3 className="font-bold mb-4  font-saudi text-[32px]">نتائج</h3>
               
               <div className="space-y-3">
                 {leaderboard.map((player, index) => (
@@ -110,9 +111,9 @@ const QuestionsResult = ({data}) => {
                           </defs>
                       </svg>
                       </div>
-                      <span className="text-white">{player.name}</span>
+                      <span className="text-white font-saudi text-[24px]">{player.name}</span>
                     </div>
-                    <span className="text-white font-bold">PT {player.score}</span>
+                    <span className="text-white font-bold font-saudi text-[24px]">PT {player.score}</span>
                   </div>
                 ))}
                 
@@ -127,18 +128,7 @@ const QuestionsResult = ({data}) => {
 
           {/* Footer */}
           <div className="p-6 flex justify-center">
-            <button 
-              onClick={handleNextQuestion}
-              disabled={isLoading}
-              className={`font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px] ${
-                isLoading
-                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  : "bg-button text-white"
-              }`}
-              dir="rtl"
-            >
-              {isLoading ? "جاري التحميل..." : "التالي"}
-            </button>
+            <GreenButton text="التالي" handleClick={handleNextQuestion} />
           </div>
           
           {/* Footer with Logo */}
