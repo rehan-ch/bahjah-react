@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HostCreateQuiz from './pages/Host/HostCreateQuiz';
 import HostLoby from './pages/Host/HostLoby';
@@ -11,6 +11,7 @@ import FinalResult from './pages/Host/FinalResult';
 import PlayerQuestions from './pages/player/playerQuestions';
 import PlayerResult from './pages/player/PlayerResult';
 import { connectToGameChannel, subscribeToGameEvent, unsubscribeFromGameEvent, getConnectionInfo, testWebSocketConnection } from './utills/helperFunctions';
+import AppLayout from './Components/AppLayout';
 
 
 const App = () => {
@@ -50,28 +51,29 @@ const App = () => {
     initializeWebSocket();
 
     return () => {
-      unsubscribeFromGameEvent('game_state', () => {});
+      unsubscribeFromGameEvent('game_state', () => { });
     };
-  }, [accessCode, userId,isStarted]);
+  }, [accessCode, userId, isStarted]);
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-custom text-white">
-        <main>
-          <Routes>
-            <Route path="/" element={<HostLoby />} />
-            <Route path="/create-quiz" element={<HostCreateQuiz setIsStarted={setIsStarted}/>} />
-            <Route path="/host-waiting/:id" element={<HostWaitingpage leaderboard={data?.leaderboard}/>} />
-            <Route path="/host-questions" element={<HostGameControl data={data}/>} />
-            <Route path="/question-result" element={<QuestionsResult data={data}/>} />
-            <Route path="/player-join/:code" element={<PlayerJoinPage setIsStarted={setIsStarted}/>} />
-            <Route path="/player-waiting" element={<PlayerWaiting leaderboard={data?.leaderboard} status={data?.game?.status} />} />
-            <Route path="/player-questions" element={<PlayerQuestions data={data}/>} />
-            <Route path="/player-result" element={<PlayerResult data={data} />} />
-            <Route path="/final-result" element={<FinalResult data={data}/>} />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        <Route element={<AppLayout spreadItems={true} />}>
+          <Route path="/" element={<HostLoby />} />
+          <Route path="/player-join/:code" element={<PlayerJoinPage setIsStarted={setIsStarted} />} />
+        </Route>
+
+        <Route element={<AppLayout spreadItems={false} />}>
+          <Route path="/player-waiting" element={<PlayerWaiting leaderboard={data?.leaderboard} status={data?.game?.status} />} />
+          <Route path="/player-questions" element={<PlayerQuestions data={data} />} />
+          <Route path="/create-quiz" element={<HostCreateQuiz setIsStarted={setIsStarted} />} />
+          <Route path="/host-waiting/:id" element={<HostWaitingpage leaderboard={data?.leaderboard} />} />
+          <Route path="/host-questions" element={<HostGameControl data={data} />} />
+          <Route path="/question-result" element={<QuestionsResult data={data} />} />
+          <Route path="/player-result" element={<PlayerResult data={data} />} />
+          <Route path="/final-result" element={<FinalResult data={data} />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

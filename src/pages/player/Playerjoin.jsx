@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SplashLogo from "../../assests/splashLogo.svg";
+import BahjahLogo from "../../assests/bahjah-logo.svg";
 import FooterLogo from "../../assests/footerLogo.png";
 import FooterLogo2 from "../../assests/splashLogo2.png";
 import GroupLogo from "../../assests/groupLogo.svg";
@@ -12,7 +12,7 @@ import GroupLogo5 from "../../assests/groupLogo5.svg";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 
-const PlayerJoinPage = ({setIsStarted}) => {
+const PlayerJoinPage = ({ setIsStarted }) => {
   const navigate = useNavigate();
   const { code } = useParams();
 
@@ -53,7 +53,7 @@ const PlayerJoinPage = ({setIsStarted}) => {
       };
 
       const result = await apiService.joinGame(joinData);
-      
+
       localStorage.setItem("player_id", result.player_id);
       localStorage.setItem("user_id", result.user_id);
       localStorage.setItem("game_id", result.game_id);
@@ -68,109 +68,75 @@ const PlayerJoinPage = ({setIsStarted}) => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-custom overflow-y-auto scrollbar-hide overflow-x-hidden">
-        <div className="w-[520px] overflow-hidden">
-          <div className="min-h-full bg-custom text-white flex flex-col overflow-y-auto">
-          <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-            <div className="mb-12 text-center">
-              <div className="w-36 h-24 rounded flex items-center justify-center">
-                <img src={SplashLogo} alt="Saudi National Day 95" className="w-full h-full object-contain" />
-              </div>
-            </div>
-
-            <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold mb-6 font-saudi text-[32px]" dir="rtl">مسابقة اليوم الوطني</h1>
-            </div>
-
-            <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
-              {/* <div className="flex justify-center">
-                <button type="button" className="bg-button text-white font-bold py-4 px-6 rounded-[25px] text-lg transition-colors min-w-[120px]" dir="rtl" disabled>
-                  إبدأ لعبة جديدة
-                </button>
-              </div> */}
-
-              <div className="flex items-center justify-center gap-2 py-2">
-              <img src={GroupLogo} alt="decor" className="w-40 h-10" />
-                <img src={GroupLogo1} alt="decor" className="w-40 h-10" />
-                <img src={GroupLogo2} alt="decor" className="w-40 h-10" />
-                <span className="text-lg mx-2 whitespace-nowrap font-saudi text-[19px]">انضم إلى اللعبة</span>
-                <img src={GroupLogo3} alt="decor" className="w-40 h-10" />
-                <img src={GroupLogo4} alt="decor" className="w-40 h-10" />
-                <img src={GroupLogo5} alt="decor" className="w-40 h-10" />
-              </div>
-
-              <div dir="rtl">
-                {/* <label className="block mb-2 text-sm">رمز اللعبة</label> */}
-                <input
-                  type="text"
-                  hidden={true}
-                  value={gameCode}
-                  onChange={(e) => setGameCode(e.target.value.toUpperCase())}
-                  placeholder="أدخل رمز اللعبة"
-                  autoComplete="one-time-code"
-                  className="w-full bg-transparent font-saudi text-[15px] border-2 border-teal-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
-                />
-              </div>
-
-              <div dir="rtl">
-                {/* <label className="block mb-2 text-sm">اسمك</label> */}
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="اسمك"
-                  className="w-full bg-transparent border-[3px] font-saudi text-[15px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
-                />
-              </div>
-
-              <div dir="rtl">
-                {/* <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label> */}
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="البريد الإلكتروني الخاص بك"
-                  className="w-full bg-transparent border-[2px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
-                />
-              </div>
-
-              {error && (
-                <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
-                  {error}
-                </div>
-              )}
-
-              <div className="flex justify-center">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`inline-flex h-[56px] px-[48px] py-[18px] justify-center items-center text-white rounded-[24px] font-saudi text-[24px] transition-colors 
-                    ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-button hover:bg-green-700"}`}
-                  dir="rtl"
-                >
-                  {isLoading ? UI_TEXT.JOINING : UI_TEXT.START_GAME}
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="text-center mb-8">
-              <p className="text-lg font-bold mb-6 leading-relaxed" dir="rtl">STREAM</p>
-            </div>
-
-          <div className="relative">
-            <div className="h-20 relative flex justify-center items-center">
-              <div className="flex">
-                <img src={FooterLogo} alt="Decorative Pattern" className="w-[210px] h-[60px] object-contain" />
-              </div>
-            </div>
-
-            {/* <div className="bg-teal-900 text-center py-3">
-              <p className="text-xs text-teal-300" dir="rtl">{UI_TEXT.COPYRIGHT}</p>
-            </div> */}
-          </div>
-        </div>
+    <div className="flex flex-col items-center justify-center px-6 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-2xl font-bold mb-6 font-saudi text-[32px]" dir="rtl">مسابقة اليوم الوطني</h1>
       </div>
+
+      <form className="w-full max-w-sm space-y-4" onSubmit={handleJoinGame}>
+        <div className="flex items-center justify-center gap-0.5 py-2">
+          <img src={GroupLogo} alt="decor" className="w-40 h-10" />
+          <img src={GroupLogo1} alt="decor" className="w-40 h-10" />
+          <img src={GroupLogo2} alt="decor" className="w-40 h-10" />
+          <span className="text-lg mx-2 whitespace-nowrap font-saudi text-[19px]">انضم إلى اللعبة</span>
+          <img src={GroupLogo3} alt="decor" className="w-40 h-10" />
+          <img src={GroupLogo4} alt="decor" className="w-40 h-10" />
+          <img src={GroupLogo5} alt="decor" className="w-40 h-10" />
+        </div>
+
+        <div dir="rtl">
+          {/* <label className="block mb-2 text-sm">رمز اللعبة</label> */}
+          <input
+            type="text"
+            hidden={true}
+            value={gameCode}
+            onChange={(e) => setGameCode(e.target.value.toUpperCase())}
+            placeholder="أدخل رمز اللعبة"
+            autoComplete="one-time-code"
+            className="w-full bg-transparent font-saudi text-[15px] border-2 border-teal-400 text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-green-400"
+          />
+        </div>
+
+        <div dir="rtl">
+          {/* <label className="block mb-2 text-sm">اسمك</label> */}
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="اسمك"
+            className="w-full bg-transparent border-[3px] font-saudi text-[15px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
+          />
+        </div>
+
+        <div dir="rtl">
+          {/* <label className="block mb-2 text-sm">البريد الإلكتروني الخاص بك</label> */}
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="البريد الإلكتروني الخاص بك"
+            className="w-full bg-transparent border-[2px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
+          />
+        </div>
+
+        {error && (
+          <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
+            {error}
+          </div>
+        )}
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`inline-flex h-[56px] px-[48px] py-[18px] justify-center items-center text-white rounded-[24px] font-saudi text-[24px] transition-colors 
+                    ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-button hover:bg-green-700"}`}
+            dir="rtl"
+          >
+            {isLoading ? UI_TEXT.JOINING : UI_TEXT.START_GAME}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
