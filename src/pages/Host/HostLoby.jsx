@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GroupLogo from "../../assests/groupLogo.svg";
 import GroupLogo1 from "../../assests/groupLogo1.svg";
@@ -6,8 +6,6 @@ import GroupLogo2 from "../../assests/groupLogo2.svg";
 import GroupLogo3 from "../../assests/groupLogo3.svg";
 import GroupLogo4 from "../../assests/groupLogo4.svg";
 import GroupLogo5 from "../../assests/groupLogo5.svg";
-import HeaderLogo from "../../Components/HeaderLogo";
-import FooterLogoComponent from "../../Components/FooterLogo";
 import GreenButton from "../../Components/GreenButton";
 
 const HostLoby = () => {

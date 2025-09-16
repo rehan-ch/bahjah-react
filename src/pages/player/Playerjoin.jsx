@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BahjahLogo from "../../assests/bahjah-logo.svg";
-import FooterLogo from "../../assests/footerLogo.png";
-import FooterLogo2 from "../../assests/splashLogo2.png";
 import GroupLogo from "../../assests/groupLogo.svg";
 import GroupLogo1 from "../../assests/groupLogo1.svg";
 import GroupLogo2 from "../../assests/groupLogo2.svg";

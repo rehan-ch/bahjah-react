@@ -1,10 +1,7 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants';
+import { ERROR_MESSAGES } from '../../utills/constants';
 import apiService from '../../services/apiService';
-import HeaderLogo from '../../Components/HeaderLogo';
-import FooterLogoComponent from '../../Components/FooterLogo';
 import GreenButton from '../../Components/GreenButton';
 
 const QuestionsResult = ({ data }) => {

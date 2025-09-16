@@ -1,9 +1,5 @@
-
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { disconnectFromGameChannel } from '../../utills/helperFunctions';
-import HeaderLogo from '../../Components/HeaderLogo';
-import FooterLogoComponent from '../../Components/FooterLogo';
 import GreenButton from '../../Components/GreenButton';
 
 const FinalResult = ({ data }) => {

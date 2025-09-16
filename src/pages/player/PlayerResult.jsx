@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UI_TEXT } from '../../utills/constants';
-import HeaderLogo from '../../Components/HeaderLogo';
-import FooterLogoComponent from '../../Components/FooterLogo';
 
 const PlayerResult = ({ data }) => {
   const navigate = useNavigate();

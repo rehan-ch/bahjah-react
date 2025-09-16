@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePolling } from '../../hooks/usePolling';
 import { ERROR_MESSAGES, UI_TEXT } from '../../utills/constants';
-import HeaderLogo from '../../Components/HeaderLogo';
-import FooterLogoComponent from '../../Components/FooterLogo';
 
 const PlayerWaiting = ({ leaderboard, status }) => {
   const navigate = useNavigate();

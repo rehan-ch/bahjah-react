@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
-import HeaderLogo from "../../Components/HeaderLogo";
-import FooterLogoComponent from "../../Components/FooterLogo";
 import GreenButton from "../../Components/GreenButton";
 
 const HostWaitingpage = ({ leaderboard }) => {

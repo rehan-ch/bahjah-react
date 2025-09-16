@@ -1,10 +1,7 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UI_TEXT } from '../../utills/constants'
 import apiService from '../../services/apiService'
-import HeaderLogo from '../../Components/HeaderLogo'
 import User from '../../assests/multiuser.png'
-import FooterLogoComponent from '../../Components/FooterLogo'
 import GreenButton from '../../Components/GreenButton'
 
 const HostGameControl = ({ data }) => {

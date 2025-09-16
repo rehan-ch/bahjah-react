@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UI_TEXT, ERROR_MESSAGES } from '../../utills/constants'
+import { ERROR_MESSAGES } from '../../utills/constants'
 import apiService from '../../services/apiService'
-import HeaderLogo from '../../Components/HeaderLogo'
-import FooterLogoComponent from '../../Components/FooterLogo'
 
 const PlayerQuestions = ({ data }) => {
   const navigate = useNavigate()
