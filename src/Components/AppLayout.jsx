@@ -12,7 +12,7 @@ export default function AppLayout({ spreadItems = true }) {
             />
         </div>
 
-        <main className="grow-1 pt-4 px-4 md:max-w-md md:mx-auto">
+        <main className="grow-1 pt-4 px-4 md:w-[400px] md:mx-auto">
             <Outlet />
         </main>
 
