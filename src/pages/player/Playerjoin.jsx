@@ -101,7 +101,7 @@ const PlayerJoinPage = ({ setIsStarted }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="اسمك"
-            className="w-full bg-transparent border-[3px] font-saudi text-[15px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
+            className="w-full bg-transparent border-[3px] font-saudi text-[15px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px]"
           />
         </div>
 
@@ -112,7 +112,7 @@ const PlayerJoinPage = ({ setIsStarted }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="البريد الإلكتروني الخاص بك"
-            className="w-full bg-transparent border-[2px] border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px] border-borderGreen"
+            className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none focus:border-[3px]"
           />
         </div>
 

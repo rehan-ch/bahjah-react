@@ -33,7 +33,7 @@ const FinalResult = ({ data }) => {
           </div>
 
           <div dir="rtl">
-            <h2 className="text-right mb-4 text-center font-saudi text-[32px]">نتائج</h2>
+            <h2 className="text-right mb-4 font-saudi text-[32px]">نتائج</h2>
 
             <div className="space-y-3">
               {leaderboard.map((player, index) => (

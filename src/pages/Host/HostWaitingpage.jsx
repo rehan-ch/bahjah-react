@@ -120,7 +120,7 @@ const HostWaitingpage = ({ leaderboard }) => {
               <div dir="rtl" className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">شفرة</span>
               </div>
-              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] px-[16px] py-[12px] font-saudi text-[15px] text-white py-1 px-4 rounded-[25px] flex items-center justify-between text-left">
+              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] font-saudi text-[15px] text-white py-1 px-4 rounded-[25px] flex items-center justify-between text-left">
                 <span className="font-mono">{quizCode} 📋</span>
               </div>
             </div>
@@ -129,7 +129,7 @@ const HostWaitingpage = ({ leaderboard }) => {
               <div dir="rtl" className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">الانضمام إلى URL</span>
               </div>
-              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] px-[16px] py-[12px] font-saudi text-[15px] text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
+              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] font-saudi text-[15px] text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
                 {joinUrl} 📋
               </div>
             </div>
