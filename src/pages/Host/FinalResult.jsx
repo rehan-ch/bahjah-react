@@ -3,6 +3,7 @@ import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 import Lottie from 'lottie-react';
 import confetti from '../../assests/confetti.json';
 import GreenButton from '../../Components/GreenButton';
+import { useEffect, useRef, useState } from 'react';
 
 const FinalResult = ({ data }) => {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ const FinalResult = ({ data }) => {
   return (
     <>
       <Lottie
-        animationData={confetti} 
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        animationData={confetti}
+        className={`fixed inset-0 z-50 pointer-events-none`}
       />
 
       <div className="flex flex-col overflow-y-auto">
