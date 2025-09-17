@@ -3,7 +3,6 @@ import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 import Lottie from 'lottie-react';
 import confetti from '../../assests/confetti.json';
 import GreenButton from '../../Components/GreenButton';
-import { useEffect, useRef, useState } from 'react';
 
 const FinalResult = ({ data }) => {
   const navigate = useNavigate();
