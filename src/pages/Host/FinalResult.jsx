@@ -1,8 +1,9 @@
 import Lottie from 'lottie-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import confetti from '../../assests/confetti.json';
 import GreenButton from '../../Components/GreenButton';
 import { disconnectFromGameChannel } from '../../utills/helperFunctions';
+import BahjahLogo from "../../assests/bahjah-logo.svg";
 
 const FinalResult = ({ data }) => {
   const navigate = useNavigate();
@@ -27,13 +28,13 @@ const FinalResult = ({ data }) => {
       <div className="flex flex-col overflow-y-auto">
         <div className="flex-1 px-6 py-4 space-y-6 overflow-y-auto">
           <div className="text-right" dir="rtl">
-            <p className="text-lg mb-2 font-saudi text-[16px]">
+            <p className="mb-2 text-center">
               مسابقة اليوم الوطني
             </p>
           </div>
 
           <div dir="rtl">
-            <h2 className="text-right mb-4 font-saudi text-[32px]">نتائج</h2>
+            <h2 className="text-right mb-4 text-heading">نتائج</h2>
 
             <div className="space-y-3">
               {leaderboard.map((player, index) => (
@@ -51,9 +52,9 @@ const FinalResult = ({ data }) => {
                         </defs>
                       </svg>
                     </div>
-                    <span className="text-white font-saudi text-[24px]">{player.name}</span>
+                    <span className="text-white text-primary-button">{player.name}</span>
                   </div>
-                  <span className="text-white font-saudi text-[24px]" dir='ltr'>{player.score} PT </span>
+                  <span className="text-white text-primary-button" dir='ltr'>{player.score} PT </span>
                 </div>
               ))}
               {leaderboard.length === 0 && (
@@ -65,8 +66,14 @@ const FinalResult = ({ data }) => {
           </div>
         </div>
 
-        <div className="p-6 flex justify-center">
-          <GreenButton text="ابدأ لعبة جديدة" handleClick={handleClick} />
+        <div className="p-6 flex flex-col space-y-5 justify-center items-center">
+          <GreenButton text="العودة إلى بهجة" handleClick={handleClick} />
+          <Link to={"https://www.bahjah.com"} className='flex justify-center items-center w-[165px] h-[65px] rounded-full bg-button hover:bg-green-700'>
+            <img
+              className={`w-[80px] h-[32px] object-contain`}
+              src={BahjahLogo}
+            />
+          </Link>
         </div>
       </div>
     </>

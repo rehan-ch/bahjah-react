@@ -1,9 +1,10 @@
 import React from 'react'
 
-const GreenButton = ({ text, handleClick, disabled = false }) => {
+const GreenButton = ({ text, handleClick, disabled = false, type = "button" }) => {
   return (
     <button
-      className={`inline-flex h-[56px] px-[48px] py-[18px] justify-center items-center text-white rounded-[24px] font-saudi text-[24px] transition-colors 
+      type={type}
+      className={`inline-flex h-[56px] px-[48px] py-[18px] justify-center items-center text-white text-primary-button rounded-full transition-colors 
         ${disabled ? "bg-gray-400 cursor-not-allowed" : "bg-button hover:bg-green-700"}`}
       dir="rtl"
       onClick={handleClick}

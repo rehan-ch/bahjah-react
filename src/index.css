@@ -1,22 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
-    font-family: "Saudi1";
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+  font-family: "Saudi";
+  src: url("./assests/fonts/SaudiWeb-Regular.woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Arabic", sans-serif;
+  src: url("./assests/fonts/IBMPlexSansArabic-Medium.ttf");
+}
+
 @layer utilities {
-  /* Chrome, Safari, Edge, Opera */
-  .no-spinner::-webkit-outer-spin-button,
-  .no-spinner::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  .text-heading {
+    font-size: 2rem;
+    line-height: 1.25em;
+    @apply font-saudi;
+    @apply font-bold;
+    @apply text-center;
   }
 
-  /* Firefox */
-  .no-spinner[type=number] {
-    -moz-appearance: textfield;
+  .text-primary-button {
+    font-size: 1.5rem;
+    line-height: 1em;
+    @apply font-saudi;
+    @apply font-medium;
+    @apply text-center;
   }
+}
+
+html {
+  font-family: "IBM Plex Sans Arabic", sans-serif;
 }

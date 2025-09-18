@@ -73,11 +73,11 @@ const PlayerWaiting = ({ leaderboard, status }) => {
         {!isLoading && !error && data && (
           <>
             <div className="text-center space-y-2" dir="rtl">
-              <h2 className="font-bold font-saudi text-white text-right text-[32px]">{UI_TEXT.GAME_TITLE}</h2>
+              <h2 className="text-heading text-white">{UI_TEXT.GAME_TITLE}</h2>
             </div>
 
             <div dir="rtl">
-              <h3 className="mb-4 font-bold font-saudi text-[17px]">مشاركون</h3>
+              <h3 className="mb-4 text-lg font-bold">مشاركون</h3>
               <div className="space-y-3">
                 {participants.map((participant, index) => (
                   <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-700">
@@ -94,7 +94,7 @@ const PlayerWaiting = ({ leaderboard, status }) => {
                           </defs>
                         </svg>
                       </div>
-                      <span className="text-white font-saudi text-[24px]">{participant.name}</span>
+                      <span className="text-white text-primary-button">{participant.name}</span>
                     </div>
                   </div>
                 ))}

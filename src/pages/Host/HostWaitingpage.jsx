@@ -113,29 +113,29 @@ const HostWaitingpage = ({ leaderboard }) => {
         {!isLoading && !error && data && (
           <>
             <div className="text-right space-y-2" dir="rtl">
-              <h2 className="font-bold font-saudi text-white text-right text-[32px]">{UI_TEXT.GAME_TITLE}</h2>
+              <h2 className="text-heading text-white">{UI_TEXT.GAME_TITLE}</h2>
             </div>
 
             <div onClick={() => copyToClipboard(quizCode)}>
               <div dir="rtl" className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">شفرة</span>
+                <span className="text-sm">رمز اللعبة</span>
               </div>
-              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] font-saudi text-[15px] text-white py-1 px-4 rounded-[25px] flex items-center justify-between text-left">
+              <div className="text-sm bg-transparent border-[3px] border-borderGreen gap-[10px] text-white py-1 px-4 rounded-[25px] flex items-center justify-between text-left">
                 <span className="font-mono">{quizCode} 📋</span>
               </div>
             </div>
 
             <div onClick={() => copyToClipboard(joinUrl)}>
               <div dir="rtl" className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">الانضمام إلى URL</span>
+                <span className="text-sm">رابط الدخول</span>
               </div>
-              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] font-saudi text-[15px] text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
+              <div className="bg-transparent border-[3px] border-borderGreen gap-[10px] text-white py-2 px-4 rounded-[25px] text-left text-sm break-all">
                 {joinUrl} 📋
               </div>
             </div>
 
             <div dir="rtl">
-              <h3 className="mb-4 font-saudi text-[17px]">مشاركون</h3>
+              <h3 className="mb-4">اللاعبون</h3>
               <div className="space-y-3">
                 {participants.map((participant, index) => (
                   <div key={participant.id} className="flex items-center justify-between py-2 border-b border-green-400">
@@ -152,7 +152,7 @@ const HostWaitingpage = ({ leaderboard }) => {
                           </defs>
                         </svg>
                       </div>
-                      <span className="text-white font-saudi text-[24px]">{participant.name}</span>
+                      <span className="text-white text-primary-button">{participant.name}</span>
                     </div>
                   </div>
                 ))}

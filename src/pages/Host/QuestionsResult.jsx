@@ -65,11 +65,10 @@ const QuestionsResult = ({ data }) => {
           </div>
         )}
 
+        <h2 className="text-center font-medium mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
+
         <div className="text-right" dir="rtl">
-          <h2 className="text-lg font-bold mb-2">السؤال {currentQuestion}/{totalQuestions}</h2>
-        </div>
-        <div className="text-right" dir="rtl">
-          <p className="leading-relaxed font-saudi text-[15px]">
+          <p className="leading-relaxed text-heading">
             {question}
           </p>
         </div>
@@ -88,7 +87,7 @@ const QuestionsResult = ({ data }) => {
 
         {/* Results Section */}
         <div className="text-right" dir="rtl">
-          <h3 className="mb-4 font-saudi text-[32px]">نتائج</h3>
+          <h3 className="mb-4 text-heading">نتائج</h3>
 
           <div className="space-y-3">
             {leaderboard.map((player, index) => (
@@ -106,9 +105,9 @@ const QuestionsResult = ({ data }) => {
                       </defs>
                     </svg>
                   </div>
-                  <span className="text-white font-saudi text-[24px]">{player.name}</span>
+                  <span className="text-white text-primary-button">{player.name}</span>
                 </div>
-                <span className="text-white font-saudi text-[24px]" dir='ltr'>{player.score} PT</span>
+                <span className="text-white text-primary-button" dir='ltr'>{player.score} PT</span>
               </div>
             ))}
 

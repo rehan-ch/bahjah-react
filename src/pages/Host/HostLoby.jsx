@@ -35,17 +35,9 @@ const HostLoby = () => {
   return (
     <div className="flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold mb-6 leading-relaxed font-saudi text-[32px]" dir="rtl">
-            مرحباً بكم في بهجة
-          </h1>
-          <p
-            className="text-base leading-relaxed px-4 text-center font-saudi text-[17px]"
-            dir="rtl"
-          >أهلاً بكم في بهجة! هل أنتم مستعدون للانضمام   <br />
-            إلى المغامرة أو بدء لعبة جديدة؟
-          </p>
-        </div>
+        <h1 className="text-heading mb-6" dir="rtl">
+          اختبروا معلوماتكم عن الوطن
+        </h1>
 
         <div className="w-full max-w-sm space-y-4">
           <div className="flex justify-center">
