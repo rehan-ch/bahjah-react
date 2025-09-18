@@ -21,6 +21,10 @@ const PlayerJoinPage = ({ setIsStarted }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    localStorage.clear();
+  }, []);
+
+  useEffect(() => {
     if (code) setGameCode(String(code).toUpperCase());
   }, [code]);
 

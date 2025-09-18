@@ -78,9 +78,8 @@ const HostGameControl = ({ data }) => {
           {error}
         </div>
       )}
-      <div className="text-right" dir="rtl">
-        <h2 className="text-lg font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
-      </div>
+
+      <h2 className="text-center font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
 
       <div className="bg-custom rounded-full p-4" dir="rtl">
         <h2 className="text-white text-heading leading-10 tracking-wide mb-4">

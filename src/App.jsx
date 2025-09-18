@@ -15,11 +15,11 @@ import AppLayout from './Components/AppLayout';
 
 
 const App = () => {
-
   const accessCode = localStorage.getItem('access_code')
   const userId = localStorage.getItem('user_id')
   const [data, setData] = useState(null)
   const [isStarted, setIsStarted] = useState(false)
+  const [gameInProgress, setGameInProgress] = useState(false);
 
   useEffect(() => {
     if (!accessCode || !userId) return;
@@ -58,7 +58,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout spreadItems={true} />}>
+        <Route element={<AppLayout spreadItems={true} gameInProgress={gameInProgress} />}>
           <Route path="/" element={<HostLoby />} />
           <Route path="/player-join/:code" element={<PlayerJoinPage setIsStarted={setIsStarted} />} />
           <Route path="/host-questions" element={<HostGameControl data={data} />} />
@@ -67,9 +67,9 @@ const App = () => {
           <Route path="/player-questions" element={<PlayerQuestions data={data} />} />
         </Route>
 
-        <Route element={<AppLayout spreadItems={false} />}>
-          <Route path="/host-waiting/:id" element={<HostWaitingpage leaderboard={data?.leaderboard} />} />
-          <Route path="/player-waiting" element={<PlayerWaiting leaderboard={data?.leaderboard} status={data?.game?.status} />} />
+        <Route element={<AppLayout spreadItems={false} gameInProgress={gameInProgress} />}>
+          <Route path="/host-waiting/:id" element={<HostWaitingpage setGameInProgress={setGameInProgress} leaderboard={data?.leaderboard} />} />
+          <Route path="/player-waiting" element={<PlayerWaiting setGameInProgress={setGameInProgress} leaderboard={data?.leaderboard} status={data?.game?.status} />} />
           <Route path="/create-quiz" element={<HostCreateQuiz setIsStarted={setIsStarted} />} />
           <Route path="/player-result" element={<PlayerResult data={data} />} />
         </Route>

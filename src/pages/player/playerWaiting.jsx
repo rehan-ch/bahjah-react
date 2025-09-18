@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePolling } from '../../hooks/usePolling';
 import { ERROR_MESSAGES, UI_TEXT } from '../../utills/constants';
 
-const PlayerWaiting = ({ leaderboard, status }) => {
+const PlayerWaiting = ({ leaderboard, status, setGameInProgress }) => {
   const navigate = useNavigate();
 
   const gameId = localStorage.getItem('game_id');
@@ -17,6 +17,7 @@ const PlayerWaiting = ({ leaderboard, status }) => {
       setPlayerData(leaderboard);
     }
     if (status === "active") {
+      setGameInProgress(true);
       navigate('/player-questions')
     }
   }, [leaderboard, status])

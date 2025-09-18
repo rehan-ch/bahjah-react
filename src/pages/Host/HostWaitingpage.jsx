@@ -4,7 +4,7 @@ import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 import GreenButton from "../../Components/GreenButton";
 
-const HostWaitingpage = ({ leaderboard }) => {
+const HostWaitingpage = ({ leaderboard, setGameInProgress }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const baseUrl = window.location.origin;
@@ -75,6 +75,7 @@ const HostWaitingpage = ({ leaderboard }) => {
 
       const result = await apiService.startQuiz(gameId);
       if (result) {
+        setGameInProgress(true);
         navigate("/host-questions");
       }
 
