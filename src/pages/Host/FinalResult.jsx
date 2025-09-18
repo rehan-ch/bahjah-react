@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 import Lottie from 'lottie-react';
+import { useNavigate } from 'react-router-dom';
 import confetti from '../../assests/confetti.json';
 import GreenButton from '../../Components/GreenButton';
+import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 
 const FinalResult = ({ data }) => {
   const navigate = useNavigate();
