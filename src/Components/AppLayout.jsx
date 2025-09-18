@@ -9,7 +9,6 @@ export default function AppLayout({ spreadItems = true, gameInProgress = false }
     
     useEffect(() => {
         const accessCode = localStorage.getItem("access_code");
-        console.log("access code in effect: ", accessCode);
         setAccessCode(accessCode);
     }, [gameInProgress]);
 
