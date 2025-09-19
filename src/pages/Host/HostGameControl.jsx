@@ -7,6 +7,7 @@ import apiService from '../../services/apiService'
 const HostGameControl = ({ data }) => {
   const navigate = useNavigate()
   const game_id = localStorage.getItem('game_id')
+  const access_code = localStorage.getItem('access_code');
   const isQuestionSubmitted = localStorage.getItem('isQuestionSubmitted')
   const [isSubmitting, setIsSubmitting] = useState(isQuestionSubmitted)
   const player_id = data?.game?.host?.player_id
@@ -79,16 +80,19 @@ const HostGameControl = ({ data }) => {
         </div>
       )}
 
-      <h2 className="text-center font-bold mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
+      <div className="w-full flex justify-between">
+        <span>{access_code}: رمز اللعبة</span>
+        <h2 className="text-center mr-3">السؤال {currentQuestion}/{totalQuestions}</h2>
+      </div>
 
-      <div className="bg-custom rounded-full p-4" dir="rtl">
+      <div className="bg-custom rounded-full" dir="rtl">
         <h2 className="text-white text-heading leading-10 tracking-wide mb-4">
           {question}
         </h2>
         <div className="space-y-3">
-          {options.map((option, idx) => (
+          {options.map((option, _idx) => (
             <button
-              key={idx}
+              key={option}
               onClick={() => setSelectedOption(option)}
               className={`
                     w-full py-2 px-4 rounded-full border-2 flex items-center justify-between 
@@ -98,12 +102,14 @@ const HostGameControl = ({ data }) => {
                   : "text-white hover:border-borderGreen"
                 }
                   `}
+              type="button"
               dir="rtl"
             >
               <span className="block flex-1">{option}</span>
               {selectedOption === option && (
                 <div className="w-6 h-6 grow-0 flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" className="w-6 h-6">
+                    <title>Option selected icon</title>
                     <path d="M11 0C3.29 0 0 3.29 0 11C0 18.71 3.29 22 11 22C18.71 22 22 18.71 22 11C22 3.29 18.71 0 11 0ZM16.305 8.539C14.993 10.592 13.125 13.165 10.304 14.858C9.98 15.053 9.573 15.048 9.254 14.845C7.734 13.882 6.593 12.85 5.66 11.597C5.33 11.154 5.422 10.528 5.865 10.198C6.307 9.868 6.934 9.961 7.263 10.403C7.937 11.308 8.751 12.082 9.799 12.808C11.959 11.348 13.443 9.301 14.618 7.462C14.917 6.996 15.535 6.86 15.999 7.158C16.465 7.456 16.602 8.074 16.305 8.539Z" fill="#008A4A" />
                   </svg>
                 </div>
@@ -126,7 +132,7 @@ const HostGameControl = ({ data }) => {
           {isSubmitting === "submitted" ? (
             <GreenButton text="التالي" handleClick={handleNextQuestion} />
           ) : (
-            <GreenButton text="يُقدِّم" handleClick={handleSubmitAnswer} />
+            <GreenButton text="يُقدِّم" handleClick={handleSubmitAnswer} disabled={selectedOption === null} />
           )
           }
         </div>
