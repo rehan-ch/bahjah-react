@@ -27,10 +27,14 @@ useEffect(() => {
     try {
       if (code) {
         setGameCode(String(code).toUpperCase());
-        await apiService.getGameStatus(code);
+      const response = await apiService.getGameStatus(code);
+      if(!response?.exists){
+        setError("هذا الرمز غير صالح");
+      }
       }
     } catch (err) {
       setError("هذا الرمز غير صالح");
+      navigate("/");
     }
   };
 
@@ -129,7 +133,7 @@ useEffect(() => {
         </div>
 
         {error && (
-          <div className="bg-red-600 text-white p-3 rounded-full text-center" dir="rtl">
+          <div className="text-red-600 text-right" dir="rtl">
             {error}
           </div>
         )}

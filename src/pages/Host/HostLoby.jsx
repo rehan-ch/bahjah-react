@@ -7,18 +7,26 @@ import GroupLogo3 from "../../assests/groupLogo3.svg";
 import GroupLogo4 from "../../assests/groupLogo4.svg";
 import GroupLogo5 from "../../assests/groupLogo5.svg";
 import GreenButton from "../../Components/GreenButton";
+import apiService from "../../services/apiService";
 
 const HostLoby = () => {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   const handleStart = () => {
     navigate("/create-quiz");
     localStorage.setItem("hasReloaded", "available");
   };
-  const handleStratPlayerGame = () => {
+  const handleStratPlayerGame = async () => {
     if (code.trim()) {
-      navigate(`/player-join/${code}`);
-      localStorage.setItem("hasReloaded", "available");
+      setError("");
+      const response = await apiService.getGameStatus(code);
+      if(response?.exists){
+        navigate(`/player-join/${code}`);
+        localStorage.setItem("hasReloaded", "available");
+      }else{
+        setError("هذا الرمز غير صالح");
+      }
     }
   };
 
@@ -30,7 +38,10 @@ const HostLoby = () => {
       window.location.reload();
     }
   }, []);
-
+const handleChangeCode = (e) => {
+  setCode(e.target.value);
+  setError("");
+};
 
   return (
     <div className="flex flex-col">
@@ -56,13 +67,17 @@ const HostLoby = () => {
           <div className="mb-4">
             <input
               type="text"
-              onChange={e => setCode(e.target.value)}
+              onChange={e => handleChangeCode(e)}
               placeholder="أدخل الرمز"
               className="w-full bg-transparent border-[2px] border-green-700 text-white placeholder-white py-2 px-4 rounded-full text-right text-lg focus:outline-none"
               dir="rtl"
             />
           </div>
-
+          {error && (
+          <div className="text-red-600 text-right" dir="rtl">
+            {error}
+          </div>
+        )}
           <div className="flex justify-center">
             <GreenButton text="انضم إلى اللعبة" handleClick={handleStratPlayerGame} />
           </div>
