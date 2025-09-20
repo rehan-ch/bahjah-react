@@ -15,14 +15,29 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // Calculate the maximum number of questions allowed based on selected categories
   const maxQuestions = selectedCategory.reduce((total, cat) => {
     const selected = typeof cat === 'string'
       ? categories.find((c) => c.name === cat)
       : cat;
     return total + (selected?.question_count || 0);
   }, 0);
+
+  const generateDropdownOptions = () => {
+    if (maxQuestions === 0) return [];
+
+    const options = [];
+    for (let i = 10; i <= maxQuestions; i += 10) {
+      options.push(i);
+    }
+
+    if (maxQuestions % 10 !== 0) {
+      options.push(maxQuestions);
+    }
+
+    return options;
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -45,6 +60,19 @@ const HostCreateQuiz = ({ setIsStarted }) => {
       setQuestionCount(maxQuestions);
     }
   }, [maxQuestions]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showDropdown && !event.target.closest('.dropdown-container')) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
 
 
   const handleCategorySelect = (category) => {
@@ -130,7 +158,12 @@ const HostCreateQuiz = ({ setIsStarted }) => {
     } else {
       setQuestionCount(Math.max(1, value));
     }
-  }
+  };
+
+  const handleDropdownSelect = (value) => {
+    setQuestionCount(value);
+    setShowDropdown(false);
+  };
 
   const getButtonBorderClasses = (category) => {
     const isSelected = selectedCategory.some(cat =>
@@ -196,14 +229,53 @@ const HostCreateQuiz = ({ setIsStarted }) => {
 
       <div dir="rtl">
         <label className="block mb-2">عدد الأسئلة</label>
-        <input
-          type="number"
-          value={questionCount}
-          min={1}
-          max={maxQuestions || undefined}
-          onChange={(e) => handleOnChange(e)}
-          className="w-full no-spinner bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none"
-        />
+        <div className="relative dropdown-container">
+          <input
+            type="number"
+            value={questionCount}
+            min={1}
+            max={maxQuestions || undefined}
+            onChange={(e) => handleOnChange(e)}
+            onFocus={() => setShowDropdown(false)}
+            className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            placeholder="أدخل عدد الأسئلة"
+          />
+          {maxQuestions > 0 && generateDropdownOptions().length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white hover:text-green-400 transition-colors"
+              dir="ltr"
+            >
+              <svg
+                className={`w-5 h-5 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          )}
+
+          {showDropdown && maxQuestions > 0 && generateDropdownOptions().length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border-2 border-borderGreen rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+              {generateDropdownOptions().map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => handleDropdownSelect(option)}
+                  className={`w-full text-right px-4 py-2 hover:bg-green-600 transition-colors ${
+                    questionCount === option ? 'bg-green-600 text-white' : 'text-white'
+                  }`}
+                  dir="rtl"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         {selectedCategory.length > 0 && (
           <p className="text-sm text-white mt-2">
             الحد الأقصى المسموح بناءً على الفئات المختارة: {maxQuestions}
