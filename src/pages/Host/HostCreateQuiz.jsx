@@ -9,7 +9,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
 
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [questionCount, setQuestionCount] = useState(10);
+  const [questionCount, setQuestionCount] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,17 +25,23 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   }, 0);
 
   const generateDropdownOptions = () => {
-    if (maxQuestions === 0) return [];
-
     const options = [];
-    for (let i = 10; i <= maxQuestions; i += 10) {
-      options.push(i);
+    
+    if (maxQuestions === 0) {
+      // No categories selected: show only 0
+      options.push(0);
+    } else {
+      // Categories selected: start from 10 and go in increments of 10
+      for (let i = 10; i <= maxQuestions; i += 10) {
+        options.push(i);
+      }
+      
+      // Add the maximum value if it's not a multiple of 10
+      if (maxQuestions % 10 !== 0) {
+        options.push(maxQuestions);
+      }
     }
-
-    if (maxQuestions % 10 !== 0) {
-      options.push(maxQuestions);
-    }
-
+    
     return options;
   };
 
@@ -56,10 +62,22 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   }, []);
 
   useEffect(() => {
-    if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
-      setQuestionCount(maxQuestions);
+    const numQuestionCount = Number(questionCount);
+    
+    if (maxQuestions === 0) {
+      // No categories selected: default to 0
+      if (!questionCount) {
+        setQuestionCount(0);
+      }
+    } else {
+      // Categories selected: default to 10 and enforce limits
+      if (!questionCount || numQuestionCount < 10) {
+        setQuestionCount(10);
+      } else if (numQuestionCount > maxQuestions) {
+        setQuestionCount(maxQuestions);
+      }
     }
-  }, [maxQuestions]);
+  }, [maxQuestions, questionCount]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -97,7 +115,19 @@ const HostCreateQuiz = ({ setIsStarted }) => {
       return;
     }
 
-    if (maxQuestions > 0 && Number(questionCount) > maxQuestions) {
+    const numQuestionCount = Number(questionCount);
+    
+    if (maxQuestions === 0 && numQuestionCount === 0) {
+      setError('يجب اختيار فئات أولاً لتحديد عدد الأسئلة.');
+      return;
+    }
+    
+    if (maxQuestions > 0 && numQuestionCount < 10) {
+      setError('يجب أن يكون عدد الأسئلة 10 على الأقل عند اختيار الفئات.');
+      return;
+    }
+    
+    if (maxQuestions > 0 && numQuestionCount > maxQuestions) {
       setError(`لا يمكنك اختيار عدد أسئلة أكثر من الحد المسموح (${maxQuestions}).`);
       return;
     }
@@ -139,7 +169,6 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   const handleOnChange = (e) => {
     const rawValue = e.target.value;
 
-    // Allow empty input so backspace works
     if (rawValue === "") {
       setQuestionCount("");
       return;
@@ -147,16 +176,15 @@ const HostCreateQuiz = ({ setIsStarted }) => {
 
     const value = Number(rawValue);
 
-    if (!Number.isFinite(value)) {
-      setQuestionCount(1);
-      return;
+    if (!Number.isFinite(value) || value < 0) {
+      return; // Don't update state for invalid values
     }
 
-    if (maxQuestions > 0) {
-      const clamped = Math.max(1, Math.min(value, maxQuestions));
-      setQuestionCount(clamped);
+    if (maxQuestions === 0) {
+      setQuestionCount(value);
     } else {
-      setQuestionCount(Math.max(1, value));
+      const clamped = Math.max(10, Math.min(value, maxQuestions));
+      setQuestionCount(clamped);
     }
   };
 
@@ -240,7 +268,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             className="w-full bg-transparent border-[3px] border-borderGreen text-white placeholder-white py-2 px-4 rounded-full text-right focus:outline-none pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="أدخل عدد الأسئلة"
           />
-          {maxQuestions > 0 && generateDropdownOptions().length > 0 && (
+          {generateDropdownOptions().length > 0 && (
             <button
               type="button"
               onClick={() => setShowDropdown(!showDropdown)}
@@ -258,8 +286,8 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             </button>
           )}
 
-          {showDropdown && maxQuestions > 0 && generateDropdownOptions().length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border-2 border-borderGreen rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
+          {showDropdown && generateDropdownOptions().length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 border-2 border-borderGreen rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto" style={{backgroundColor: 'rgb(0 52 58 / var(--tw-bg-opacity, 1))'}}>
               {generateDropdownOptions().map((option) => (
                 <button
                   key={option}
@@ -276,11 +304,12 @@ const HostCreateQuiz = ({ setIsStarted }) => {
             </div>
           )}
         </div>
-        {selectedCategory.length > 0 && (
-          <p className="text-sm text-white mt-2">
-            الحد الأقصى المسموح بناءً على الفئات المختارة: {maxQuestions}
-          </p>
-        )}
+        <p className="text-sm text-white mt-2">
+          {selectedCategory.length > 0 
+            ? `الحد الأقصى المسموح بناءً على الفئات المختارة: ${maxQuestions} (الحد الأدنى: 10)` 
+            : 'اختر فئات أولاً لتحديد عدد الأسئلة'
+          }
+        </p>
       </div>
 
       <div dir="rtl">
