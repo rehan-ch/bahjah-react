@@ -20,13 +20,22 @@ const PlayerJoinPage = ({ setIsStarted }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
 
-  useEffect(() => {
-    if (code) setGameCode(String(code).toUpperCase());
-  }, [code]);
+
+useEffect(() => {
+  const fetchGameStatus = async () => {
+    try {
+      if (code) {
+        setGameCode(String(code).toUpperCase());
+        await apiService.getGameStatus(code);
+      }
+    } catch (err) {
+      setError("هذا الرمز غير صالح");
+    }
+  };
+
+  fetchGameStatus();
+}, [code]);
 
   const handleJoinGame = async (e) => {
     e?.preventDefault?.();

@@ -1,9 +1,9 @@
-import Lottie from "lottie-react";
-import { Link, useNavigate } from "react-router-dom";
+import Lottie from 'lottie-react';
+import { Link, useNavigate } from 'react-router-dom';
+import confetti from '../../assests/confetti.json';
+import GreenButton from '../../Components/GreenButton';
 import BahjahLogo from "../../assests/bahjah-logo.svg";
-import confetti from "../../assests/confetti.json";
-import GreenButton from "../../Components/GreenButton";
-import { disconnectFromGameChannel } from "../../utills/helperFunctions";
+import { disconnectFromGameChannel } from '../../utills/helperFunctions';
 
 const FinalResult = ({ data }) => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const FinalResult = ({ data }) => {
   const leaderboard = data?.leaderboard || [];
 
   const handleClick = () => {
-    localStorage.clear();
-    disconnectFromGameChannel();
-    navigate("/");
-  };
+    localStorage?.clear();
+    disconnectFromGameChannel()
+    navigate('/');
+  }
 
   return (
     <>

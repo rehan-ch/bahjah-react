@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiService from "../../services/apiService";
 import { ERROR_MESSAGES, UI_TEXT } from "../../utills/constants";
 import GreenButton from "../../Components/GreenButton";
+import LoaderWrapper from "../../Components/LoadingWrapper";
 
 const HostCreateQuiz = ({ setIsStarted }) => {
   const navigate = useNavigate();
@@ -140,6 +141,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
   };
 
   return (
+    <LoaderWrapper loading={categoriesLoading}>
     <div className="flex-1 py-2 space-y-6 overflow-y-auto">
       <div className="text-heading space-y-2" dir="rtl">
         <p className="text-white">{UI_TEXT.GAME_TITLE}</p>
@@ -147,18 +149,6 @@ const HostCreateQuiz = ({ setIsStarted }) => {
 
       <div dir="rtl">
         <h3 className="mb-3 text-lg">حدد الفئات</h3>
-
-        {categoriesLoading && (
-          <div className="text-center py-4">
-            <div className="text-green-400 text-sm mb-2">{ERROR_MESSAGES.LOADING_CATEGORIES}</div>
-            <div className="flex justify-center space-x-1">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-            </div>
-          </div>
-        )}
-
         {!categoriesLoading && (
           <div className="space-y-3">
             {categories.length > 0 ? (
@@ -243,6 +233,7 @@ const HostCreateQuiz = ({ setIsStarted }) => {
         <GreenButton text={"ابدأ"} handleClick={handleSubmit} disabled={isLoading} />
       </div>
     </div>
+    </LoaderWrapper>
   );
 };
 

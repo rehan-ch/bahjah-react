@@ -158,6 +158,10 @@ class ApiService {
     const response = await this.get(`/api/v1/games/${gameId}/results`);
     return response.data;
   }
+  async getGameStatus(code) {
+    const response = await this.get(`/api/v1/games/check?access_code=${code}`);
+    return response.data;
+  }
 }
 
 const apiService = new ApiService();

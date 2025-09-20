@@ -18,7 +18,6 @@ const HostWaitingpage = ({ leaderboard }) => {
   const [error, setError] = useState(null);
 
   const quizCode = data?.access_code;
-  const isFinished = !!data?.is_finished;
   const totalPlayers = data?.total_players ?? 0;
 
   const participants =
